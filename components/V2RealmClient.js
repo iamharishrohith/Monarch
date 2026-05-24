@@ -14,7 +14,9 @@ import {
   PenTool,
   Smartphone,
   TrendingUp,
-  Blocks
+  Blocks,
+  X,
+  Info
 } from "lucide-react";
 import { SectionReveal } from "@/components/SectionReveal";
 import { V2Constellation } from "@/components/V2Constellation";
@@ -388,6 +390,7 @@ export function V2RealmClient({
 }) {
   const gear = 5; // Default to Gear 5 / Sun God Nika
   const [isHakiEnabled, setIsHakiEnabled] = useState(true);
+  const [infoModalOpen, setInfoModalOpen] = useState(false);
 
   // Map gear states to styling classes
   const getGearClass = () => {
@@ -428,6 +431,7 @@ export function V2RealmClient({
           certificationCount={certifications.length}
           achievementCount={achievements.length}
           v2Config={v2Config}
+          onOpenInfo={() => setInfoModalOpen(true)}
         />
 
         <SectionReveal className={styles.originSection} delay={0.04}>
@@ -702,6 +706,94 @@ export function V2RealmClient({
           </div>
         </section>
       </main>
+
+      {infoModalOpen ? (
+        <div className={styles.portalOverlay} role="dialog" aria-modal="true">
+          <div className={styles.portalBackdrop} onClick={() => setInfoModalOpen(false)} />
+          <div className={styles.portalPanel} style={{ maxWidth: "680px", width: "90%", background: "rgba(10, 8, 36, 0.96)", border: "1px solid rgba(168, 85, 247, 0.3)" }}>
+            <button type="button" className={styles.portalClose} onClick={() => setInfoModalOpen(false)}>
+              <X size={16} />
+            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+              <Info size={18} style={{ color: "#fbbf24" }} />
+              <span className={styles.systemBadge}>SYSTEM PROTOCOL</span>
+            </div>
+            <h3 style={{ fontSize: "1.6rem", fontWeight: "700", color: "#ffffff", marginBottom: "16px", letterSpacing: "-0.02em" }}>
+              Monarch Portfolio System Specs
+            </h3>
+            
+            <div style={{
+              maxHeight: "400px",
+              overflowY: "auto",
+              paddingRight: "12px",
+              textAlign: "left",
+              fontSize: "0.88rem",
+              color: "#d8b4fe",
+              lineHeight: "1.65",
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px"
+            }}>
+              <section>
+                <h4 style={{ color: "#ffffff", fontSize: "1.05rem", fontWeight: "600", marginBottom: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span>🌟</span> Why This Theme?
+                </h4>
+                <p style={{ color: "#a5b4fc" }}>
+                  This portfolio is architected as an interactive <strong>Ascension and Progression System</strong>. It merges high-impact modern systems engineering (like Bun, ElysiaJS, real-time WebSockets, PINNs, and IoT telemetry) with the philosophy of <strong>ultimate creative freedom</strong>, drawing aesthetic inspiration from Luffy's <strong>Gear 5 / Sun God Nika</strong>. In the spirit of liberation, it defies the latency of traditional web architectures to build fluid, sub-millisecond, responsive user interfaces.
+                </p>
+              </section>
+
+              <section style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "14px" }}>
+                <h4 style={{ color: "#ffffff", fontSize: "1.05rem", fontWeight: "600", marginBottom: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span>⚡</span> Leveling & XP Engine
+                </h4>
+                <p style={{ color: "#a5b4fc" }}>
+                  Every item listed on this portfolio represents a milestone in Harish&apos;s engineering journey, each contributing a specific weight of <strong>EXP (Experience Points)</strong> to the system:
+                </p>
+                <ul style={{ listStyleType: "square", paddingLeft: "20px", color: "#c084fc", marginTop: "6px", display: "flex", flexDirection: "column", gap: "4px" }}>
+                  <li><strong>Core Projects:</strong> Significant engineering builds (like SkipQ or R-Choice) yield up to <strong>+9,600 EXP</strong> based on code complexity and live product impact.</li>
+                  <li><strong>Skill Nodes:</strong> Individual core competencies (e.g. ElysiaJS, TinyML, Custom LLM Training) yield EXP scaling with active proficiency levels.</li>
+                  <li><strong>Chronicle Milestones:</strong> Real-world experience (founding CoLearn, Trainee work) adds baseline career EXP.</li>
+                  <li><strong>System Artifacts:</strong> Professional certifications (Oracle, IBM, Google, AWS) yield EXP values verifying structured learning.</li>
+                  <li><strong>Hackathon Victories:</strong> Top-tier placements (TANCAM, Nehru, VOID:V1, Vikas Saptah) yield high-tier EXP points.</li>
+                </ul>
+              </section>
+
+              <section style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "14px" }}>
+                <h4 style={{ color: "#ffffff", fontSize: "1.05rem", fontWeight: "600", marginBottom: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span>🏆</span> Ranking & Progression Tiers
+                </h4>
+                <p style={{ color: "#a5b4fc" }}>
+                  Your cumulative EXP determines your <strong>Power Level</strong> (calculated mathematically as <code>Lvl = ⌊√(Total_EXP / 120)⌋ + 1</code>). The level unlocks progressive architectural ranks:
+                </p>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px", marginTop: "10px", background: "rgba(255,255,255,0.02)", padding: "10px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 1+:</span> <br/><span style={{color:"#fff"}}>E-Rank - Initiate</span></div>
+                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 4+:</span> <br/><span style={{color:"#fff"}}>D-Rank - Builder</span></div>
+                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 7+:</span> <br/><span style={{color:"#fff"}}>C-Rank - Operator</span></div>
+                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 10+:</span> <br/><span style={{color:"#fff"}}>B-Rank - Vanguard</span></div>
+                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 13+:</span> <br/><span style={{color:"#fff"}}>A-Rank - Ascendant</span></div>
+                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 16+:</span> <br/><span style={{color:"#fff"}}>S-Rank - Monarch</span></div>
+                </div>
+              </section>
+
+              <section style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "14px", marginBottom: "10px" }}>
+                <h4 style={{ color: "#ffffff", fontSize: "1.05rem", fontWeight: "600", marginBottom: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span>💻</span> Interactive HUD & Commands
+                </h4>
+                <p style={{ color: "#a5b4fc" }}>
+                  Press <kbd style={{ background: "rgba(255,255,255,0.1)", padding: "2px 6px", borderRadius: "4px", fontSize: "0.8rem", color: "#ffffff" }}>Ctrl + K</kbd> (or click the floating Console icon in the HUD) to trigger the interactive command panel. Type and click commands to test system capabilities:
+                </p>
+                <ul style={{ listStyleType: "circle", paddingLeft: "20px", color: "#a78bfa", marginTop: "6px", display: "flex", flexDirection: "column", gap: "4px" }}>
+                  <li><code>/joyboy</code>: Overdrives UI nodes into high-elasticity cartoon physics.</li>
+                  <li><code>/haki</code>: Toggles interactive red/black Conqueror Haki particle lightning.</li>
+                  <li><code>/gears</code>: Inspects current gear modes, performance latency, and active sub-components.</li>
+                  <li><code>/stats</code>: Generates a complete mathematical breakdown of EXP across sections.</li>
+                </ul>
+              </section>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -68,7 +68,7 @@ function VisualOrb({ initials }) {
   );
 }
 
-export function V2HeroSection({ profile, progression, projectCount, skillCount, certificationCount, achievementCount, v2Config = null }) {
+export function V2HeroSection({ profile, progression, projectCount, skillCount, certificationCount, achievementCount, v2Config = null, onOpenInfo }) {
   const heroRef = useRef(null);
   const initials = useMemo(() => getInitials(profile?.name || "Harish Rohith"), [profile?.name]);
   const [monarchHovered, setMonarchHovered] = useState(false);
@@ -91,6 +91,14 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
           <p className={styles.navTitle}>Welcome to {profile?.name || "Harish Rohith"}&apos;s Ascension Realm</p>
         </div>
         <div className={styles.navActions}>
+          <button
+            type="button"
+            onClick={onOpenInfo}
+            className={styles.ghostButton}
+            style={{ marginRight: "10px", padding: "8px 16px", fontSize: "0.75rem", background: "rgba(255,255,255,0.03)" }}
+          >
+            System Specs
+          </button>
           <a
             href={v2Config?.heroPrimaryCtaHref || "#quests"}
             onClick={() => trackEvent("Hero Header", "Button Click", v2Config?.heroPrimaryCtaLabel || "Enter Quest Log")}
@@ -145,7 +153,7 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
             Inspired by Luffy to be a Warrior of Liberation
           </div>
 
-          <div className={styles.floatCardWrapper}>
+          <div className={styles.floatCardWrapper} onClick={onOpenInfo} style={{ cursor: "pointer" }} title="Click to view Portfolio System details">
             <div className={`${styles.floatCard} ${styles.floatCardTop}`}>
               <span>{v2Config?.levelLabel || "RANK"}</span>
               <strong>{progression.currentRank}</strong>

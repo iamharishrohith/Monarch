@@ -53,6 +53,364 @@ function buildQuestType(index) {
   return "Rapid Quest";
 }
 
+function SolutionOverview({ projectId, isFeatured = false }) {
+  let gradient = "linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)";
+  let content = null;
+  let initials = "PR";
+  let label = "PROJECT SYSTEM";
+
+  if (projectId === "skipq") {
+    gradient = "linear-gradient(135deg, #3730a3 0%, #0f766e 100%)";
+    initials = "SQ";
+    label = "QUEUE PORTAL";
+    content = (
+      <>
+        <defs>
+          <linearGradient id="skipqGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#818cf8" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#34d399" stopOpacity="0.8" />
+          </linearGradient>
+          <radialGradient id="skipqGlow" cx="80%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#34d399" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#34d399" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <circle cx="240" cy="90" r="110" fill="url(#skipqGlow)" />
+        <path d="M 0,20 L 320,20 M 0,60 L 320,60 M 0,100 L 320,100 M 0,140 L 320,140" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <path d="M 40,0 L 40,180 M 120,0 L 120,180 M 200,0 L 200,180 M 280,0 L 280,180" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        
+        <path d="M -20,120 C 60,120 80,60 160,60 C 240,60 260,120 340,120" stroke="rgba(255,255,255,0.15)" strokeWidth="8" strokeLinecap="round" fill="none" />
+        <path d="M -20,120 C 60,120 80,60 160,60 C 240,60 260,120 340,120" stroke="url(#skipqGrad)" strokeWidth="4" strokeLinecap="round" fill="none" />
+        
+        <circle cx="50" cy="120" r="10" fill="#312e81" stroke="white" strokeWidth="2" />
+        <text x="50" y="123" fill="white" fontSize="9" textAnchor="middle" fontWeight="bold" fontFamily="monospace">01</text>
+        
+        <circle cx="110" cy="90" r="10" fill="#312e81" stroke="white" strokeWidth="2" />
+        <text x="110" y="93" fill="white" fontSize="9" textAnchor="middle" fontWeight="bold" fontFamily="monospace">02</text>
+        
+        <circle cx="170" cy="65" r="10" fill="#312e81" stroke="white" strokeWidth="2" />
+        <text x="170" y="68" fill="white" fontSize="9" textAnchor="middle" fontWeight="bold" fontFamily="monospace">03</text>
+        
+        <circle cx="230" cy="85" r="10" fill="#312e81" stroke="white" strokeWidth="2" />
+        <text x="230" y="88" fill="white" fontSize="9" textAnchor="middle" fontWeight="bold" fontFamily="monospace">04</text>
+        
+        <ellipse cx="270" cy="90" rx="14" ry="34" fill="rgba(255,255,255,0.1)" stroke="white" strokeWidth="2" strokeDasharray="3,3" />
+        <ellipse cx="270" cy="90" rx="8" ry="24" fill="white" opacity="0.85" />
+        <path d="M 270,66 L 290,90 L 270,114" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </>
+    );
+  } else if (projectId === "r-choice") {
+    gradient = "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)";
+    initials = "RC";
+    label = "PLACEMENT PIPELINE";
+    content = (
+      <>
+        <defs>
+          <linearGradient id="rchoiceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#4c1d95" stopOpacity="0.4" />
+          </linearGradient>
+        </defs>
+        <path d="M 0,20 L 320,20 M 0,60 L 320,60 M 0,100 L 320,100 M 0,140 L 320,140" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <path d="M 40,0 L 40,180 M 120,0 L 120,180 M 200,0 L 200,180 M 280,0 L 280,180" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+
+        <path d="M 80,130 Q 140,40 200,75" stroke="rgba(255,255,255,0.2)" strokeWidth="2" strokeDasharray="4,4" fill="none" />
+        <path d="M 140,100 Q 200,20 260,50" stroke="rgba(255,255,255,0.2)" strokeWidth="2" strokeDasharray="4,4" fill="none" />
+
+        <g transform="translate(50, 110)">
+          <polygon points="30,0 60,15 30,30 0,15" fill="url(#rchoiceGrad)" stroke="white" strokeWidth="1.5" />
+          <polygon points="30,30 30,40 0,25 0,15" fill="#4c1d95" opacity="0.8" />
+          <polygon points="60,15 60,25 30,40 30,30" fill="#2e1065" opacity="0.8" />
+          <text x="30" y="16" fill="white" fontSize="8" textAnchor="middle" fontWeight="bold" fontFamily="monospace">APPLY</text>
+        </g>
+
+        <g transform="translate(110, 80)">
+          <polygon points="30,0 60,15 30,30 0,15" fill="url(#rchoiceGrad)" stroke="white" strokeWidth="1.5" />
+          <polygon points="30,30 30,40 0,25 0,15" fill="#4c1d95" opacity="0.8" />
+          <polygon points="60,15 60,25 30,40 30,30" fill="#2e1065" opacity="0.8" />
+          <text x="30" y="16" fill="white" fontSize="8" textAnchor="middle" fontWeight="bold" fontFamily="monospace">VERIFY</text>
+        </g>
+
+        <g transform="translate(170, 55)">
+          <polygon points="30,0 60,15 30,30 0,15" fill="url(#rchoiceGrad)" stroke="white" strokeWidth="1.5" />
+          <polygon points="30,30 30,40 0,25 0,15" fill="#4c1d95" opacity="0.8" />
+          <polygon points="60,15 60,25 30,40 30,30" fill="#2e1065" opacity="0.8" />
+          <text x="30" y="16" fill="white" fontSize="8" textAnchor="middle" fontWeight="bold" fontFamily="monospace">MATCH</text>
+        </g>
+
+        <g transform="translate(240, 20)">
+          <circle cx="25" cy="25" r="18" fill="rgba(251,191,36,0.15)" stroke="#fbbf24" strokeWidth="2" />
+          <polygon points="25,12 28,20 36,20 30,25 32,33 25,28 18,33 20,25 14,20 22,20" fill="#fbbf24" />
+          <circle cx="25" cy="25" r="22" stroke="white" strokeWidth="1" strokeDasharray="3,3" opacity="0.5" />
+        </g>
+      </>
+    );
+  } else if (projectId === "devs-recipe") {
+    gradient = "linear-gradient(135deg, #1e293b 0%, #475569 100%)";
+    initials = "DR";
+    label = "COOKBOOK AUTO";
+    content = (
+      <>
+        <defs>
+          <linearGradient id="recipeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#ef4444" stopOpacity="0.8" />
+          </linearGradient>
+        </defs>
+        <path d="M 0,20 L 320,20 M 0,60 L 320,60 M 0,100 L 320,100 M 0,140 L 320,140" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <path d="M 40,0 L 40,180 M 120,0 L 120,180 M 200,0 L 200,180 M 280,0 L 280,180" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+
+        <circle cx="160" cy="90" r="32" fill="url(#recipeGrad)" stroke="white" strokeWidth="2.5" />
+        <circle cx="160" cy="90" r="42" stroke="rgba(255,255,255,0.22)" strokeWidth="1" strokeDasharray="4,4" />
+        <text x="160" y="97" fill="white" fontSize="24" textAnchor="middle" fontWeight="bold" fontFamily="monospace">{"{}"}</text>
+        
+        <g transform="translate(60, 40)">
+          <rect x="0" y="0" width="34" height="24" rx="4" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="1.5" />
+          <path d="M 6,10 L 10,14 L 6,18" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+          <line x1="13" y1="18" x2="22" y2="18" stroke="white" strokeWidth="1.5" />
+        </g>
+
+        <g transform="translate(220, 110)">
+          <circle cx="18" cy="18" r="10" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+          <circle cx="18" cy="18" r="4" fill="white" />
+          <path d="M 18,4 V 8 M 18,28 V 32 M 4,18 H 8 M 28,18 H 32" stroke="white" strokeWidth="2" />
+        </g>
+
+        <g transform="translate(230, 30)">
+          <polygon points="15,0 30,8 15,16 0,8" fill="rgba(255,255,255,0.2)" stroke="white" strokeWidth="1" />
+          <polygon points="15,16 15,26 0,18 0,8" fill="rgba(255,255,255,0.1)" stroke="white" strokeWidth="1" />
+          <polygon points="30,8 30,18 15,26 15,16" fill="rgba(255,255,255,0.3)" stroke="white" strokeWidth="1" />
+        </g>
+
+        <circle cx="70" cy="130" r="3" fill="white" opacity="0.6" />
+        <circle cx="100" cy="120" r="1.5" fill="white" />
+        <circle cx="210" cy="40" r="2.5" fill="white" />
+      </>
+    );
+  } else if (projectId === "gridsense") {
+    gradient = "linear-gradient(135deg, #0f172a 0%, #0284c7 100%)";
+    initials = "GS";
+    label = "GRID SENSING CONSTELLATION";
+    content = (
+      <>
+        <defs>
+          <linearGradient id="gridGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#22c55e" stopOpacity="0.9" />
+          </linearGradient>
+        </defs>
+        <path d="M 0,20 L 320,20 M 0,60 L 320,60 M 0,100 L 320,100 M 0,140 L 320,140" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <path d="M 40,0 L 40,180 M 120,0 L 120,180 M 200,0 L 200,180 M 280,0 L 280,180" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+
+        <circle cx="160" cy="90" r="30" stroke="rgba(255,255,255,0.12)" strokeWidth="2" strokeDasharray="3,3" />
+        <circle cx="160" cy="90" r="55" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" strokeDasharray="4,4" />
+        <circle cx="160" cy="90" r="80" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+
+        <g transform="translate(142, 72)">
+          <polygon points="18,0 36,36 0,36" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+          <line x1="18" y1="12" x2="18" y2="36" stroke="white" strokeWidth="1.5" />
+          <circle cx="18" cy="0" r="4" fill="white" />
+        </g>
+
+        <g transform="translate(50, 95)">
+          <polygon points="10,0 20,20 0,20" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="1.5" />
+          <circle cx="10" cy="0" r="2.5" fill="white" />
+        </g>
+
+        <g transform="translate(250, 95)">
+          <polygon points="10,0 20,20 0,20" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="1.5" />
+          <circle cx="10" cy="0" r="2.5" fill="white" />
+        </g>
+
+        <path d="M 20,90 Q 50,50 80,90 T 140,90 T 200,90 T 260,90 T 300,90" stroke="url(#gridGrad)" strokeWidth="3" strokeLinecap="round" fill="none" />
+        <circle cx="80" cy="90" r="4" fill="#22c55e" stroke="white" strokeWidth="1" />
+        <circle cx="200" cy="90" r="4" fill="#0ea5e9" stroke="white" strokeWidth="1" />
+      </>
+    );
+  } else if (projectId === "neer-ai") {
+    gradient = "linear-gradient(135deg, #090d16 0%, #0d9488 100%)";
+    initials = "NA";
+    label = "HYDRO DIAGNOSTIC AI";
+    content = (
+      <>
+        <defs>
+          <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#0d9488" stopOpacity="0.4" />
+          </linearGradient>
+        </defs>
+        <path d="M 0,20 L 320,20 M 0,60 L 320,60 M 0,100 L 320,100 M 0,140 L 320,140" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <path d="M 40,0 L 40,180 M 120,0 L 120,180 M 200,0 L 200,180 M 280,0 L 280,180" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+
+        <path d="M -20,120 Q 40,80 100,120 T 220,120 T 340,120" stroke="rgba(255,255,255,0.1)" strokeWidth="12" strokeLinecap="round" fill="none" />
+        <path d="M -20,135 Q 45,95 110,135 T 230,135 T 350,135" stroke="rgba(255,255,255,0.15)" strokeWidth="8" strokeLinecap="round" fill="none" />
+
+        <g transform="translate(138, 55)">
+          <path d="M 22,0 C 22,0 44,24 44,38 C 44,50 34,60 22,60 C 10,60 0,50 0,38 C 0,24 22,0 22,0 Z" fill="url(#waterGrad)" stroke="white" strokeWidth="2.5" />
+          <circle cx="22" cy="38" r="22" stroke="white" strokeWidth="1" strokeDasharray="3,3" opacity="0.6" />
+        </g>
+
+        <circle cx="95" cy="85" r="5" fill="#f59e0b" stroke="white" strokeWidth="1" />
+        <line x1="100" y1="85" x2="136" y2="85" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+        <circle cx="225" cy="85" r="5" fill="#f59e0b" stroke="white" strokeWidth="1" />
+        <line x1="220" y1="85" x2="184" y2="85" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+        <circle cx="160" cy="32" r="5" fill="#f59e0b" stroke="white" strokeWidth="1" />
+        <line x1="160" y1="37" x2="160" y2="53" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+      </>
+    );
+  } else if (projectId === "custom-llm-dashboard" || projectId.includes("custom-llm")) {
+    gradient = "linear-gradient(135deg, #581c87 0%, #db2777 100%)";
+    initials = "CU";
+    label = "DECISION COGNITIVE CORE";
+    content = (
+      <>
+        <circle cx="160" cy="90" r="24" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <circle cx="160" cy="90" r="16" fill="none" stroke="white" strokeWidth="1.5" strokeDasharray="3,3" />
+        <circle cx="100" cy="90" r="6" fill="white" />
+        <circle cx="220" cy="90" r="6" fill="white" />
+        <circle cx="160" cy="40" r="6" fill="white" />
+        <circle cx="160" cy="140" r="6" fill="white" />
+        <line x1="106" y1="90" x2="136" y2="90" stroke="white" strokeWidth="1.5" />
+        <line x1="184" y1="90" x2="214" y2="90" stroke="white" strokeWidth="1.5" />
+        <line x1="160" y1="46" x2="160" y2="66" stroke="white" strokeWidth="1.5" />
+        <line x1="160" y1="114" x2="160" y2="134" stroke="white" strokeWidth="1.5" />
+        <text x="160" y="114" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">MODEL 4B+</text>
+      </>
+    );
+  } else if (projectId.includes("zentix") || projectId.includes("campus")) {
+    gradient = "linear-gradient(135deg, #312e81 0%, #6366f1 100%)";
+    initials = "ZX";
+    label = "CAMPUS CONTROL OS";
+    content = (
+      <>
+        <path d="M 60,130 L 160,70 L 260,130 L 160,160 Z" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
+        <path d="M 80,110 L 160,62 L 240,110 L 160,134 Z" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeDasharray="3,3" />
+        <circle cx="160" cy="70" r="5" fill="white" />
+        <circle cx="100" cy="106" r="3.5" fill="white" />
+        <circle cx="220" cy="106" r="3.5" fill="white" />
+        <line x1="160" y1="75" x2="160" y2="147" stroke="white" strokeWidth="1.5" />
+        <text x="160" y="44" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">REALTIME MAP</text>
+      </>
+    );
+  } else if (projectId.includes("libreflow")) {
+    gradient = "linear-gradient(135deg, #78350f 0%, #d97706 100%)";
+    initials = "LF";
+    label = "CIRCULATION FLOW";
+    content = (
+      <>
+        <rect x="70" y="60" width="54" height="38" rx="4" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <path d="M 80,73 H 114 M 80,83 H 105" stroke="white" strokeWidth="1.5" />
+        <rect x="196" y="60" width="54" height="38" rx="4" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <path d="M 206,73 H 240 M 206,83 H 228" stroke="white" strokeWidth="1.5" />
+        <path d="M 132,79 C 132,70 188,70 188,79" stroke="white" strokeWidth="1.5" strokeDasharray="3,3" />
+        <path d="M 188,79 L 182,74 M 188,79 L 182,84" stroke="white" strokeWidth="1.5" />
+        <text x="160" y="124" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">CIRCULATION</text>
+      </>
+    );
+  } else if (projectId.includes("resolv")) {
+    gradient = "linear-gradient(135deg, #1e1b4b 0%, #ec4899 100%)";
+    initials = "RA";
+    label = "TICKET TRIAGE FILTER";
+    content = (
+      <>
+        <path d="M 80,50 L 140,110 H 180 L 240,50 Z" stroke="white" strokeWidth="2" fill="rgba(255,255,255,0.06)" />
+        <circle cx="110" cy="62" r="3" fill="white" />
+        <circle cx="160" cy="62" r="3" fill="white" />
+        <circle cx="210" cy="62" r="3" fill="white" />
+        <circle cx="160" cy="85" r="4" fill="white" />
+        <circle cx="160" cy="138" r="10" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <text x="160" y="162" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">AUTO CLASSIFY</text>
+      </>
+    );
+  } else if (projectId.includes("cense")) {
+    gradient = "linear-gradient(135deg, #064e3b 0%, #059669 100%)";
+    initials = "CO";
+    label = "IOT SENSOR GATEWAY";
+    content = (
+      <>
+        <rect x="50" y="60" width="44" height="34" rx="4" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <circle cx="72" cy="77" r="4" fill="white" />
+        <rect x="226" y="60" width="44" height="34" rx="4" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <circle cx="248" cy="77" r="4" fill="white" />
+        <path d="M 94,77 H 226" stroke="rgba(255,255,255,0.2)" strokeWidth="2" strokeDasharray="3,3" />
+        <circle cx="160" cy="77" r="12" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <path d="M 155,77 L 160,82 L 168,74" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="160" y="116" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">HEALTH CHECK</text>
+      </>
+    );
+  } else if (projectId.includes("shebloom")) {
+    gradient = "linear-gradient(135deg, #831843 0%, #f43f5e 100%)";
+    initials = "SB";
+    label = "WELLNESS TIMELINE";
+    content = (
+      <>
+        <circle cx="160" cy="90" r="28" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
+        <path d="M 148,82 C 148,76 160,70 160,82 C 160,70 172,76 172,82 C 172,92 160,98 160,102 C 160,98 148,92 148,82 Z" fill="white" opacity="0.8" />
+        <path d="M 132,90 H 80 M 188,90 H 240" stroke="white" strokeWidth="1.5" strokeDasharray="4,4" />
+        <circle cx="80" cy="90" r="4" fill="white" />
+        <circle cx="240" cy="90" r="4" fill="white" />
+        <text x="160" y="132" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">CYCLE FLOW</text>
+      </>
+    );
+  } else if (projectId.includes("dream")) {
+    gradient = "linear-gradient(135deg, #172554 0%, #2563eb 100%)";
+    initials = "DV";
+    label = "MODULAR READING MAP";
+    content = (
+      <>
+        <rect x="60" y="60" width="38" height="48" rx="3" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <path d="M 68,72 H 90 M 68,82 H 84" stroke="white" strokeWidth="1.5" />
+        <rect x="222" y="60" width="38" height="48" rx="3" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <path d="M 230,72 H 252 M 230,82 H 246" stroke="white" strokeWidth="1.5" />
+        <path d="M 98,84 H 222" stroke="white" strokeWidth="1.5" strokeDasharray="4,4" />
+        <circle cx="160" cy="84" r="8" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <text x="160" y="124" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">READ MAP</text>
+      </>
+    );
+  } else if (projectId.includes("symbio")) {
+    gradient = "linear-gradient(135deg, #115e59 0%, #10b981 100%)";
+    initials = "SY";
+    label = "COLLABORATIVE SYNCHRONIZER";
+    content = (
+      <>
+        <rect x="100" y="50" width="120" height="70" rx="6" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <circle cx="160" cy="85" r="14" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.5" />
+        <path d="M 80,75 L 94,82 M 240,75 L 226,82" stroke="white" strokeWidth="1.5" />
+        <polygon points="80,75 86,85 82,82 76,82" fill="white" stroke="white" strokeWidth="1" />
+        <text x="160" y="142" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">SHARED SYNC</text>
+      </>
+    );
+  } else {
+    gradient = "linear-gradient(135deg, #115e59 0%, #10b981 100%)";
+    initials = projectId.substring(0, 2).toUpperCase();
+    label = "SYSTEM INTEGRATION";
+    content = (
+      <>
+        <rect x="50" y="70" width="50" height="40" rx="6" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <rect x="220" y="70" width="50" height="40" rx="6" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
+        <path d="M 108,90 H 212" stroke="white" strokeWidth="2" />
+        <path d="M 206,84 L 212,90 L 206,96" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="160" cy="90" r="8" fill="white" />
+        <text x="160" y="132" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">DATA SYNC</text>
+      </>
+    );
+  }
+
+  return (
+    <div className={styles.geometricCoverWrapper} style={{ background: gradient }}>
+      <div className={styles.geometricCoverGrid} />
+      <div className={styles.geometricCoverGlow} />
+      <div className={styles.solutionOverviewSvgContainer}>
+        <svg viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {content}
+        </svg>
+      </div>
+      <div className={styles.geometricCoverBadge}>{initials}</div>
+      <div className={styles.geometricCoverStackDetail}>{label}</div>
+    </div>
+  );
+}
+
 export function V2RealmClient({
   profile,
   projects,
@@ -208,14 +566,7 @@ export function V2RealmClient({
           {featuredProject ? (
             <article id={featuredProject.slug} className={styles.featuredQuest}>
               <div className={`${styles.featuredQuestMedia} ${projectMyths[featuredProject.slug]?.className || ""}`}>
-                {featuredProject.coverImage ? (
-                  <Image
-                    src={featuredProject.coverImage}
-                    alt={featuredProject.title}
-                    fill
-                    sizes="(max-width: 900px) 100vw, 40vw"
-                  />
-                ) : null}
+                <SolutionOverview projectId={featuredProject.id} isFeatured={true} />
                 <div className={styles.featuredQuestGlow} />
                 <div className={styles.featuredQuestSeal}>
                   <span>World Quest</span>
@@ -257,28 +608,6 @@ export function V2RealmClient({
           <div className={styles.questColumns}>
             <div className={styles.eliteQuestColumn}>
               {secondaryProjects.map((project, index) => {
-                const coverImg = project.coverImage;
-                const initials = project.title.split(/[\s|]+/)[0].substring(0, 2).toUpperCase();
-                const primaryStack = splitStack(project.stack)[0] || "Full Stack";
-
-                // Dynamic gradients based on project context
-                let gradient = "linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)";
-                if (project.id.includes("llm") || project.id.includes("ai")) {
-                  gradient = "linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)";
-                } else if (project.id.includes("gridsense") || project.id.includes("cense") || project.id.includes("ops")) {
-                  gradient = "linear-gradient(135deg, #10b981 0%, #059669 100%)";
-                } else if (project.id.includes("zentix") || project.id.includes("campus")) {
-                  gradient = "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)";
-                } else if (project.id.includes("libreflow")) {
-                  gradient = "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)";
-                } else if (project.id.includes("bloom") || project.id.includes("wellness")) {
-                  gradient = "linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)";
-                } else if (project.id.includes("dream") || project.id.includes("publications")) {
-                  gradient = "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)";
-                } else if (project.id.includes("symbio") || project.id.includes("workspace")) {
-                  gradient = "linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)";
-                }
-
                 return (
                   <article key={project.id} id={project.slug} className={`${styles.questCard} ${projectMyths[project.slug]?.className || ""}`}>
                     <div className={styles.questCardTopline}>
@@ -287,25 +616,9 @@ export function V2RealmClient({
                     </div>
 
                     {/* Project Cover Block */}
-                    {coverImg ? (
-                      <div className={styles.questCardMedia}>
-                        <Image
-                          src={coverImg}
-                          alt={project.title}
-                          fill
-                          sizes="(max-width: 900px) 100vw, 40vw"
-                          className={styles.projectCoverImage}
-                        />
-                        <div className={styles.projectCoverOverlay} />
-                      </div>
-                    ) : (
-                      <div className={styles.questCardMedia} style={{ background: gradient }}>
-                        <div className={styles.geometricCoverGrid} />
-                        <div className={styles.geometricCoverGlow} />
-                        <div className={styles.geometricCoverBadge}>{initials}</div>
-                        <div className={styles.geometricCoverStackDetail}>{primaryStack}</div>
-                      </div>
-                    )}
+                    <div className={styles.questCardMedia}>
+                      <SolutionOverview projectId={project.id} />
+                    </div>
 
                     <div className={styles.questCardBody}>
                       <span className={styles.questMythLabel}>{projectMyths[project.slug]?.label || "Elite Relic"}</span>
@@ -325,28 +638,6 @@ export function V2RealmClient({
 
             <div className={styles.questGrid}>
               {gridProjects.map((project, index) => {
-                const coverImg = project.coverImage;
-                const initials = project.title.split(/[\s|]+/)[0].substring(0, 2).toUpperCase();
-                const primaryStack = splitStack(project.stack)[0] || "Full Stack";
-
-                // Dynamic gradients based on project context
-                let gradient = "linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)";
-                if (project.id.includes("llm") || project.id.includes("ai")) {
-                  gradient = "linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)";
-                } else if (project.id.includes("gridsense") || project.id.includes("cense") || project.id.includes("ops")) {
-                  gradient = "linear-gradient(135deg, #10b981 0%, #059669 100%)";
-                } else if (project.id.includes("zentix") || project.id.includes("campus")) {
-                  gradient = "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)";
-                } else if (project.id.includes("libreflow")) {
-                  gradient = "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)";
-                } else if (project.id.includes("bloom") || project.id.includes("wellness")) {
-                  gradient = "linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)";
-                } else if (project.id.includes("dream") || project.id.includes("publications")) {
-                  gradient = "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)";
-                } else if (project.id.includes("symbio") || project.id.includes("workspace")) {
-                  gradient = "linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)";
-                }
-
                 return (
                   <article key={project.id} id={project.slug} className={`${styles.questTile} ${projectMyths[project.slug]?.className || ""}`}>
                     <div className={styles.questTileTop}>
@@ -355,25 +646,9 @@ export function V2RealmClient({
                     </div>
 
                     {/* Project Cover Block */}
-                    {coverImg ? (
-                      <div className={styles.questTileMedia}>
-                        <Image
-                          src={coverImg}
-                          alt={project.title}
-                          fill
-                          sizes="(max-width: 900px) 100vw, 30vw"
-                          className={styles.projectCoverImage}
-                        />
-                        <div className={styles.projectCoverOverlay} />
-                      </div>
-                    ) : (
-                      <div className={styles.questTileMedia} style={{ background: gradient }}>
-                        <div className={styles.geometricCoverGrid} />
-                        <div className={styles.geometricCoverGlow} />
-                        <div className={styles.geometricCoverBadge}>{initials}</div>
-                        <div className={styles.geometricCoverStackDetail}>{primaryStack}</div>
-                      </div>
-                    )}
+                    <div className={styles.questTileMedia}>
+                      <SolutionOverview projectId={project.id} />
+                    </div>
 
                     <div className={styles.questTileBody}>
                       <span className={styles.questTileMyth}>{projectMyths[project.slug]?.label || "Rapid Relic"}</span>

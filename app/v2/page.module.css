@@ -1341,6 +1341,23 @@
   pointer-events: none;
 }
 
+.questTileTopInline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.questTileTopInline span {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(168, 85, 247, 0.14);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 18px rgba(168, 85, 247, 0.04);
+}
+
 .questCardTopline span,
 .questTileTop span {
   padding: 5px 10px;

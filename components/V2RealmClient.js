@@ -405,8 +405,6 @@ function SolutionOverview({ projectId, isFeatured = false }) {
           {content}
         </svg>
       </div>
-      <div className={styles.geometricCoverBadge}>{initials}</div>
-      <div className={styles.geometricCoverStackDetail}>{label}</div>
     </div>
   );
 }
@@ -640,17 +638,11 @@ export function V2RealmClient({
               {gridProjects.map((project, index) => {
                 return (
                   <article key={project.id} id={project.slug} className={`${styles.questTile} ${projectMyths[project.slug]?.className || ""}`}>
-                    <div className={styles.questTileTop}>
-                      <span className={styles.questType}>{buildQuestType(index + 3)}</span>
-                      <span className={styles.tileExp}>+{project.expValue} EXP</span>
-                    </div>
-
-                    {/* Project Cover Block */}
-                    <div className={styles.questTileMedia}>
-                      <SolutionOverview projectId={project.id} />
-                    </div>
-
                     <div className={styles.questTileBody}>
+                      <div className={styles.questTileTopInline}>
+                        <span className={styles.questType}>{buildQuestType(index + 3)}</span>
+                        <span className={styles.tileExp}>+{project.expValue} EXP</span>
+                      </div>
                       <span className={styles.questTileMyth}>{projectMyths[project.slug]?.label || "Rapid Relic"}</span>
                       <h3>{project.title}</h3>
                       <p>{project.impact || project.summary}</p>

@@ -1153,11 +1153,122 @@
   position: relative;
   overflow: hidden;
   border-radius: 30px;
-  padding: 24px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
+
+.questCardMedia {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.questTileMedia {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.projectCoverImage {
+  object-fit: cover;
+  opacity: 0.85;
+  transition: transform 0.4s ease;
+}
+
+.questCard:hover .projectCoverImage,
+.questTile:hover .projectCoverImage {
+  transform: scale(1.04);
+}
+
+.projectCoverOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.06) 100%);
+  pointer-events: none;
+}
+
+.geometricCoverGrid {
+  position: absolute;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 24px);
+  z-index: 1;
+}
+
+.geometricCoverGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130px;
+  height: 130px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, transparent 70%);
+  filter: blur(6px);
+  z-index: 1;
+}
+
+.geometricCoverBadge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: white;
+  letter-spacing: 0.05em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.questCard:hover .geometricCoverBadge,
+.questTile:hover .geometricCoverBadge {
+  transform: translate(-50%, -50%) scale(1.08) rotate(4deg);
+}
+
+.geometricCoverStackDetail {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.22);
+  padding: 3px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 2;
+}
+
+.questCardBody,
+.questTileBody {
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 
 .questCard h3 {
   margin: 8px 0 8px 0 !important;
@@ -1199,12 +1310,28 @@
   align-items: stretch;
 }
 
+.questCardTopline,
 .questTileTop {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  right: 16px;
+  z-index: 10;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
-  align-items: center;
-  margin-bottom: 10px;
+  pointer-events: none;
+}
+
+.questCardTopline span,
+.questTileTop span {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(168, 85, 247, 0.14);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 18px rgba(168, 85, 247, 0.04);
 }
 
 .questTileMyth {
@@ -1771,7 +1898,12 @@
 
   .questCard,
   .questTile {
-    padding: 18px !important;
+    padding: 0 !important;
+  }
+
+  .questCardBody,
+  .questTileBody {
+    padding: 16px 14px 16px !important;
   }
 
   .constellationShell {

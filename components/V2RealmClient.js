@@ -256,42 +256,138 @@ export function V2RealmClient({
 
           <div className={styles.questColumns}>
             <div className={styles.eliteQuestColumn}>
-              {secondaryProjects.map((project, index) => (
-                <article key={project.id} id={project.slug} className={`${styles.questCard} ${projectMyths[project.slug]?.className || ""}`}>
-                  <div className={styles.questCardTopline}>
-                    <span className={styles.questType}>{buildQuestType(index + 1)}</span>
-                    <span className={styles.tileExp}>+{project.expValue} EXP</span>
-                  </div>
-                  <span className={styles.questMythLabel}>{projectMyths[project.slug]?.label || "Elite Relic"}</span>
-                  <h3>{project.title}</h3>
-                  <p>{project.summary}</p>
-                  <strong className={styles.questImpactLine}>{project.impact}</strong>
-                  <div className={styles.questMeta}>
-                    {splitStack(project.stack).map((item) => (
-                      <span key={item}>{item}</span>
-                    ))}
-                  </div>
-                </article>
-              ))}
+              {secondaryProjects.map((project, index) => {
+                const coverImg = project.coverImage;
+                const initials = project.title.split(/[\s|]+/)[0].substring(0, 2).toUpperCase();
+                const primaryStack = splitStack(project.stack)[0] || "Full Stack";
+
+                // Dynamic gradients based on project context
+                let gradient = "linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)";
+                if (project.id.includes("llm") || project.id.includes("ai")) {
+                  gradient = "linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)";
+                } else if (project.id.includes("gridsense") || project.id.includes("cense") || project.id.includes("ops")) {
+                  gradient = "linear-gradient(135deg, #10b981 0%, #059669 100%)";
+                } else if (project.id.includes("zentix") || project.id.includes("campus")) {
+                  gradient = "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)";
+                } else if (project.id.includes("libreflow")) {
+                  gradient = "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)";
+                } else if (project.id.includes("bloom") || project.id.includes("wellness")) {
+                  gradient = "linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)";
+                } else if (project.id.includes("dream") || project.id.includes("publications")) {
+                  gradient = "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)";
+                } else if (project.id.includes("symbio") || project.id.includes("workspace")) {
+                  gradient = "linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)";
+                }
+
+                return (
+                  <article key={project.id} id={project.slug} className={`${styles.questCard} ${projectMyths[project.slug]?.className || ""}`}>
+                    <div className={styles.questCardTopline}>
+                      <span className={styles.questType}>{buildQuestType(index + 1)}</span>
+                      <span className={styles.tileExp}>+{project.expValue} EXP</span>
+                    </div>
+
+                    {/* Project Cover Block */}
+                    {coverImg ? (
+                      <div className={styles.questCardMedia}>
+                        <Image
+                          src={coverImg}
+                          alt={project.title}
+                          fill
+                          sizes="(max-width: 900px) 100vw, 40vw"
+                          className={styles.projectCoverImage}
+                        />
+                        <div className={styles.projectCoverOverlay} />
+                      </div>
+                    ) : (
+                      <div className={styles.questCardMedia} style={{ background: gradient }}>
+                        <div className={styles.geometricCoverGrid} />
+                        <div className={styles.geometricCoverGlow} />
+                        <div className={styles.geometricCoverBadge}>{initials}</div>
+                        <div className={styles.geometricCoverStackDetail}>{primaryStack}</div>
+                      </div>
+                    )}
+
+                    <div className={styles.questCardBody}>
+                      <span className={styles.questMythLabel}>{projectMyths[project.slug]?.label || "Elite Relic"}</span>
+                      <h3>{project.title}</h3>
+                      <p>{project.summary}</p>
+                      <strong className={styles.questImpactLine}>{project.impact}</strong>
+                      <div className={styles.questMeta}>
+                        {splitStack(project.stack).map((item) => (
+                          <span key={item}>{item}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
 
             <div className={styles.questGrid}>
-              {gridProjects.map((project, index) => (
-                <article key={project.id} id={project.slug} className={`${styles.questTile} ${projectMyths[project.slug]?.className || ""}`}>
-                  <div className={styles.questTileTop}>
-                    <span className={styles.questType}>{buildQuestType(index + 3)}</span>
-                    <span className={styles.tileExp}>+{project.expValue} EXP</span>
-                  </div>
-                  <span className={styles.questTileMyth}>{projectMyths[project.slug]?.label || "Rapid Relic"}</span>
-                  <h3>{project.title}</h3>
-                  <p>{project.impact || project.summary}</p>
-                  <div className={styles.questTileFoot}>
-                    {splitStack(project.stack).slice(0, 2).map((item) => (
-                      <span key={item}>{item}</span>
-                    ))}
-                  </div>
-                </article>
-              ))}
+              {gridProjects.map((project, index) => {
+                const coverImg = project.coverImage;
+                const initials = project.title.split(/[\s|]+/)[0].substring(0, 2).toUpperCase();
+                const primaryStack = splitStack(project.stack)[0] || "Full Stack";
+
+                // Dynamic gradients based on project context
+                let gradient = "linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)";
+                if (project.id.includes("llm") || project.id.includes("ai")) {
+                  gradient = "linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)";
+                } else if (project.id.includes("gridsense") || project.id.includes("cense") || project.id.includes("ops")) {
+                  gradient = "linear-gradient(135deg, #10b981 0%, #059669 100%)";
+                } else if (project.id.includes("zentix") || project.id.includes("campus")) {
+                  gradient = "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)";
+                } else if (project.id.includes("libreflow")) {
+                  gradient = "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)";
+                } else if (project.id.includes("bloom") || project.id.includes("wellness")) {
+                  gradient = "linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)";
+                } else if (project.id.includes("dream") || project.id.includes("publications")) {
+                  gradient = "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)";
+                } else if (project.id.includes("symbio") || project.id.includes("workspace")) {
+                  gradient = "linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)";
+                }
+
+                return (
+                  <article key={project.id} id={project.slug} className={`${styles.questTile} ${projectMyths[project.slug]?.className || ""}`}>
+                    <div className={styles.questTileTop}>
+                      <span className={styles.questType}>{buildQuestType(index + 3)}</span>
+                      <span className={styles.tileExp}>+{project.expValue} EXP</span>
+                    </div>
+
+                    {/* Project Cover Block */}
+                    {coverImg ? (
+                      <div className={styles.questTileMedia}>
+                        <Image
+                          src={coverImg}
+                          alt={project.title}
+                          fill
+                          sizes="(max-width: 900px) 100vw, 30vw"
+                          className={styles.projectCoverImage}
+                        />
+                        <div className={styles.projectCoverOverlay} />
+                      </div>
+                    ) : (
+                      <div className={styles.questTileMedia} style={{ background: gradient }}>
+                        <div className={styles.geometricCoverGrid} />
+                        <div className={styles.geometricCoverGlow} />
+                        <div className={styles.geometricCoverBadge}>{initials}</div>
+                        <div className={styles.geometricCoverStackDetail}>{primaryStack}</div>
+                      </div>
+                    )}
+
+                    <div className={styles.questTileBody}>
+                      <span className={styles.questTileMyth}>{projectMyths[project.slug]?.label || "Rapid Relic"}</span>
+                      <h3>{project.title}</h3>
+                      <p>{project.impact || project.summary}</p>
+                      <div className={styles.questTileFoot}>
+                        {splitStack(project.stack).slice(0, 2).map((item) => (
+                          <span key={item}>{item}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </SectionReveal>

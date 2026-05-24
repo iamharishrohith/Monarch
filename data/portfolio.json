@@ -434,21 +434,48 @@
   ],
   "achievements": [
     {
-      "id": "ach-0",
-      "title": "1st Place: Idea Forge Event, IntroFest '26",
-      "summary": "Won at Sree Sakthi Engineering College for concept clarity and high-impact idea presentation.",
-      "awardedBy": "",
-      "awardedAt": "2026-01-01",
-      "expValue": 3040,
-      "status": "PUBLISHED"
-    },
-    {
       "id": "ach-1",
       "title": "Special Prize: Tamil Nadu TANCAM Hackathon (2026)",
       "summary": "Recognized with a special prize for hackathon execution and industrial automation.",
       "awardedBy": "",
       "awardedAt": "2026-01-01",
       "expValue": 3440,
+      "status": "PUBLISHED"
+    },
+    {
+      "id": "ach-10",
+      "title": "Finalist (Top 90/3,500): VOID:V1 Hackathon",
+      "summary": "Recognized for building SkipQ, a decentralized queue management system.",
+      "awardedBy": "",
+      "awardedAt": "2026-01-01",
+      "expValue": 2880,
+      "status": "PUBLISHED"
+    },
+    {
+      "id": "ach-9",
+      "title": "Finalist (Top 4/4,500): Vikas Saptah Hackathon 2025",
+      "summary": "Developed the AI-driven Wire Strike Protection System.",
+      "awardedBy": "",
+      "awardedAt": "2026-01-01",
+      "expValue": 3520,
+      "status": "PUBLISHED"
+    },
+    {
+      "id": "ach-5",
+      "title": "Winner (1st Place): National Level 24-Hour Hackmarathon 2K26",
+      "summary": "Secured 1st place at Nehru Arts and Science College. Built a Custom 4B+ Parameter LLM (Tx-ITx architecture) and secured a 1-year MoU with the Innovation Cell.",
+      "awardedBy": "",
+      "awardedAt": "2026-01-01",
+      "expValue": 5120,
+      "status": "PUBLISHED"
+    },
+    {
+      "id": "ach-0",
+      "title": "1st Place: Idea Forge Event, IntroFest '26",
+      "summary": "Won at Sree Sakthi Engineering College for concept clarity and high-impact idea presentation.",
+      "awardedBy": "",
+      "awardedAt": "2026-01-01",
+      "expValue": 3040,
       "status": "PUBLISHED"
     },
     {
@@ -479,15 +506,6 @@
       "status": "PUBLISHED"
     },
     {
-      "id": "ach-5",
-      "title": "Winner (1st Place): National Level 24-Hour Hackmarathon 2K26",
-      "summary": "Secured 1st place at Nehru Arts and Science College. Built a Custom 4B+ Parameter LLM (Tx-ITx architecture) and secured a 1-year MoU with the Innovation Cell.",
-      "awardedBy": "",
-      "awardedAt": "2026-01-01",
-      "expValue": 5120,
-      "status": "PUBLISHED"
-    },
-    {
       "id": "ach-6",
       "title": "1st Place: Mini Hackathon (Solo), TECHGEEKZ'26",
       "summary": "Engineered LibreFlow (LMS) in a timed solo challenge at Dhaanish Ahmed College.",
@@ -512,24 +530,6 @@
       "awardedBy": "",
       "awardedAt": "2026-01-01",
       "expValue": 3600,
-      "status": "PUBLISHED"
-    },
-    {
-      "id": "ach-9",
-      "title": "Finalist (Top 4/4,500): Vikas Saptah Hackathon 2025",
-      "summary": "Developed the AI-driven Wire Strike Protection System.",
-      "awardedBy": "",
-      "awardedAt": "2026-01-01",
-      "expValue": 3520,
-      "status": "PUBLISHED"
-    },
-    {
-      "id": "ach-10",
-      "title": "Finalist (Top 90/3,500): VOID:V1 Hackathon",
-      "summary": "Recognized for building SkipQ, a decentralized queue management system.",
-      "awardedBy": "",
-      "awardedAt": "2026-01-01",
-      "expValue": 2880,
       "status": "PUBLISHED"
     },
     {

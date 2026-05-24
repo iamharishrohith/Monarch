@@ -1777,8 +1777,8 @@
   .constellationShell {
     min-height: auto;
     display: grid;
-    gap: 16px !important;
-    padding: 16px;
+    gap: 12px !important;
+    padding: 12px !important;
   }
 
   .constellationShell::before,
@@ -1793,14 +1793,25 @@
     width: 100% !important;
     height: auto !important;
     margin: 0 auto !important;
+    padding: 10px 12px !important;
+    border-radius: 16px !important;
+  }
+
+  .constellationCore strong {
+    font-size: 0.95rem !important;
+  }
+
+  .constellationCore p {
+    font-size: 0.68rem !important;
+    margin-top: 2px !important;
   }
 
   .mobileSkillsGrid {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
+    gap: 8px !important;
     width: 100% !important;
-    margin-top: 10px !important;
+    margin-top: 8px !important;
   }
 
   .floatingSkill {
@@ -1813,6 +1824,23 @@
     height: auto !important;
     box-sizing: border-box !important;
     margin: 0 !important;
+    padding: 5px 8px 5px 5px !important;
+    border-radius: 999px !important;
+  }
+
+  .floatingSkillIconWrap {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    border-radius: 999px !important;
+  }
+
+  .floatingSkillIconWrap svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .floatingSkillCopy strong {
+    font-size: 0.72rem !important;
   }
 
   .constellationCore {
@@ -1860,11 +1888,38 @@
     width: 100%;
     margin-top: 0;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 8px !important;
   }
 
   .domainGrid:last-child {
     display: none;
+  }
+
+  .domainPill,
+  .domainPillActive {
+    padding: 6px 10px !important;
+    border-radius: 999px !important;
+    gap: 6px !important;
+  }
+
+  .domainGlyph {
+    width: 1.6rem !important;
+    height: 1.6rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  .domainGlyph svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .domainPillHead h3 {
+    font-size: 0.72rem !important;
+  }
+
+  .domainPillHead p {
+    font-size: 0.58rem !important;
+    margin-top: 1px !important;
   }
 
   .constellationPanel {

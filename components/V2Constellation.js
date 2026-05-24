@@ -99,7 +99,11 @@ function getSkillGlyph(skill) {
     "LoRa": Orbit,
     "Sensors": Component,
     "State & Hooks Management": Orbit,
-    "Tailwind CSS": Palette
+    "Tailwind CSS": Palette,
+    "PHP": Code2,
+    "System Design": Cpu,
+    "Git & GitHub": Code2,
+    "REST APIs": Braces
   };
 
   return exactIconMap[skill.name] || Code2;
@@ -109,6 +113,7 @@ function getDomainIcon(title) {
   const icons = {
     "Frontend & Mobile": WandSparkles,
     "Backend & Performance": Cpu,
+    "P-Languages": Braces,
     "IoT & Infrastructure": Orbit,
     "Vibe Coding": Sparkles,
     Fundamentals: BookOpenText

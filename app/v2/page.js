@@ -78,13 +78,20 @@ const curatedFloatingSkills = [
   { name: "MongoDB", category: "Database & Cloud" },
   { name: "MySQL", category: "Database & Cloud" },
   { name: "Supabase", category: "Database & Cloud" },
-  { name: "JavaScript (ES6+)", category: "Fundamentals" },
-  { name: "TypeScript", category: "Fundamentals" },
-  { name: "Python", category: "Fundamentals" },
-  { name: "Java", category: "Fundamentals" },
-  { name: "C++", category: "Fundamentals" },
-  { name: "SQL", category: "Fundamentals" },
-  { name: "Solidity", category: "Fundamentals" },
+  { name: "JavaScript (ES6+)", category: "P-Languages" },
+  { name: "TypeScript", category: "P-Languages" },
+  { name: "Python", category: "P-Languages" },
+  { name: "Java", category: "P-Languages" },
+  { name: "C++", category: "P-Languages" },
+  { name: "PHP", category: "P-Languages" },
+  { name: "SQL", category: "P-Languages" },
+  { name: "Solidity", category: "P-Languages" },
+  { name: "DSA", category: "Fundamentals" },
+  { name: "OOPS", category: "Fundamentals" },
+  { name: "DOM", category: "Fundamentals" },
+  { name: "System Design", category: "Fundamentals" },
+  { name: "Git & GitHub", category: "Fundamentals" },
+  { name: "REST APIs", category: "Fundamentals" },
   { name: "Sensors", category: "IoT & Infrastructure" },
   { name: "ESP32", category: "IoT & Infrastructure" },
   { name: "Embedded C", category: "IoT & Infrastructure" },
@@ -102,6 +109,10 @@ const curatedDomainCards = [
     items: ["Bun.js", "ElysiaJS", "Redis", "Node.js", "Express.js"]
   },
   {
+    title: "P-Languages",
+    items: ["JavaScript (ES6+)", "TypeScript", "Python", "Java", "C++", "PHP", "SQL", "Solidity"]
+  },
+  {
     title: "IoT & Infrastructure",
     items: ["Sensors", "ESP32", "Embedded C", "Raspberry Pi", "LoRa"]
   },
@@ -111,7 +122,7 @@ const curatedDomainCards = [
   },
   {
     title: "Fundamentals",
-    items: ["JavaScript (ES6+)", "TypeScript", "Python", "Java", "C++", "SQL", "Solidity"]
+    items: ["DSA", "OOPS", "DOM", "System Design", "Git & GitHub", "REST APIs"]
   }
 ];
 

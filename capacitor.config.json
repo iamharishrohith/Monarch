@@ -1,0 +1,9 @@
+{
+  "appId": "com.monarch.portfolio",
+  "appName": "Monarch Portfolio System",
+  "webDir": "out",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}

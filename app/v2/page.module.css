@@ -1,0 +1,2290 @@
+.realm {
+  --bg: #f9fafb;
+  --cloud: rgba(255, 255, 255, 0.88);
+  --panel: rgba(255, 255, 255, 0.65);
+  --panel-strong: rgba(255, 255, 255, 0.85);
+  --line: rgba(168, 85, 247, 0.12);
+  --text: #1e1b4b;
+  --muted: #5b21b6;
+  --primary: #8b5cf6;
+  --primary-soft: #ede9fe;
+  --gold: #fbbf24;
+  --coral: #c084fc;
+  min-height: 100vh;
+  position: relative;
+  overflow: clip;
+  padding: 24px;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(251, 191, 36, 0.12), transparent 28%),
+    radial-gradient(circle at 82% 18%, rgba(168, 85, 247, 0.16), transparent 28%),
+    radial-gradient(circle at 55% 70%, rgba(192, 132, 252, 0.1), transparent 30%),
+    linear-gradient(180deg, #f9fafb 0%, #f5f3ff 44%, #fdfdfd 100%);
+  --hero-x: 50%;
+  --hero-y: 50%;
+}
+
+.realmChrome {
+  position: relative;
+}
+
+.loreHud {
+  position: fixed;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 35;
+  width: 14rem;
+  display: grid;
+  gap: 10px;
+}
+
+.loreHud article {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(168, 85, 247, 0.14);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 44px rgba(168, 85, 247, 0.08);
+}
+
+.loreHud span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.loreHud strong {
+  font-size: 0.82rem;
+}
+
+@keyframes rotateSigil {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes pulseAura {
+  0%, 100% { transform: scale(1); opacity: 0.72; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+@keyframes driftShard {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(10px, -12px, 0); }
+}
+
+.skyLayer,
+.gridLayer,
+.auraA,
+.auraB,
+.auraC {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.skyLayer {
+  z-index: 0;
+  display: none;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.98), transparent 20%),
+    radial-gradient(circle at 76% 36%, rgba(255, 255, 255, 0.94), transparent 22%),
+    radial-gradient(circle at 44% 84%, rgba(255, 255, 255, 0.9), transparent 16%);
+}
+
+.gridLayer {
+  z-index: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(168, 85, 247, 0.035) 0 1px, transparent 1px 108px),
+    repeating-linear-gradient(0deg, rgba(168, 85, 247, 0.025) 0 1px, transparent 1px 108px);
+  mask-image: linear-gradient(180deg, rgba(0,0,0,0.8), transparent 94%);
+}
+
+.auraA,
+.auraB,
+.auraC {
+  z-index: 0;
+  filter: blur(110px);
+  border-radius: 999px;
+}
+
+.auraA {
+  top: 4%;
+  left: -12%;
+  width: 34rem;
+  height: 16rem;
+  background: rgba(251, 191, 36, 0.18);
+}
+
+.auraB {
+  top: 18%;
+  right: -12%;
+  width: 36rem;
+  height: 18rem;
+  background: rgba(168, 85, 247, 0.22);
+}
+
+.auraC {
+  bottom: 10%;
+  left: 30%;
+  width: 32rem;
+  height: 14rem;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.hero,
+.originSection,
+.servicesSection,
+.constellationSection,
+.questSection,
+.timelineSection,
+.vaultSection,
+.finalSection,
+.footerNote {
+  width: min(1240px, calc(100% - 24px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  padding: 18px 0 40px;
+}
+
+.navStrip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid rgba(168, 85, 247, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 50px rgba(168, 85, 247, 0.06);
+}
+
+@media (min-width: 821px) and (max-width: 1400px) {
+  .navStrip {
+    padding-right: 315px !important;
+  }
+}
+
+.navTitle {
+  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: #1e1b4b;
+}
+
+.navTitle,
+.heroLead,
+.heroText,
+.originPanel p,
+.featuredQuestCopy p,
+.questCard p,
+.questTile p,
+.victoryCard p,
+.finalSection p {
+  margin: 0;
+}
+
+.kicker,
+.systemBadge,
+.questType,
+.timelinePeriod,
+.timelineExp,
+.tileExp {
+  font-family: var(--font-mono), monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.kicker,
+.systemBadge {
+  color: var(--primary);
+}
+
+.navActions,
+.heroActions,
+.finalActions,
+.questActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primaryButton,
+.ghostButton,
+.questActions a,
+.footerNote a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.primaryButton {
+  padding: 12px 18px;
+  color: white;
+  background: linear-gradient(135deg, var(--primary), #4e90f0 70%, var(--coral));
+  box-shadow: 0 18px 44px rgba(29, 102, 210, 0.24);
+}
+
+.ghostButton,
+.questActions a,
+.footerNote a {
+  padding: 11px 17px;
+  color: var(--text);
+  border: 1px solid rgba(168, 85, 247, 0.18);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.primaryButton:hover,
+.ghostButton:hover,
+.questActions a:hover,
+.footerNote a:hover {
+  transform: translateY(-2px);
+}
+
+.heroLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  gap: 32px;
+  align-items: center;
+  padding: 42px 0 22px;
+}
+
+.heroCopy h1,
+.sectionHeading h2,
+.featuredQuestCopy h3,
+.questCard h3,
+.questTile h3,
+.timelineCard h3,
+.finalSection h2 {
+  margin: 0;
+  letter-spacing: -0.06em;
+}
+
+.heroCopy h1 {
+  font-size: clamp(2.6rem, 6.2vw, 4.4rem);
+  line-height: 0.92;
+  margin-top: 12px;
+}
+
+.heroLead {
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  color: var(--text);
+  max-width: 52rem;
+}
+
+.heroText {
+  margin-top: 18px;
+  max-width: 42rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.heroCenterpiece {
+  position: relative;
+  min-height: 36rem;
+  display: grid;
+  place-items: center;
+}
+
+.heroAuraField {
+  position: absolute;
+  inset: 8%;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at var(--hero-x) var(--hero-y), rgba(96,165,250,0.15), transparent 28%),
+    radial-gradient(circle at center, rgba(29,102,210,0.06), transparent 56%);
+  filter: blur(20px);
+  animation: pulseAura 6s ease-in-out infinite;
+}
+
+.heroPortrait,
+.heroOrb {
+  position: relative;
+  width: min(30rem, 76vw);
+  aspect-ratio: 1;
+  border-radius: 999px;
+}
+
+.heroPortrait {
+  overflow: hidden;
+  border: 8px solid var(--cloud);
+  box-shadow:
+    0 0 0 18px rgba(168, 85, 247, 0.06),
+    0 40px 110px rgba(168, 85, 247, 0.12);
+}
+
+.heroPortrait img {
+  object-fit: cover;
+}
+
+.heroOrbOuter,
+.heroOrbMiddle,
+.heroOrbCore {
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+}
+
+.heroOrbOuter {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 56%, rgba(168, 85, 247, 0.25) 58%, rgba(255,255,255,0.02) 62%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, rgba(168, 85, 247, 0.18) 60%, rgba(255,255,255,0) 74%);
+  box-shadow: 0 0 0 26px rgba(168, 85, 247, 0.08);
+  animation: rotateSigil 16s linear infinite;
+}
+
+.heroOrbMiddle {
+  width: 72%;
+  height: 72%;
+  border: 2px solid rgba(251, 191, 36, 0.35);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.95), rgba(243, 232, 255, 0.86) 58%, rgba(168, 85, 247, 0.12) 100%);
+}
+
+.heroOrbCore {
+  width: 44%;
+  height: 44%;
+  display: grid;
+  place-items: center;
+  font-size: clamp(2.6rem, 6vw, 4rem);
+  font-weight: 700;
+  color: var(--primary);
+  border: 1px solid rgba(168, 85, 247, 0.18);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.98), rgba(243, 232, 255, 0.92) 52%, rgba(251, 191, 36, 0.16) 100%);
+  box-shadow:
+    0 0 0 16px rgba(255, 255, 255, 0.6),
+    0 28px 70px rgba(168, 85, 247, 0.1);
+}
+
+.floatCardWrapper {
+  display: contents;
+}
+
+.floatCard {
+  position: absolute;
+  min-width: 12rem;
+  padding: 16px 18px;
+  border-radius: 24px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 24px 60px rgba(168, 85, 247, 0.06);
+  z-index: 20;
+}
+
+.floatCard span,
+.metricRibbon article span,
+.originStats span,
+.constellationCore span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.floatCard strong,
+.metricRibbon article strong,
+.originStats strong,
+.constellationCore strong {
+  font-size: 1.2rem;
+}
+
+.floatCardTop {
+  top: 10%;
+  left: -2%;
+  transform: translate(calc((var(--hero-x) - 50%) * 0.22px), calc((var(--hero-y) - 50%) * 0.22px));
+  transition: transform 0.25s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+.floatCardRight {
+  right: -10%;
+  top: 34%;
+  transform: translate(calc((var(--hero-x) - 50%) * -0.18px), calc((var(--hero-y) - 50%) * -0.18px));
+  transition: transform 0.25s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+.floatCardBottom {
+  bottom: 8%;
+  left: 12%;
+  transform: translate(calc((var(--hero-x) - 50%) * 0.26px), calc((var(--hero-y) - 50%) * 0.26px));
+  transition: transform 0.25s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+
+.metricRibbon {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.metricRibbon article,
+.originPanel,
+.originStats,
+.domainNode,
+.featuredQuest,
+.questCard,
+.questTile,
+.timelineCard,
+.artifactVault,
+.victoryVault,
+.finalSection {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 22px 60px rgba(168, 85, 247, 0.06);
+}
+
+.metricRibbon article {
+  padding: 18px 20px;
+  border-radius: 28px;
+}
+
+.originSection,
+.servicesSection,
+.constellationSection,
+.questSection,
+.timelineSection,
+.vaultSection,
+.finalSection {
+  margin-top: 38px;
+}
+
+.sectionHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.sectionHeading h2 {
+  font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+}
+
+.originLayout {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.originGhost {
+  position: absolute;
+  top: 10%;
+  left: 4%;
+  z-index: 0;
+  font-size: clamp(4rem, 16vw, 12rem);
+  letter-spacing: -0.08em;
+  color: rgba(96, 165, 250, 0.03);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.originPanel,
+.originStats {
+  position: relative;
+  z-index: 1;
+  border-radius: 34px;
+  padding: 28px;
+}
+
+.originPanel p {
+  font-size: 1.04rem;
+  line-height: 1.9;
+  color: var(--text);
+}
+
+.philosophyRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.philosophyRow span,
+.domainSkillList span,
+.victoryTrail span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+  font-size: 0.82rem;
+  color: var(--text);
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.servicesIntro {
+  width: min(42rem, 100%);
+  margin: 0 0 16px;
+}
+
+.servicesIntro p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.serviceCard {
+  position: relative;
+  border-radius: 28px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 85% 18%, rgba(168, 85, 247, 0.14), transparent 24%),
+    var(--panel);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 22px 60px rgba(168, 85, 247, 0.06);
+  overflow: hidden;
+}
+
+.serviceCard::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--gold),
+    var(--coral)
+  );
+}
+
+.serviceCard h3,
+.serviceCard p {
+  margin: 0;
+}
+
+.serviceCard h3 {
+  margin-top: 8px;
+}
+
+.serviceCard p {
+  margin-top: 10px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.serviceIconWrap {
+  width: 2.7rem;
+  height: 2.7rem;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  margin-bottom: 14px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 28px rgba(168, 85, 247, 0.04);
+}
+
+.serviceFoot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.serviceFoot span {
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+  font-size: 0.76rem;
+  color: var(--text);
+}
+
+.originStats {
+  display: grid;
+  gap: 16px;
+  align-content: center;
+}
+
+.constellationLayout {
+  display: block;
+}
+
+.constellationShell {
+  position: relative;
+  min-height: 44rem;
+  border-radius: 42px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.85), rgba(168, 85, 247, 0.08) 50%, rgba(255, 255, 255, 0.4) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(168, 85, 247, 0.02));
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.constellationBackdropLabel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(4.5rem, 13vw, 9rem);
+  letter-spacing: -0.08em;
+  color: rgba(168, 85, 247, 0.035);
+  font-weight: 700;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.constellationShell::before,
+.constellationShell::after {
+  content: "";
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+}
+
+.constellationShell::before {
+  width: min(50%, 26rem);
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+}
+
+.constellationShell::after {
+  width: min(31%, 15.5rem);
+  aspect-ratio: 1;
+  border: 1px dashed rgba(251, 191, 36, 0.25);
+}
+
+.constellationCore {
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  width: 17rem;
+  height: 17rem;
+  padding: 24px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.98), rgba(243, 232, 255, 0.85) 60%, rgba(251, 191, 36, 0.15) 100%);
+  border: 1px solid var(--line);
+  box-shadow:
+    0 0 0 24px rgba(255, 255, 255, 0.6),
+    0 24px 64px rgba(168, 85, 247, 0.08);
+  z-index: 2;
+}
+
+.constellationCore p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.constellationQuote {
+  position: absolute;
+  left: 50%;
+  top: 13%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: min(52rem, calc(100% - 5rem));
+  text-align: center;
+  pointer-events: none;
+}
+
+.constellationQuoteLabel {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-family: var(--font-mono), monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 28px rgba(168, 85, 247, 0.04);
+}
+
+.constellationQuoteText {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.1vw, 2.7rem);
+  line-height: 1.22;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+  color: var(--text);
+  text-wrap: balance;
+  text-shadow: 0 2px 8px rgba(168, 85, 247, 0.05);
+}
+
+.constellationCaret {
+  display: inline-block;
+  width: 0.11em;
+  height: 0.95em;
+  margin-left: 0.18em;
+  vertical-align: -0.08em;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--primary), rgba(78, 144, 240, 0.4));
+  animation: quoteBlink 1s steps(1, end) infinite;
+}
+
+@keyframes quoteBlink {
+  0%, 45% {
+    opacity: 1;
+  }
+  46%, 100% {
+    opacity: 0;
+  }
+}
+
+.domainCard h3,
+.vaultTitle h3,
+.artifactCard strong,
+.victoryCard strong {
+  margin: 0;
+}
+
+.domainGlyph {
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+}
+
+.domainMarquee {
+  margin-top: 16px;
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 10px 18px 14px;
+}
+
+.domainMarquee::before,
+.domainMarquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 26px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.domainMarquee::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg) 0%, rgba(249, 250, 251, 0) 100%);
+}
+
+.domainMarquee::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--bg) 0%, rgba(249, 250, 251, 0) 100%);
+}
+
+.domainMarqueeTrack {
+  display: inline-flex;
+  width: max-content;
+  gap: 0;
+  will-change: transform;
+}
+
+.domainPill,
+.domainPillActive {
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 28px rgba(168, 85, 247, 0.04);
+  cursor: pointer;
+}
+
+.domainPill {
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 28px rgba(168, 85, 247, 0.04);
+  cursor: pointer;
+}
+
+.domainPillActive {
+  border-radius: 999px;
+  padding: 12px 16px;
+  border-color: var(--primary);
+  box-shadow: 0 16px 34px rgba(168, 85, 247, 0.08);
+  background: var(--panel-strong);
+}
+
+.domainGrid {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+  margin-top: 0;
+  padding-right: 12px;
+}
+
+.domainGrid > * {
+  flex-shrink: 0;
+}
+
+.domainPillHead {
+  white-space: nowrap;
+}
+
+.domainPillHead h3,
+.domainPillHead p {
+  margin: 0;
+}
+
+.domainPillHead p {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.domainSkillList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.floatingSkill {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 20rem;
+  padding: 8px 14px 8px 8px;
+  border-radius: 999px;
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 24px rgba(168, 85, 247, 0.05);
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  transition: opacity 180ms ease, box-shadow 180ms ease, transform 0.45s cubic-bezier(0.1, 0.8, 0.25, 1);
+}
+
+.floatingSkillIconWrap {
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 20px rgba(168, 85, 247, 0.03);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.floatingSkillGlyph {
+  color: var(--primary);
+}
+
+.floatingSkillActive {
+  opacity: 1;
+  box-shadow: 0 16px 34px rgba(96, 165, 250, 0.12);
+}
+
+.floatingSkillMuted {
+  opacity: 0.28;
+}
+
+.floatingSkillCopy {
+  min-width: 0;
+}
+
+.floatingSkillCopy strong {
+  display: block;
+  font-size: 0.85rem;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.featuredQuest {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.48fr) minmax(0, 0.52fr);
+  gap: 0;
+  border-radius: 40px;
+  overflow: hidden;
+}
+
+.featuredQuestMedia {
+  position: relative;
+  min-height: 23rem;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(168, 85, 247, 0.08), transparent 18%),
+    var(--panel);
+}
+
+.featuredQuestMedia img {
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.featuredQuestGlow {
+  position: absolute;
+  inset: auto -12% -24% auto;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 999px;
+  background: rgba(168, 85, 247, 0.05);
+  filter: blur(40px);
+}
+
+.featuredQuestSeal {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 24px;
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 40px rgba(168, 85, 247, 0.06);
+  z-index: 2;
+}
+
+.featuredQuestCopy {
+  display: grid;
+  align-content: center;
+  gap: 18px;
+  padding: 38px 34px;
+  background: var(--panel);
+}
+
+.questHeadlineRow,
+.questCardTopline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.questMythLabel {
+  display: inline-flex;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+  color: var(--primary);
+  font-size: 0.76rem;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+.featuredQuestSeal span,
+.questStatRow article span,
+.questTileMyth {
+  font-family: var(--font-mono), monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+.featuredQuestSeal strong,
+.questStatRow article strong {
+  font-size: 0.96rem;
+  color: var(--text);
+}
+
+.featuredQuestCopy h3 {
+  font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+}
+
+.questImpactLine {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+
+.questStatRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.questStatRow article {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 22px;
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+}
+
+.featuredQuestCopy p,
+.questCard p,
+.questTile p,
+.timelineCard p,
+.victoryCard p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+.questMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.questMeta span {
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+}
+
+.questMythCelestial {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.12), transparent 22%),
+    var(--panel);
+}
+
+.questMythStorm {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(168, 85, 247, 0.14), transparent 24%),
+    var(--panel);
+}
+
+.questMythStrategy {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(251, 191, 36, 0.15), transparent 24%),
+    var(--panel);
+}
+
+.questMythPulse {
+  background:
+    radial-gradient(circle at 24% 18%, rgba(168, 85, 247, 0.14), transparent 24%),
+    var(--panel);
+}
+
+.questMythCampus {
+  background:
+    radial-gradient(circle at 80% 18%, rgba(168, 85, 247, 0.12), transparent 24%),
+    var(--panel);
+}
+
+.questMythCookbook {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(251, 191, 36, 0.15), transparent 24%),
+    var(--panel);
+}
+
+.questMythWater {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(96, 165, 250, 0.15), transparent 24%),
+    var(--panel);
+}
+
+.questColumns {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.eliteQuestColumn {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.questGrid,
+.artifactGrid,
+.victoryHeroGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.questCard,
+.questTile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.questCard h3 {
+  margin: 8px 0 8px 0 !important;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+}
+
+.questTile h3 {
+  margin: 6px 0 6px 0 !important;
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+}
+
+.questCard p {
+  margin: 0 0 14px 0 !important;
+}
+
+.questTile p {
+  margin: 0 0 12px 0 !important;
+}
+
+.questCard::before,
+.questTile::before,
+.timelineCard::before,
+.artifactCard::before,
+.victoryCard::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(96, 165, 250, 0.82),
+    rgba(244, 63, 94, 0.9) 52%,
+    rgba(251, 191, 36, 0.42)
+  );
+}
+
+.questGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.questTileTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.questTileMyth {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.questTileFoot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.questTileFoot span {
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  border: 1px solid var(--line);
+  font-size: 0.76rem;
+}
+
+.tileExp {
+  color: var(--coral);
+}
+
+.timelineTrack {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  padding: 10px 0;
+}
+
+.timelineTrack::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0), rgba(168, 85, 247, 0.3), rgba(168, 85, 247, 0));
+}
+
+.timelineNode {
+  position: relative;
+  width: 50%;
+}
+
+.timelineLeft {
+  justify-self: start;
+  padding-right: 28px;
+}
+
+.timelineRight {
+  justify-self: end;
+  padding-left: 28px;
+}
+
+.timelineDot {
+  position: absolute;
+  top: 32px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), var(--gold));
+  box-shadow: 0 0 0 7px var(--bg);
+}
+
+.timelineLeft .timelineDot {
+  right: -0.5rem;
+}
+
+.timelineRight .timelineDot {
+  left: -0.5rem;
+}
+
+.timelineCard {
+  position: relative;
+  border-radius: 28px;
+  padding: 22px;
+}
+
+.timelineExp {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--coral);
+}
+
+.vaultLayout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.44fr) minmax(0, 0.56fr);
+  gap: 18px;
+}
+
+.artifactVault,
+.victoryVault {
+  border-radius: 34px;
+  padding: 24px;
+}
+
+.vaultTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.artifactGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.artifactCard,
+.victoryCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  padding: 18px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.artifactCard {
+  display: grid;
+  gap: 10px;
+}
+
+.artifactCard span {
+  color: var(--muted);
+}
+
+.victoryHeroGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.victoryCard {
+  min-height: 12rem;
+}
+
+.victoryGlow {
+  position: absolute;
+  right: -12%;
+  top: -18%;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(168, 85, 247, 0.18) 0%,
+    rgba(251, 191, 36, 0.1) 52%,
+    transparent 74%
+  );
+  filter: blur(26px);
+}
+
+.victoryTrail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.finalSection {
+  overflow: hidden;
+  border-radius: 40px;
+  padding: 46px 28px;
+  text-align: center;
+}
+
+.finalSection h2,
+.finalSection p,
+.finalSection span {
+  position: relative;
+  z-index: 1;
+}
+
+.finalRing {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: min(35rem, 90vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  box-shadow:
+    0 0 0 24px rgba(255, 255, 255, 0.4),
+    0 0 0 72px rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.finalSection p {
+  width: min(42rem, 100%);
+  margin: 16px auto 0;
+}
+
+.finalActions {
+  position: relative;
+  z-index: 1;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.portalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+}
+
+.portalBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(245, 243, 255, 0.85);
+  backdrop-filter: blur(18px);
+}
+
+.portalPanel {
+  position: relative;
+  z-index: 1;
+  width: min(32rem, calc(100% - 24px));
+  padding: 28px;
+  border-radius: 36px;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.98), rgba(243, 232, 255, 0.9) 48%, #f5f3ff 100%);
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 80px rgba(168, 85, 247, 0.15);
+  text-align: center;
+}
+
+.portalClose {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--primary-soft);
+  color: var(--text);
+}
+
+.portalSigil {
+  width: 9rem;
+  height: 9rem;
+  margin: 0 auto 16px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.98), rgba(243, 232, 255, 0.84) 58%, rgba(251, 191, 36, 0.15) 100%);
+  box-shadow:
+    0 0 0 16px rgba(255, 255, 255, 0.6),
+    0 0 0 42px rgba(255, 255, 255, 0.3);
+}
+
+.portalLinks {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.portalLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.footerNote {
+  margin-top: 18px;
+  margin-bottom: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 0 6px;
+  color: var(--muted);
+}
+
+.footerNote div {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 1100px) {
+  .heroLayout,
+  .originLayout,
+  .questColumns,
+  .vaultLayout,
+  .featuredQuest {
+    grid-template-columns: 1fr;
+  }
+
+  .featuredQuestMedia {
+    min-height: 12rem !important;
+  }
+
+  .servicesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .eliteQuestColumn {
+    grid-template-columns: 1fr;
+  }
+
+  .questGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .heroCenterpiece {
+    min-height: 30rem;
+  }
+
+  .metricRibbon,
+  .victoryHeroGrid,
+  .artifactGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .loreHud {
+    display: none;
+  }
+
+  .constellationLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .constellationLayoutActive,
+  .constellationLayoutIdle {
+    grid-template-columns: 1fr;
+  }
+
+  .constellationPanel {
+    position: relative;
+    width: 100%;
+    margin: 0;
+  }
+
+  .domainMarquee {
+    overflow: visible;
+    margin-bottom: 14px;
+    padding: 0;
+  }
+
+  .domainMarquee::before,
+  .domainMarquee::after {
+    display: none;
+  }
+
+  .domainMarqueeTrack {
+    width: 100%;
+    display: block;
+    animation: none;
+  }
+
+  .domainGrid {
+    width: 100%;
+    margin-top: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .domainGrid:last-child {
+    display: none;
+  }
+
+  .timelineTrack::before {
+    left: 20px;
+  }
+
+  .timelineNode,
+  .timelineLeft,
+  .timelineRight {
+    width: 100%;
+    justify-self: stretch;
+    padding-left: 48px;
+    padding-right: 0;
+  }
+
+  .timelineLeft .timelineDot,
+  .timelineRight .timelineDot {
+    left: 12px;
+    right: auto;
+  }
+}
+
+@media (max-width: 820px) {
+  .realm {
+    padding: 18px 12px;
+  }
+
+  .navStrip,
+  .sectionHeading,
+  .footerNote {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navStrip {
+    border-radius: 24px !important;
+  }
+
+  .metricRibbon,
+  .servicesGrid,
+  .questGrid,
+  .artifactGrid,
+  .victoryHeroGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(2rem, 10vw, 3.4rem);
+    line-height: 1.1;
+  }
+
+  .heroCenterpiece {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .heroPortrait,
+  .heroOrb {
+    width: min(22rem, 90vw);
+  }
+
+  .floatCardWrapper {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 32rem !important;
+    padding: 0 10px !important;
+    margin-top: 14px !important;
+    z-index: 20;
+  }
+
+  .floatCard {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    padding: 12px 6px !important;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.04) !important;
+  }
+
+  .floatCard span {
+    font-size: 0.62rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .floatCard strong {
+    font-size: 0.95rem !important;
+  }
+
+  .luffyCaption {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+    white-space: normal !important;
+    width: 92% !important;
+    max-width: 26rem !important;
+    margin-top: 12px !important;
+    font-size: 0.68rem !important;
+    line-height: 1.45 !important;
+    padding: 8px 14px !important;
+  }
+
+  .featuredQuestCopy {
+    padding: 24px 18px !important;
+  }
+
+  .questCard,
+  .questTile {
+    padding: 18px !important;
+  }
+
+  .constellationShell {
+    min-height: auto;
+    display: grid;
+    gap: 28px !important;
+    padding: 18px;
+  }
+
+  .constellationShell::before,
+  .constellationShell::after {
+    display: none;
+  }
+
+  .constellationCore,
+  .floatingSkill {
+    position: relative;
+    inset: auto;
+    transform: none;
+    width: 100%;
+    height: auto;
+  }
+
+  .constellationCore {
+    box-shadow:
+      0 0 0 8px rgba(255, 255, 255, 0.6),
+      0 12px 36px rgba(168, 85, 247, 0.06) !important;
+  }
+
+  .constellationBackdropLabel {
+    display: none;
+  }
+
+  .constellationQuote {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    order: -1;
+    padding-top: 0.25rem;
+  }
+
+  .constellationQuoteText {
+    font-size: clamp(1.2rem, 6vw, 1.8rem);
+  }
+
+  .domainMarquee {
+    overflow: visible;
+    margin-bottom: 12px;
+    padding: 0;
+  }
+
+  .domainMarquee::before,
+  .domainMarquee::after {
+    display: none;
+  }
+
+  .domainMarqueeTrack {
+    width: 100%;
+    display: block;
+    animation: none;
+  }
+
+  .domainGrid {
+    width: 100%;
+    margin-top: 0;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .domainGrid:last-child {
+    display: none;
+  }
+
+  .constellationPanel {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+/* ==========================================================================
+   AWAKENED SYSTEMS & INTERACTIVE MODE STYLES (GEARS, TERMINAL, DRUMS, CANVAS)
+   ========================================================================== */
+
+/* 1. Canvas overlay */
+.physicsCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none; /* Allows clicks to go through to layout, but window pointermove tracks it */
+  width: 100%;
+  height: 100%;
+}
+
+/* 2. Gear Control HUD */
+.gearControlWidget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 45;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(168, 85, 247, 0.16);
+  backdrop-filter: blur(20px);
+  padding: 10px 14px;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(168, 85, 247, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.gearPillContainer {
+  display: flex;
+  gap: 6px;
+}
+
+.gearPill,
+.gearPillActive {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(168, 85, 247, 0.12);
+}
+
+.gearPill {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--muted);
+}
+
+.gearPill:hover {
+  background: var(--primary-soft);
+  transform: translateY(-2px);
+}
+
+.gearPillActive {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+.hudSeparator {
+  width: 100%;
+  height: 1px;
+  background: rgba(168, 85, 247, 0.12);
+  margin: 4px 0;
+}
+
+/* 3. System HUD Panel (Sound & Console) */
+.systemHudPanel {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 45;
+  display: flex;
+  gap: 10px;
+}
+
+.hudIconBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(168, 85, 247, 0.14);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 12px 30px rgba(168, 85, 247, 0.06);
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.hudIconBtn:hover {
+  background: var(--primary-soft);
+  transform: translateY(-2px);
+  color: var(--primary);
+}
+
+.hudIconActive {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* 4. Terminal Modal Console */
+.terminalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.terminalBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 12, 30, 0.45);
+  backdrop-filter: blur(14px);
+}
+
+.terminalPanel {
+  position: relative;
+  width: min(34rem, 100%);
+  background: rgba(26, 22, 46, 0.94);
+  border: 1px solid rgba(168, 85, 247, 0.28);
+  border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(15, 10, 35, 0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+}
+
+.terminalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: rgba(15, 12, 30, 0.6);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+}
+
+.terminalTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--coral);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-family: monospace;
+}
+
+.terminalClose {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.terminalClose:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.terminalSearchRow {
+  display: flex;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+}
+
+.terminalSearchIcon {
+  color: rgba(168, 85, 247, 0.6);
+  margin-right: 12px;
+}
+
+.terminalSearchRow input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.terminalSearchRow input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.terminalBody {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.terminalResults {
+  display: grid;
+  gap: 6px;
+}
+
+.terminalResultItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.terminalResultItem:hover {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.4);
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+.terminalResultItem div {
+  display: flex;
+  flex-direction: column;
+}
+
+.terminalResultItem strong {
+  font-size: 0.86rem;
+}
+
+.terminalResultItem span {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 2px;
+}
+
+.terminalLogs {
+  background: rgba(10, 8, 22, 0.85);
+  border-radius: 14px;
+  border: 1px solid rgba(168, 85, 247, 0.1);
+  padding: 12px;
+  font-family: monospace;
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.terminalLogs p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.terminalFooter {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: rgba(15, 12, 30, 0.4);
+  border-top: 1px solid rgba(168, 85, 247, 0.1);
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: monospace;
+}
+
+/* 5. Heartbeat pulsator effects */
+:global(body.drums-pulse) .gridLayer {
+  opacity: 0.75;
+  background-color: rgba(168, 85, 247, 0.02);
+}
+
+:global(body.drums-pulse) .heroOrb {
+  transform: scale(1.08) rotate(2deg);
+  box-shadow: 0 0 45px rgba(168, 85, 247, 0.25);
+}
+
+:global(body.drums-pulse) .luffyAvatarOverlay {
+  transform: scale(1.04) rotate(-1deg);
+}
+
+:global(body.drums-pulse) .floatCard {
+  transform: scale(1.04);
+}
+
+/* 6. Luffy Image container & overlays */
+.heroLuffyContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.luffyAvatarOverlay {
+  position: absolute;
+  width: 58%;
+  height: 58%;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-origin: center center;
+  animation: luffyFloat 5s ease-in-out infinite;
+}
+
+.luffyHeroImg {
+  object-fit: contain !important;
+  filter: drop-shadow(0 18px 36px rgba(168, 85, 247, 0.22));
+}
+
+@keyframes luffyFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1.5deg); }
+}
+
+.luffyCaption {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0.85;
+  background: rgba(255, 255, 255, 0.55);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(168, 85, 247, 0.1);
+  backdrop-filter: blur(8px);
+  z-index: 15;
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.04);
+}
+
+/* 7. Steam particles for Gear 2 */
+.steamOverlays {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
+  overflow: hidden;
+}
+
+.steam1, .steam2, .steam3 {
+  position: absolute;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.28) 0%, transparent 70%);
+  border-radius: 999px;
+  filter: blur(12px);
+  animation: floatSteam 6s infinite linear;
+}
+
+.steam1 {
+  width: 20rem;
+  height: 20rem;
+  left: 10%;
+  bottom: -20%;
+  animation-delay: 0s;
+}
+
+.steam2 {
+  width: 25rem;
+  height: 25rem;
+  right: 15%;
+  bottom: -25%;
+  animation-delay: 2s;
+}
+
+.steam3 {
+  width: 18rem;
+  height: 18rem;
+  left: 45%;
+  bottom: -18%;
+  animation-delay: 4s;
+}
+
+@keyframes floatSteam {
+  0% { transform: translateY(0) scale(1) translateX(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.2; }
+  100% { transform: translateY(-120vh) scale(1.6) translateX(40px); opacity: 0; }
+}
+
+/* 8. Console highlights and easter egg animations */
+@keyframes consoleFlash {
+  0%, 100% { border-color: rgba(168, 85, 247, 0.12); box-shadow: none; }
+  50% { border-color: var(--primary); box-shadow: 0 0 30px rgba(168, 85, 247, 0.28); }
+}
+
+:global(.console-highlight) {
+  animation: consoleFlash 1.2s ease-in-out 3;
+}
+
+@keyframes elasticWobble {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.05) rotate(2deg); }
+  50% { transform: scale(0.95) rotate(-2deg); }
+  75% { transform: scale(1.02) rotate(1deg); }
+}
+
+:global(.elastic-shake) {
+  animation: elasticWobble 1s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   GEAR PARAMETERS OVERRIDES
+   ========================================================================== */
+
+/* Gear 2: Overdrive Velocity */
+.gearMode2 {
+  transition-duration: 0.08s !important;
+  --primary: #f43f5e; /* Vibrant crimson overdrive */
+  --primary-soft: #ffe4e6;
+  --line: rgba(244, 63, 94, 0.16);
+  --muted: #e11d48;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' style='fill:%23f43f5e'><path d='M2.1 1.9l20.4 12.3-9 2.1 5.9 5.8-3.4 1.7-5.9-5.9-5.3 4.2z'/></svg>"), auto;
+}
+
+.gearMode2 * {
+  transition-duration: 0.08s !important;
+}
+
+/* Gear 3: Gigantification scaling */
+.gearMode3 {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='fill:%23d97706'><path d='M2.1 1.9l20.4 12.3-9 2.1 5.9 5.8-3.4 1.7-5.9-5.9-5.3 4.2z'/></svg>"), auto;
+}
+
+.gearMode3 .serviceCard:hover,
+.gearMode3 .questCard:hover,
+.gearMode3 .questTile:hover,
+.gearMode3 .timelineCard:hover,
+.gearMode3 .artifactCard:hover,
+.gearMode3 .victoryCard:hover {
+  transform: scale(1.08) !important;
+  box-shadow: 0 20px 48px rgba(168, 85, 247, 0.16) !important;
+  z-index: 5;
+}
+
+/* Gear 4: Bouncy Snakeman spring curves */
+.gearMode4 {
+  --primary: #7c3aed;
+  --primary-soft: #f5f3ff;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' style='fill:%237c3aed'><path d='M2.1 1.9l20.4 12.3-9 2.1 5.9 5.8-3.4 1.7-5.9-5.9-5.3 4.2z'/></svg>"), auto;
+}
+
+.gearMode4 .serviceCard,
+.gearMode4 .questCard,
+.gearMode4 .questTile,
+.gearMode4 .timelineCard,
+.gearMode4 .artifactCard,
+.gearMode4 .victoryCard,
+.gearMode4 button,
+.gearMode4 a {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.35), box-shadow 0.3s ease !important;
+}
+
+.gearMode4 .serviceCard:hover,
+.gearMode4 .questCard:hover,
+.gearMode4 .questTile:hover,
+.gearMode4 .timelineCard:hover,
+.gearMode4 .artifactCard:hover,
+.gearMode4 .victoryCard:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* Default Cursor: Professional Purple Tech Arrow with White Core (Base64 encoded) */
+.gearMode5 {
+  cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj4gPGRlZnM+IDxmaWx0ZXIgaWQ9InB1cnBsZUdsb3ciIHg9Ii0yMCUiIHk9Ii0yMCUiIHdpZHRoPSIxNDAlIiBoZWlnaHQ9IjE0MCUiPiA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxLjIiIHJlc3VsdD0iYmx1ciIvPiA8ZmVNZXJnZT4gPGZlTWVyZ2VOb2RlIGluPSJibHVyIi8+IDxmZU1lcmdlTm9kZSBpbj0iU291cmNlR3JhcGhpYyIvPiA8L2ZlTWVyZ2U+IDwvZmlsdGVyPiA8L2RlZnM+IDxwYXRoIGQ9Ik0yIDIgTDEyIDI0IEwxNiAxNiBMMjQgMTIgWiIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjOGI1Y2Y2IiBzdHJva2Utd2lkdGg9IjEuOCIgZmlsdGVyPSJ1cmwoI3B1cnBsZUdsb3cpIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+IDwvc3ZnPg==") 2 2, auto;
+}
+
+/* CTA Hover Cursor: Classic Pointing Hand with White Core and Purple Glowing Edge (Base64 encoded) */
+.gearMode5 a,
+.gearMode5 button,
+.gearMode5 [role="button"],
+.gearMode5 input[type="submit"] {
+  cursor: pointer !important;
+}
+
+/* 9. Responsive System HUD controls */
+@media (max-width: 820px) {
+  .hudBtnText {
+    display: none;
+  }
+  .systemHudPanel {
+    top: 16px !important;
+    right: 16px !important;
+    gap: 6px !important;
+  }
+  .hudIconBtn {
+    padding: 10px !important;
+    border-radius: 999px !important;
+  }
+}
+

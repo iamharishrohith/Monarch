@@ -1,0 +1,12 @@
+node_modules
+.next
+.vercel
+.env
+dev.db
+dev.db-journal
+prisma/dev.db
+prisma/dev.db-journal
+dist
+out
+backups
+backups/*

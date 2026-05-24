@@ -27,23 +27,6 @@
   },
   "projects": [
     {
-      "id": "custom-llm-dashboard",
-      "slug": "custom-llm-decision-intelligence-dashboard",
-      "title": "Custom LLM & Decision Intelligence Dashboard",
-      "summary": "Architected and trained a 4B+ parameter LLM using linear regression and Tx-ITx architecture on 100K+ curated data points.",
-      "description": "Secured a 1-year research MoU with the Innovation Cell by building a decision intelligence stack around a custom model training pipeline.",
-      "stack": "Custom LLM, Tx-ITx, Python, Decision Intelligence",
-      "featured": false,
-      "expValue": 9600,
-      "impact": "Secured a 1-year research MoU with the Innovation Cell.",
-      "status": "PUBLISHED",
-      "coverImage": "",
-      "repoUrl": "",
-      "liveUrl": "",
-      "caseStudyUrl": "",
-      "sortOrder": 1
-    },
-    {
       "id": "skipq",
       "slug": "skipq-decentralized-queue-management",
       "title": "SkipQ | Decentralized Queue Management",
@@ -58,12 +41,46 @@
       "repoUrl": "",
       "liveUrl": "",
       "caseStudyUrl": "",
+      "sortOrder": 1
+    },
+    {
+      "id": "r-choice",
+      "slug": "r-choice-product-platform",
+      "title": "R-Choice",
+      "summary": "A full-stack internship and placement management platform unifying students, faculty, coordinators, and company partners into an 8-role aware, streamlined digital pipeline.",
+      "description": "Developed a production-ready institutional platform for Rathinam College of Arts and Science. Built with a 6-tier automated approval pipeline that routes internship requests through institutional hierarchy. Designed real-time dashboards with animated charts, a self-service company portal for job postings, and robust enterprise-grade security including rate limiting, CSRF protection, and audit logs.",
+      "stack": "Next.js 16 (App Router), React 19, TypeScript, Drizzle ORM, PostgreSQL (Neon)",
+      "featured": true,
+      "expValue": 7920,
+      "impact": "Replaced manual spreadsheets with a unified system managing internship approvals for 8 distinct roles.",
+      "status": "PUBLISHED",
+      "coverImage": "",
+      "repoUrl": "",
+      "liveUrl": "",
+      "caseStudyUrl": "",
       "sortOrder": 2
+    },
+    {
+      "id": "devs-recipe",
+      "slug": "devs-recipe",
+      "title": "Devs Recipe",
+      "summary": "A modern, comprehensive developer resource hub designed as an interactive cookbook for developers, offering high-quality script generators, library comparisons, quick templates, and visual project structures.",
+      "description": "Engineered as an interactive, high-performance resource hub with TypeScript and Next.js. Features automated script generators to eliminate mundane coding tasks, side-by-side library comparison matrices to guide technology stack decisions, ready-to-use template snippets for common UI and logic patterns, and interactive visual structures to conceptualize complex software architectures with built-in productivity keyboard shortcuts.",
+      "stack": "TypeScript, Next.js 15, Tailwind CSS, Shadcn UI, Keyboard Shortcuts",
+      "featured": true,
+      "expValue": 8400,
+      "impact": "Automated coding tasks and streamlined technology selection workflows with script generators.",
+      "status": "PUBLISHED",
+      "coverImage": "",
+      "repoUrl": "",
+      "liveUrl": "",
+      "caseStudyUrl": "",
+      "sortOrder": 3
     },
     {
       "id": "gridsense",
       "slug": "tneb-gridsense",
-      "title": "TN-GridSense ⚡",
+      "title": "TN-GridSense",
       "summary": "Tamil Nadu distributed smart pole telemetry and predictive fault management system monitoring the electrical distribution grid at pole-level granularity.",
       "description": "Engineered a state-scale real-time monitoring platform for electrical grids. Deployed intelligent edge nodes on distribution poles using ESP32 microcontrollers to capture 5-second interval NTP-synced telemetry packets containing voltage, current, temperature, and health scores. Architected a sub-millisecond ingestion backend on Bun and ElysiaJS, processing concurrent pole telemetry, evaluating health scores, estimating AT&C loss deviations, and broadcasting real-time metrics via WebSockets to a responsive 3-tier mapping dashboard.",
       "stack": "ESP32, Bun.js, ElysiaJS, LoRa SX1278, WebSockets, Chart.js",
@@ -75,7 +92,41 @@
       "repoUrl": "",
       "liveUrl": "",
       "caseStudyUrl": "",
-      "sortOrder": 3
+      "sortOrder": 4
+    },
+    {
+      "id": "neer-ai",
+      "slug": "neer-ai",
+      "title": "NeerAI",
+      "summary": "Intelligent state-scale water infrastructure and telemetry platform combining Physics-Informed Neural Networks (PINNs), IoT Edge computing, and local Cognitive AI.",
+      "description": "Architected a 3-tier municipal water monitoring network utilizing TinyML (Random Forests) on ESP32 microcontrollers for real-time edge anomaly filtering. Integrated fluid dynamics (Bernoulli and Hazen-Williams equations) with deep learning inside a Physics-Informed Neural Network (PINN) to localize leaks using Negative Pressure Wave equations. Fine-tuned NeerLLM—a domain-specific 3B parameter local LLM—on IS 10500 standards, WHO guidelines, and 2.4 million network anomaly sequences for automated cognitive diagnostics.",
+      "stack": "Next.js 15, TinyML (ESP32), PINN (Deep Learning), Bun.js, ElysiaJS, NeerLLM (3B LLM)",
+      "featured": false,
+      "expValue": 3600,
+      "impact": "Pinpoints pipe leaks, predicts water pump degradation/RUL with LSTMs, and optimizes municipality pump energy grids.",
+      "status": "PUBLISHED",
+      "coverImage": "",
+      "repoUrl": "",
+      "liveUrl": "",
+      "caseStudyUrl": "",
+      "sortOrder": 5
+    },
+    {
+      "id": "custom-llm-dashboard",
+      "slug": "custom-llm-decision-intelligence-dashboard",
+      "title": "Custom LLM & Decision Intelligence Dashboard",
+      "summary": "Architected and trained a 4B+ parameter LLM using linear regression and Tx-ITx architecture on 100K+ curated data points.",
+      "description": "Secured a 1-year research MoU with the Innovation Cell by building a decision intelligence stack around a custom model training pipeline.",
+      "stack": "Custom LLM, Tx-ITx, Python, Decision Intelligence",
+      "featured": false,
+      "expValue": 9600,
+      "impact": "Secured a 1-year research MoU with the Innovation Cell.",
+      "status": "PUBLISHED",
+      "coverImage": "",
+      "repoUrl": "",
+      "liveUrl": "",
+      "caseStudyUrl": "",
+      "sortOrder": 6
     },
     {
       "id": "zentix",
@@ -92,24 +143,7 @@
       "repoUrl": "",
       "liveUrl": "",
       "caseStudyUrl": "",
-      "sortOrder": 4
-    },
-    {
-      "id": "r-choice",
-      "slug": "r-choice-product-platform",
-      "title": "R-Choice 🎓",
-      "summary": "A full-stack internship and placement management platform unifying students, faculty, coordinators, and company partners into an 8-role aware, streamlined digital pipeline.",
-      "description": "Developed a production-ready institutional platform for Rathinam College of Arts and Science. Built with a 6-tier automated approval pipeline that routes internship requests through institutional hierarchy. Designed real-time dashboards with animated charts, a self-service company portal for job postings, and robust enterprise-grade security including rate limiting, CSRF protection, and audit logs.",
-      "stack": "Next.js 16 (App Router), React 19, TypeScript, Drizzle ORM, PostgreSQL (Neon)",
-      "featured": true,
-      "expValue": 7920,
-      "impact": "Replaced manual spreadsheets with a unified system managing internship approvals for 8 distinct roles.",
-      "status": "PUBLISHED",
-      "coverImage": "",
-      "repoUrl": "",
-      "liveUrl": "",
-      "caseStudyUrl": "",
-      "sortOrder": 5
+      "sortOrder": 7
     },
     {
       "id": "libreflow",
@@ -126,7 +160,7 @@
       "repoUrl": "",
       "liveUrl": "",
       "caseStudyUrl": "",
-      "sortOrder": 6
+      "sortOrder": 8
     },
     {
       "id": "resolv-ai",
@@ -143,24 +177,7 @@
       "repoUrl": "",
       "liveUrl": "",
       "caseStudyUrl": "",
-      "sortOrder": 7
-    },
-    {
-      "id": "neer-ai",
-      "slug": "neer-ai",
-      "title": "NeerAI 🌊",
-      "summary": "Intelligent state-scale water infrastructure and telemetry platform combining Physics-Informed Neural Networks (PINNs), IoT Edge computing, and local Cognitive AI.",
-      "description": "Architected a 3-tier municipal water monitoring network utilizing TinyML (Random Forests) on ESP32 microcontrollers for real-time edge anomaly filtering. Integrated fluid dynamics (Bernoulli and Hazen-Williams equations) with deep learning inside a Physics-Informed Neural Network (PINN) to localize leaks using Negative Pressure Wave equations. Fine-tuned NeerLLM—a domain-specific 3B parameter local LLM—on IS 10500 standards, WHO guidelines, and 2.4 million network anomaly sequences for automated cognitive diagnostics.",
-      "stack": "Next.js 15, TinyML (ESP32), PINN (Deep Learning), Bun.js, ElysiaJS, NeerLLM (3B LLM)",
-      "featured": false,
-      "expValue": 3600,
-      "impact": "Pinpoints pipe leaks, predicts water pump degradation/RUL with LSTMs, and optimizes municipality pump energy grids.",
-      "status": "PUBLISHED",
-      "coverImage": "",
-      "repoUrl": "",
-      "liveUrl": "",
-      "caseStudyUrl": "",
-      "sortOrder": 8
+      "sortOrder": 9
     },
     {
       "id": "cense-ops",
@@ -177,7 +194,7 @@
       "repoUrl": "",
       "liveUrl": "",
       "caseStudyUrl": "",
-      "sortOrder": 9
+      "sortOrder": 10
     },
     {
       "id": "shebloom",
@@ -194,7 +211,7 @@
       "repoUrl": "",
       "liveUrl": "",
       "caseStudyUrl": "",
-      "sortOrder": 10
+      "sortOrder": 11
     },
     {
       "id": "dream-valley-publications",
@@ -206,23 +223,6 @@
       "featured": false,
       "expValue": 3000,
       "impact": "Streamlined book exploration and digital textbook navigation.",
-      "status": "PUBLISHED",
-      "coverImage": "",
-      "repoUrl": "",
-      "liveUrl": "",
-      "caseStudyUrl": "",
-      "sortOrder": 11
-    },
-    {
-      "id": "devs-recipe",
-      "slug": "devs-recipe",
-      "title": "Devs Recipe 🍳",
-      "summary": "A modern, comprehensive developer resource hub designed as an interactive cookbook for developers, offering high-quality script generators, library comparisons, quick templates, and visual project structures.",
-      "description": "Engineered as an interactive, high-performance resource hub with TypeScript and Next.js. Features automated script generators to eliminate mundane coding tasks, side-by-side library comparison matrices to guide technology stack decisions, ready-to-use template snippets for common UI and logic patterns, and interactive visual structures to conceptualize complex software architectures with built-in productivity keyboard shortcuts.",
-      "stack": "TypeScript, Next.js 15, Tailwind CSS, Shadcn UI, Keyboard Shortcuts",
-      "featured": true,
-      "expValue": 8400,
-      "impact": "Automated coding tasks and streamlined technology selection workflows with script generators.",
       "status": "PUBLISHED",
       "coverImage": "",
       "repoUrl": "",

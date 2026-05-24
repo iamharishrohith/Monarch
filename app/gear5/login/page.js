@@ -11,14 +11,14 @@ async function loginAction(formData) {
   await signIn("credentials", {
     email: formData.get("email"),
     password: formData.get("password"),
-    redirectTo: "/admin"
+    redirectTo: "/gear5"
   });
 }
 
 export default async function AdminLoginPage() {
   const session = await auth();
   if (session?.user) {
-    redirect("/admin");
+    redirect("/gear5");
   }
 
   return (

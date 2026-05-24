@@ -1,35 +1,24 @@
 import { auth, signOut } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
-import { getProgressionSnapshot } from "@/lib/queries";
+import { getData, computeProgression } from "@/lib/data";
 import AdminDashboardClient from "@/components/AdminDashboardClient";
 
 export const dynamic = "force-dynamic";
 
-
-
 async function logoutAction() {
   "use server";
-  await signOut({ redirectTo: "/admin/login" });
+  await signOut({ redirectTo: "/gear5/login" });
 }
 
 export default async function AdminPage() {
   const session = await auth();
   if (!session?.user) {
-    redirect("/admin/login");
+    redirect("/gear5/login");
   }
 
-  const [progression, profile, settings, projects, skills, experiences, certifications, achievements, notifications] = await Promise.all([
-    getProgressionSnapshot(),
-    prisma.profile.findFirst(),
-    prisma.siteSettings.findFirst(),
-    prisma.project.findMany({ orderBy: [{ featured: "desc" }, { sortOrder: "asc" }, { createdAt: "desc" }] }),
-    prisma.skill.findMany({ orderBy: [{ featured: "desc" }, { level: "desc" }, { createdAt: "desc" }] }),
-    prisma.experience.findMany({ orderBy: [{ startDate: "desc" }, { createdAt: "desc" }] }),
-    prisma.certification.findMany({ orderBy: [{ issueDate: "desc" }, { createdAt: "desc" }] }),
-    prisma.achievement.findMany({ orderBy: [{ awardedAt: "desc" }, { createdAt: "desc" }] }),
-    prisma.notificationEvent.findMany({ orderBy: { createdAt: "desc" }, take: 5 })
-  ]);
+  const data = getData();
+  const progression = computeProgression();
+  const { profile, settings, projects, skills, experiences, certifications, achievements, notifications } = data;
 
   return (
     <main className="admin-page-shell">
@@ -89,9 +78,9 @@ export default async function AdminPage() {
         <div className="admin-side-card">
           <h3>Recent Notifications</h3>
           <div className="admin-side-list">
-            {notifications.map((event) => (
-              <article key={event.id} className="admin-side-item">
-                <span className="system-pill small">{event.kind.replace("_", " ")}</span>
+            {(notifications || []).slice(0, 5).map((event, idx) => (
+              <article key={event.id || idx} className="admin-side-item">
+                <span className="system-pill small">{(event.kind || "INFO").replace("_", " ")}</span>
                 <strong>{event.title}</strong>
                 <p>{event.message}</p>
               </article>

@@ -19,7 +19,7 @@ import {
   updateProjectAction,
   updateSiteSettingsAction,
   updateSkillAction
-} from "@/app/admin/actions";
+} from "@/app/gear5/actions";
 
 const initialState = { success: false, message: "" };
 const defaultServiceRows = [

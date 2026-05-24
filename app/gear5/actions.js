@@ -2,9 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
-import { bustProgressionCache } from "@/lib/queries";
-import { recomputeProgression } from "@/lib/progression";
+import {
+  addProject, updateProject, deleteProject,
+  addSkill, updateSkill, deleteSkill,
+  addExperience, updateExperience, deleteExperience,
+  addCertification, updateCertification, deleteCertification,
+  addAchievement, updateAchievement, deleteAchievement,
+  updateProfile, updateSettings
+} from "@/lib/data";
 import { auth } from "@/lib/auth";
 
 async function checkAuth() {
@@ -99,11 +104,12 @@ function normalizeBoolean(value) {
 }
 
 async function refreshExperienceSystem() {
-  await recomputeProgression();
-  await bustProgressionCache();
+  // Progression is computed on read from the JSON data layer — no recomputation needed
   revalidatePath("/");
-  revalidatePath("/admin");
+  revalidatePath("/gear5");
 }
+
+// ─── Projects ───────────────────────────────────────────────────────────────────
 
 export async function createProjectAction(_prevState, formData) {
   if (!(await checkAuth())) {
@@ -130,11 +136,9 @@ export async function createProjectAction(_prevState, formData) {
     return { success: false, message: "Project data is incomplete or invalid." };
   }
 
-  await prisma.project.create({
-    data: {
-      ...parsed.data,
-      status: parsed.data.published ? "PUBLISHED" : "DRAFT"
-    }
+  addProject({
+    ...parsed.data,
+    status: parsed.data.published ? "PUBLISHED" : "DRAFT"
   });
 
   await refreshExperienceSystem();
@@ -171,12 +175,9 @@ export async function updateProjectAction(_prevState, formData) {
     return { success: false, message: "Project update data is incomplete or invalid." };
   }
 
-  await prisma.project.update({
-    where: { id },
-    data: {
-      ...parsed.data,
-      status: parsed.data.published ? "PUBLISHED" : "DRAFT"
-    }
+  updateProject(id, {
+    ...parsed.data,
+    status: parsed.data.published ? "PUBLISHED" : "DRAFT"
   });
 
   await refreshExperienceSystem();
@@ -193,10 +194,12 @@ export async function deleteProjectAction(_prevState, formData) {
     return { success: false, message: "Missing project id." };
   }
 
-  await prisma.project.delete({ where: { id } });
+  deleteProject(id);
   await refreshExperienceSystem();
   return { success: true, message: "Project deleted." };
 }
+
+// ─── Skills ─────────────────────────────────────────────────────────────────────
 
 export async function createSkillAction(_prevState, formData) {
   if (!(await checkAuth())) {
@@ -217,54 +220,13 @@ export async function createSkillAction(_prevState, formData) {
     return { success: false, message: "Skill data is incomplete or invalid." };
   }
 
-  await prisma.skill.create({
-    data: {
-      ...parsed.data,
-      status: parsed.data.published ? "PUBLISHED" : "DRAFT"
-    }
+  addSkill({
+    ...parsed.data,
+    status: parsed.data.published ? "PUBLISHED" : "DRAFT"
   });
 
   await refreshExperienceSystem();
   return { success: true, message: "Skill node added and EXP recomputed." };
-}
-
-export async function createExperienceAction(_prevState, formData) {
-  if (!(await checkAuth())) {
-    return { success: false, message: "Unauthorized operation." };
-  }
-
-  const parsed = experienceSchema.safeParse({
-    company: formData.get("company"),
-    role: formData.get("role"),
-    location: formData.get("location") || undefined,
-    startDate: formData.get("startDate"),
-    endDate: formData.get("endDate") || undefined,
-    summary: formData.get("summary"),
-    highlights: formData.get("highlights"),
-    expValue: formData.get("expValue"),
-    published: normalizeBoolean(formData.get("published"))
-  });
-
-  if (!parsed.success) {
-    return { success: false, message: "Experience data is incomplete or invalid." };
-  }
-
-  await prisma.experience.create({
-    data: {
-      company: parsed.data.company,
-      role: parsed.data.role,
-      location: parsed.data.location,
-      startDate: new Date(parsed.data.startDate),
-      endDate: parsed.data.endDate ? new Date(parsed.data.endDate) : null,
-      summary: parsed.data.summary,
-      highlights: parsed.data.highlights,
-      expValue: parsed.data.expValue,
-      status: parsed.data.published ? "PUBLISHED" : "DRAFT"
-    }
-  });
-
-  await refreshExperienceSystem();
-  return { success: true, message: "Experience entry added." };
 }
 
 export async function updateSkillAction(_prevState, formData) {
@@ -291,12 +253,9 @@ export async function updateSkillAction(_prevState, formData) {
     return { success: false, message: "Skill update data is incomplete or invalid." };
   }
 
-  await prisma.skill.update({
-    where: { id },
-    data: {
-      ...parsed.data,
-      status: parsed.data.published ? "PUBLISHED" : "DRAFT"
-    }
+  updateSkill(id, {
+    ...parsed.data,
+    status: parsed.data.published ? "PUBLISHED" : "DRAFT"
   });
 
   await refreshExperienceSystem();
@@ -313,9 +272,48 @@ export async function deleteSkillAction(_prevState, formData) {
     return { success: false, message: "Missing skill id." };
   }
 
-  await prisma.skill.delete({ where: { id } });
+  deleteSkill(id);
   await refreshExperienceSystem();
   return { success: true, message: "Skill deleted." };
+}
+
+// ─── Experience ─────────────────────────────────────────────────────────────────
+
+export async function createExperienceAction(_prevState, formData) {
+  if (!(await checkAuth())) {
+    return { success: false, message: "Unauthorized operation." };
+  }
+
+  const parsed = experienceSchema.safeParse({
+    company: formData.get("company"),
+    role: formData.get("role"),
+    location: formData.get("location") || undefined,
+    startDate: formData.get("startDate"),
+    endDate: formData.get("endDate") || undefined,
+    summary: formData.get("summary"),
+    highlights: formData.get("highlights"),
+    expValue: formData.get("expValue"),
+    published: normalizeBoolean(formData.get("published"))
+  });
+
+  if (!parsed.success) {
+    return { success: false, message: "Experience data is incomplete or invalid." };
+  }
+
+  addExperience({
+    company: parsed.data.company,
+    role: parsed.data.role,
+    location: parsed.data.location,
+    startDate: parsed.data.startDate,
+    endDate: parsed.data.endDate || null,
+    summary: parsed.data.summary,
+    highlights: parsed.data.highlights,
+    expValue: parsed.data.expValue,
+    status: parsed.data.published ? "PUBLISHED" : "DRAFT"
+  });
+
+  await refreshExperienceSystem();
+  return { success: true, message: "Experience entry added." };
 }
 
 export async function updateExperienceAction(_prevState, formData) {
@@ -344,19 +342,16 @@ export async function updateExperienceAction(_prevState, formData) {
     return { success: false, message: "Experience update data is incomplete or invalid." };
   }
 
-  await prisma.experience.update({
-    where: { id },
-    data: {
-      company: parsed.data.company,
-      role: parsed.data.role,
-      location: parsed.data.location,
-      startDate: new Date(parsed.data.startDate),
-      endDate: parsed.data.endDate ? new Date(parsed.data.endDate) : null,
-      summary: parsed.data.summary,
-      highlights: parsed.data.highlights,
-      expValue: parsed.data.expValue,
-      status: parsed.data.published ? "PUBLISHED" : "DRAFT"
-    }
+  updateExperience(id, {
+    company: parsed.data.company,
+    role: parsed.data.role,
+    location: parsed.data.location,
+    startDate: parsed.data.startDate,
+    endDate: parsed.data.endDate || null,
+    summary: parsed.data.summary,
+    highlights: parsed.data.highlights,
+    expValue: parsed.data.expValue,
+    status: parsed.data.published ? "PUBLISHED" : "DRAFT"
   });
 
   await refreshExperienceSystem();
@@ -373,10 +368,12 @@ export async function deleteExperienceAction(_prevState, formData) {
     return { success: false, message: "Missing experience id." };
   }
 
-  await prisma.experience.delete({ where: { id } });
+  deleteExperience(id);
   await refreshExperienceSystem();
   return { success: true, message: "Experience deleted." };
 }
+
+// ─── Certifications ─────────────────────────────────────────────────────────────
 
 export async function createCertificationAction(_prevState, formData) {
   if (!(await checkAuth())) {
@@ -395,15 +392,13 @@ export async function createCertificationAction(_prevState, formData) {
     return { success: false, message: "Certification data is incomplete or invalid." };
   }
 
-  await prisma.certification.create({
-    data: {
-      title: parsed.data.title,
-      issuer: parsed.data.issuer,
-      issueDate: new Date(parsed.data.issueDate),
-      credentialUrl: parsed.data.credentialUrl,
-      expValue: parsed.data.expValue,
-      status: "PUBLISHED"
-    }
+  addCertification({
+    title: parsed.data.title,
+    issuer: parsed.data.issuer,
+    issueDate: parsed.data.issueDate,
+    credentialUrl: parsed.data.credentialUrl,
+    expValue: parsed.data.expValue,
+    status: "PUBLISHED"
   });
 
   await refreshExperienceSystem();
@@ -432,16 +427,13 @@ export async function updateCertificationAction(_prevState, formData) {
     return { success: false, message: "Certification update data is incomplete or invalid." };
   }
 
-  await prisma.certification.update({
-    where: { id },
-    data: {
-      title: parsed.data.title,
-      issuer: parsed.data.issuer,
-      issueDate: new Date(parsed.data.issueDate),
-      credentialUrl: parsed.data.credentialUrl,
-      expValue: parsed.data.expValue,
-      status: "PUBLISHED"
-    }
+  updateCertification(id, {
+    title: parsed.data.title,
+    issuer: parsed.data.issuer,
+    issueDate: parsed.data.issueDate,
+    credentialUrl: parsed.data.credentialUrl,
+    expValue: parsed.data.expValue,
+    status: "PUBLISHED"
   });
 
   await refreshExperienceSystem();
@@ -458,10 +450,12 @@ export async function deleteCertificationAction(_prevState, formData) {
     return { success: false, message: "Missing certification id." };
   }
 
-  await prisma.certification.delete({ where: { id } });
+  deleteCertification(id);
   await refreshExperienceSystem();
   return { success: true, message: "Certification deleted." };
 }
+
+// ─── Achievements ───────────────────────────────────────────────────────────────
 
 export async function createAchievementAction(_prevState, formData) {
   if (!(await checkAuth())) {
@@ -480,15 +474,13 @@ export async function createAchievementAction(_prevState, formData) {
     return { success: false, message: "Achievement data is incomplete or invalid." };
   }
 
-  await prisma.achievement.create({
-    data: {
-      title: parsed.data.title,
-      summary: parsed.data.summary,
-      awardedBy: parsed.data.awardedBy,
-      awardedAt: new Date(parsed.data.awardedAt),
-      expValue: parsed.data.expValue,
-      status: "PUBLISHED"
-    }
+  addAchievement({
+    title: parsed.data.title,
+    summary: parsed.data.summary,
+    awardedBy: parsed.data.awardedBy,
+    awardedAt: parsed.data.awardedAt,
+    expValue: parsed.data.expValue,
+    status: "PUBLISHED"
   });
 
   await refreshExperienceSystem();
@@ -517,16 +509,13 @@ export async function updateAchievementAction(_prevState, formData) {
     return { success: false, message: "Achievement update data is incomplete or invalid." };
   }
 
-  await prisma.achievement.update({
-    where: { id },
-    data: {
-      title: parsed.data.title,
-      summary: parsed.data.summary,
-      awardedBy: parsed.data.awardedBy,
-      awardedAt: new Date(parsed.data.awardedAt),
-      expValue: parsed.data.expValue,
-      status: "PUBLISHED"
-    }
+  updateAchievement(id, {
+    title: parsed.data.title,
+    summary: parsed.data.summary,
+    awardedBy: parsed.data.awardedBy,
+    awardedAt: parsed.data.awardedAt,
+    expValue: parsed.data.expValue,
+    status: "PUBLISHED"
   });
 
   await refreshExperienceSystem();
@@ -543,10 +532,12 @@ export async function deleteAchievementAction(_prevState, formData) {
     return { success: false, message: "Missing achievement id." };
   }
 
-  await prisma.achievement.delete({ where: { id } });
+  deleteAchievement(id);
   await refreshExperienceSystem();
   return { success: true, message: "Achievement deleted." };
 }
+
+// ─── Profile ────────────────────────────────────────────────────────────────────
 
 export async function updateProfileAction(_prevState, formData) {
   if (!(await checkAuth())) {
@@ -571,21 +562,14 @@ export async function updateProfileAction(_prevState, formData) {
     return { success: false, message: "Profile data is incomplete or invalid." };
   }
 
-  const existing = await prisma.profile.findFirst();
-
-  if (existing) {
-    await prisma.profile.update({
-      where: { id: existing.id },
-      data: parsed.data
-    });
-  } else {
-    await prisma.profile.create({ data: parsed.data });
-  }
+  updateProfile(parsed.data);
 
   revalidatePath("/");
-  revalidatePath("/admin");
+  revalidatePath("/gear5");
   return { success: true, message: "Profile system updated." };
 }
+
+// ─── Site Settings ──────────────────────────────────────────────────────────────
 
 export async function updateSiteSettingsAction(_prevState, formData) {
   if (!(await checkAuth())) {
@@ -610,20 +594,10 @@ export async function updateSiteSettingsAction(_prevState, formData) {
     return { success: false, message: "Site settings are incomplete or invalid." };
   }
 
-  const existing = await prisma.siteSettings.findFirst();
-  if (existing) {
-    await prisma.siteSettings.update({
-      where: { id: existing.id },
-      data: parsed.data
-    });
-  } else {
-    await prisma.siteSettings.create({
-      data: parsed.data
-    });
-  }
+  updateSettings(parsed.data);
 
   revalidatePath("/");
   revalidatePath("/v2");
-  revalidatePath("/admin");
+  revalidatePath("/gear5");
   return { success: true, message: "V2 CMS settings updated." };
 }

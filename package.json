@@ -7,23 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
-    "prisma:push": "prisma db push",
-    "db:init": "sqlite3 prisma/dev.db \".read scripts/bootstrap-db.sql\"",
-    "prisma:seed": "node prisma/seed.js",
-    "data:harish": "node scripts/sync-harish-data.js",
-    "db:backup": "node scripts/backup-db.js",
-    "postinstall": "prisma generate",
     "cap:sync": "npx cap sync"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "^2.10.0",
-    "@prisma/client": "^6.8.0",
-    "@upstash/redis": "^1.31.6",
     "animejs": "^4.0.2",
     "bcryptjs": "^3.0.2",
-    "cloudinary": "^2.6.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.12.1",
     "gsap": "^3.13.0",
@@ -35,10 +23,5 @@
     "dotenv": "^16.6.1",
     "zod": "^4.0.0"
   },
-  "devDependencies": {
-    "prisma": "^6.8.0"
-  },
-  "prisma": {
-    "seed": "node prisma/seed.js"
-  }
+  "devDependencies": {}
 }

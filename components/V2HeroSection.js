@@ -64,31 +64,6 @@ function VisualOrb({ initials }) {
           </div>
         </div>
       </div>
-      
-      {/* Sleek Tooltip hint */}
-      <div style={{
-        position: "absolute",
-        bottom: "-52px",
-        left: "50%",
-        transform: hovered ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(10px)",
-        opacity: hovered ? 1 : 0,
-        pointerEvents: "none",
-        transition: "all 350ms cubic-bezier(0.16, 1, 0.3, 1)",
-        background: "rgba(15, 12, 46, 0.96)",
-        border: "1px solid rgba(251, 191, 36, 0.5)",
-        boxShadow: "0 12px 36px rgba(0, 0, 0, 0.4), 0 0 25px rgba(168, 85, 247, 0.25)",
-        borderRadius: "10px",
-        padding: "8px 14px",
-        color: "#fff",
-        fontSize: "0.72rem",
-        fontFamily: "monospace",
-        whiteSpace: "nowrap",
-        zIndex: 50,
-        textAlign: "center"
-      }}>
-        <div style={{ color: "#fbbf24", fontWeight: "bold", fontSize: "0.78rem", marginBottom: "2px", letterSpacing: "0.05em" }}>⚜️ MONARCHS SIGIL</div>
-        <div style={{ color: "#e9d5ff" }}>Strategic Vision & Team Origin</div>
-      </div>
     </div>
   );
 }
@@ -233,19 +208,23 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
                 {/* Compact Thumbnail (only visible in default state) */}
                 {!monarchHovered && (
                   <div style={{
-                    width: "42px",
-                    height: "42px",
-                    borderRadius: "12px",
-                    background: "rgba(168, 85, 247, 0.06)",
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "50%",
+                    background: "#ffffff",
+                    border: "1.5px solid rgba(251, 191, 36, 0.7)",
+                    boxShadow: "0 4px 12px rgba(168, 85, 247, 0.16), 0 0 8px rgba(251, 191, 36, 0.22)",
                     display: "grid",
                     placeItems: "center",
-                    flexShrink: 0
+                    flexShrink: 0,
+                    overflow: "hidden",
+                    padding: "2px"
                   }}>
                     <Image
                       src="/Monarchs.png"
                       alt="Monarchs Logo"
-                      width={36}
-                      height={36}
+                      width={30}
+                      height={30}
                       style={{ objectFit: "contain" }}
                     />
                   </div>

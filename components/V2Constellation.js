@@ -274,51 +274,53 @@ export function V2Constellation({ profileName, floatingSkills, domains, quotes =
             </div>
           ) : null}
 
-          {visibleSkills.map((skill, index) => {
-            const Glyph = getSkillGlyph(skill);
-            const layoutStyle = activeLayout[index] || activeLayout[activeLayout.length - 1];
-            
-            let customTransform = "translate(-50%, -50%)";
-            if (mousePos.x !== 0 && mousePos.y !== 0) {
-              const leftPct = parseFloat(layoutStyle.left);
-              const topPct = parseFloat(layoutStyle.top);
-              const nodeX = (leftPct / 100) * dimensions.width;
-              const nodeY = (topPct / 100) * dimensions.height;
+          <div className={styles.mobileSkillsGrid}>
+            {visibleSkills.map((skill, index) => {
+              const Glyph = getSkillGlyph(skill);
+              const layoutStyle = activeLayout[index] || activeLayout[activeLayout.length - 1];
               
-              const dx = nodeX - mousePos.x;
-              const dy = nodeY - mousePos.y;
-              const distance = Math.sqrt(dx * dx + dy * dy);
-              const maxRadius = 180;
-              
-              if (distance < maxRadius) {
-                const force = (maxRadius - distance) / maxRadius; // 0 to 1 strength
-                const maxPush = 45; // max displacement in px
-                const pushX = (dx / distance) * force * maxPush;
-                const pushY = (dy / distance) * force * maxPush;
-                customTransform = `translate(calc(-50% + ${pushX}px), calc(-50% + ${pushY}px))`;
+              let customTransform = "translate(-50%, -50%)";
+              if (mousePos.x !== 0 && mousePos.y !== 0) {
+                const leftPct = parseFloat(layoutStyle.left);
+                const topPct = parseFloat(layoutStyle.top);
+                const nodeX = (leftPct / 100) * dimensions.width;
+                const nodeY = (topPct / 100) * dimensions.height;
+                
+                const dx = nodeX - mousePos.x;
+                const dy = nodeY - mousePos.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const maxRadius = 180;
+                
+                if (distance < maxRadius) {
+                  const force = (maxRadius - distance) / maxRadius; // 0 to 1 strength
+                  const maxPush = 45; // max displacement in px
+                  const pushX = (dx / distance) * force * maxPush;
+                  const pushY = (dy / distance) * force * maxPush;
+                  customTransform = `translate(calc(-50% + ${pushX}px), calc(-50% + ${pushY}px))`;
+                }
               }
-            }
 
-            const combinedStyle = {
-              ...layoutStyle,
-              transform: customTransform
-            };
+              const combinedStyle = {
+                ...layoutStyle,
+                transform: customTransform
+              };
 
-            return (
-              <article
-                key={skill.id}
-                className={`${styles.floatingSkill} ${styles.floatingSkillActive}`}
-                style={combinedStyle}
-              >
-                <div className={styles.floatingSkillIconWrap}>
-                  <Glyph size={15} className={styles.floatingSkillGlyph} />
-                </div>
-                <div className={styles.floatingSkillCopy}>
-                  <strong>{skill.name}</strong>
-                </div>
-              </article>
-            );
-          })}
+              return (
+                <article
+                  key={skill.id}
+                  className={`${styles.floatingSkill} ${styles.floatingSkillActive}`}
+                  style={combinedStyle}
+                >
+                  <div className={styles.floatingSkillIconWrap}>
+                    <Glyph size={15} className={styles.floatingSkillGlyph} />
+                  </div>
+                  <div className={styles.floatingSkillCopy}>
+                    <strong>{skill.name}</strong>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </div>
 

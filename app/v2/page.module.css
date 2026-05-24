@@ -630,6 +630,10 @@
   display: block;
 }
 
+.mobileSkillsGrid {
+  display: contents;
+}
+
 .constellationShell {
   position: relative;
   min-height: 44rem;
@@ -1617,9 +1621,87 @@
     grid-template-columns: 1fr;
   }
 
+  /* Reductions to shrink content size and make it look perfectly compact on mobile */
+  .hero {
+    padding: 8px 0 20px !important;
+  }
+
   .heroCopy h1 {
-    font-size: clamp(2rem, 10vw, 3.4rem);
-    line-height: 1.1;
+    font-size: clamp(1.75rem, 8vw, 2.7rem) !important;
+    line-height: 1.15;
+  }
+
+  .heroLead {
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .heroText {
+    font-size: 0.82rem !important;
+    margin-top: 10px !important;
+    line-height: 1.6 !important;
+  }
+
+  .sectionHeading h2 {
+    font-size: clamp(1.2rem, 5.5vw, 1.55rem) !important;
+    line-height: 1.25;
+  }
+
+  .originPanel,
+  .originStats,
+  .serviceCard,
+  .featuredQuestCopy,
+  .questCard,
+  .questTile,
+  .timelineCard,
+  .artifactVault,
+  .victoryVault,
+  .finalSection {
+    padding: 14px 12px !important;
+    border-radius: 18px !important;
+  }
+
+  .originPanel p {
+    font-size: 0.88rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .serviceCard h3,
+  .featuredQuestCopy h3,
+  .questCard h3,
+  .questTile h3,
+  .timelineCard h3 {
+    font-size: 1.05rem !important;
+  }
+
+  .serviceCard p,
+  .featuredQuestCopy p,
+  .questCard p,
+  .questTile p,
+  .timelineCard p,
+  .victoryCard p {
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+    margin-top: 6px !important;
+  }
+
+  .originSection,
+  .servicesSection,
+  .constellationSection,
+  .questSection,
+  .timelineSection,
+  .vaultSection,
+  .finalSection {
+    margin-top: 24px !important;
+  }
+
+  .metricRibbon article {
+    padding: 10px 8px !important;
+    border-radius: 16px !important;
+  }
+
+  .metricRibbon article strong {
+    font-size: 0.95rem !important;
   }
 
   .heroCenterpiece {
@@ -1637,7 +1719,7 @@
 
   .floatCardWrapper {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
     width: 100% !important;
     max-width: 32rem !important;
@@ -1695,8 +1777,8 @@
   .constellationShell {
     min-height: auto;
     display: grid;
-    gap: 28px !important;
-    padding: 18px;
+    gap: 16px !important;
+    padding: 16px;
   }
 
   .constellationShell::before,
@@ -1704,13 +1786,33 @@
     display: none;
   }
 
-  .constellationCore,
+  .constellationCore {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  .mobileSkillsGrid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+
   .floatingSkill {
-    position: relative;
-    inset: auto;
-    transform: none;
-    width: 100%;
-    height: auto;
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
   }
 
   .constellationCore {

@@ -338,48 +338,6 @@ function SolutionOverview({ projectId, isFeatured = false }) {
         <text x="160" y="116" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">HEALTH CHECK</text>
       </>
     );
-  } else if (projectId.includes("shebloom")) {
-    gradient = "linear-gradient(135deg, #831843 0%, #f43f5e 100%)";
-    initials = "SB";
-    label = "WELLNESS TIMELINE";
-    content = (
-      <>
-        <circle cx="160" cy="90" r="28" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
-        <path d="M 148,82 C 148,76 160,70 160,82 C 160,70 172,76 172,82 C 172,92 160,98 160,102 C 160,98 148,92 148,82 Z" fill="white" opacity="0.8" />
-        <path d="M 132,90 H 80 M 188,90 H 240" stroke="white" strokeWidth="1.5" strokeDasharray="4,4" />
-        <circle cx="80" cy="90" r="4" fill="white" />
-        <circle cx="240" cy="90" r="4" fill="white" />
-        <text x="160" y="132" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">CYCLE FLOW</text>
-      </>
-    );
-  } else if (projectId.includes("dream")) {
-    gradient = "linear-gradient(135deg, #172554 0%, #2563eb 100%)";
-    initials = "DV";
-    label = "MODULAR READING MAP";
-    content = (
-      <>
-        <rect x="60" y="60" width="38" height="48" rx="3" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
-        <path d="M 68,72 H 90 M 68,82 H 84" stroke="white" strokeWidth="1.5" />
-        <rect x="222" y="60" width="38" height="48" rx="3" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
-        <path d="M 230,72 H 252 M 230,82 H 246" stroke="white" strokeWidth="1.5" />
-        <path d="M 98,84 H 222" stroke="white" strokeWidth="1.5" strokeDasharray="4,4" />
-        <circle cx="160" cy="84" r="8" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
-        <text x="160" y="124" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">READ MAP</text>
-      </>
-    );
-  } else if (projectId.includes("symbio")) {
-    gradient = "linear-gradient(135deg, #115e59 0%, #10b981 100%)";
-    initials = "SY";
-    label = "COLLABORATIVE SYNCHRONIZER";
-    content = (
-      <>
-        <rect x="100" y="50" width="120" height="70" rx="6" fill="rgba(255,255,255,0.12)" stroke="white" strokeWidth="2" />
-        <circle cx="160" cy="85" r="14" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.5" />
-        <path d="M 80,75 L 94,82 M 240,75 L 226,82" stroke="white" strokeWidth="1.5" />
-        <polygon points="80,75 86,85 82,82 76,82" fill="white" stroke="white" strokeWidth="1" />
-        <text x="160" y="142" fill="white" fontSize="8" textAnchor="middle" fontFamily="monospace" fontWeight="600">SHARED SYNC</text>
-      </>
-    );
   } else {
     gradient = "linear-gradient(135deg, #115e59 0%, #10b981 100%)";
     initials = projectId.substring(0, 2).toUpperCase();

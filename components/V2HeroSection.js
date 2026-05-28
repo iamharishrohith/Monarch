@@ -2,9 +2,40 @@
 
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
 import styles from "@/app/v2/page.module.css";
+
+function LottiePlayer({ animationPath, className }) {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    let anim;
+    let isCancelled = false;
+
+    import("lottie-web").then((lottie) => {
+      if (isCancelled || !containerRef.current) return;
+      
+      // Clear any existing children to prevent duplicate animations
+      containerRef.current.innerHTML = "";
+
+      anim = lottie.default.loadAnimation({
+        container: containerRef.current,
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        path: animationPath,
+      });
+    });
+
+    return () => {
+      isCancelled = true;
+      if (anim) anim.destroy();
+    };
+  }, [animationPath]);
+
+  return <div ref={containerRef} className={className} style={{ width: "100%", height: "100%" }} />;
+}
 
 function getInitials(name) {
   return name
@@ -68,7 +99,7 @@ function VisualOrb({ initials }) {
   );
 }
 
-export function V2HeroSection({ profile, progression, projectCount, skillCount, certificationCount, achievementCount, v2Config = null, onOpenInfo }) {
+export function V2HeroSection({ profile, progression, projectCount, skillCount, certificationCount, achievementCount, v2Config = null, onOpenInfo, onToggleMode }) {
   const heroRef = useRef(null);
   const initials = useMemo(() => getInitials(profile?.name || "Harish Rohith"), [profile?.name]);
   const [monarchHovered, setMonarchHovered] = useState(false);
@@ -88,9 +119,17 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
       <div className={styles.navStrip}>
         <div>
           <span className={styles.kicker}>WELCOME SIGNAL</span>
-          <p className={styles.navTitle}>Welcome to {profile?.name || "Harish Rohith"}&apos;s Ascension Realm</p>
+          <p className={styles.navTitle}>Welcome to {profile?.name || "Harish Rohith"}&apos;s Creative Studio</p>
         </div>
         <div className={styles.navActions}>
+          <button
+            type="button"
+            onClick={onToggleMode}
+            className={styles.ghostButton}
+            style={{ marginRight: "10px", padding: "8px 16px", fontSize: "0.75rem", background: "rgba(6,182,212,0.06)", borderColor: "rgba(6,182,212,0.2)" }}
+          >
+            Technical Mode
+          </button>
           <button
             type="button"
             onClick={onOpenInfo}
@@ -104,31 +143,31 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
             onClick={() => trackEvent("Hero Header", "Button Click", v2Config?.heroPrimaryCtaLabel || "Enter Quest Log")}
             className={styles.primaryButton}
           >
-            {v2Config?.heroPrimaryCtaLabel || "Enter Quest Log"}
+            {v2Config?.heroPrimaryCtaLabel || "Explore Projects"}
           </a>
         </div>
       </div>
 
       <div className={styles.heroLayout}>
         <div className={styles.heroCopy}>
-          <span className={styles.systemBadge}>AWAKENING GATE</span>
+          <span className={styles.systemBadge}>CREATIVE PROFILE</span>
           <h1>{profile?.name}</h1>
           <p className={styles.heroLead}>{profile?.headline}</p>
           <p className={styles.heroText}>{profile?.bio}</p>
           <div className={styles.heroActions}>
             <a
               href={v2Config?.heroPrimaryCtaHref || "#constellation"}
-              onClick={() => trackEvent("Hero Content", "Button Click", v2Config?.heroPrimaryCtaLabel || "View Awakening Map")}
+              onClick={() => trackEvent("Hero Content", "Button Click", v2Config?.heroPrimaryCtaLabel || "View Ability Map")}
               className={styles.primaryButton}
             >
-              {v2Config?.heroPrimaryCtaLabel || "View Awakening Map"}
+              {v2Config?.heroPrimaryCtaLabel || "View Ability Map"}
             </a>
             <a
               href={v2Config?.heroSecondaryCtaHref || "#final-form"}
-              onClick={() => trackEvent("Hero Content", "Button Click", v2Config?.heroSecondaryCtaLabel || "Summon Collaboration")}
+              onClick={() => trackEvent("Hero Content", "Button Click", v2Config?.heroSecondaryCtaLabel || "Contact Portal")}
               className={styles.ghostButton}
             >
-              {v2Config?.heroSecondaryCtaLabel || "Summon Collaboration"}
+              {v2Config?.heroSecondaryCtaLabel || "Contact Portal"}
             </a>
           </div>
         </div>
@@ -155,11 +194,11 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
 
           <div className={styles.floatCardWrapper} onClick={onOpenInfo} style={{ cursor: "pointer" }} title="Click to view Portfolio System details">
             <div className={`${styles.floatCard} ${styles.floatCardTop}`}>
-              <span>{v2Config?.levelLabel || "RANK"}</span>
+              <span>{v2Config?.levelLabel || "ARCHITECT TIER"}</span>
               <strong>{progression.currentRank}</strong>
             </div>
             <div className={`${styles.floatCard} ${styles.floatCardRight}`}>
-              <span>POWER LVL</span>
+              <span>ARCHITECT LVL</span>
               <strong>{progression.currentLevel}</strong>
             </div>
             <div className={`${styles.floatCard} ${styles.floatCardBottom}`}>
@@ -296,20 +335,20 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
       </div>
 
       <div className={styles.metricRibbon}>
-        <article onClick={() => trackEvent("Metrics", "Card Click", "Quest Count")}>
-          <span>Quest Count</span>
+        <article onClick={() => trackEvent("Metrics", "Card Click", "Projects")}>
+          <span>Projects</span>
           <strong>{projectCount}</strong>
         </article>
-        <article onClick={() => trackEvent("Metrics", "Card Click", "Skill Nodes")}>
-          <span>Skill Nodes</span>
+        <article onClick={() => trackEvent("Metrics", "Card Click", "Skills")}>
+          <span>Skills</span>
           <strong>{skillCount}</strong>
         </article>
-        <article onClick={() => trackEvent("Metrics", "Card Click", "Artifacts")}>
-          <span>Artifacts</span>
+        <article onClick={() => trackEvent("Metrics", "Card Click", "Certificates")}>
+          <span>Certificates</span>
           <strong>{certificationCount}</strong>
         </article>
-        <article onClick={() => trackEvent("Metrics", "Card Click", "Victories")}>
-          <span>Victories</span>
+        <article onClick={() => trackEvent("Metrics", "Card Click", "Achievements")}>
+          <span>Achievements</span>
           <strong>{achievementCount}</strong>
         </article>
       </div>

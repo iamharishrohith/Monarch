@@ -10,18 +10,19 @@
     "cap:sync": "npx cap sync"
   },
   "dependencies": {
+    "@splinetool/react-spline": "^4.1.0",
     "animejs": "^4.0.2",
     "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
+    "dotenv": "^16.6.1",
     "framer-motion": "^12.12.1",
     "gsap": "^3.13.0",
+    "lottie-web": "^5.13.0",
     "lucide-react": "^0.511.0",
     "next": "^16.0.0",
     "next-auth": "^5.0.0-beta.29",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "dotenv": "^16.6.1",
     "zod": "^4.0.0"
-  },
-  "devDependencies": {}
+  }
 }

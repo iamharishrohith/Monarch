@@ -28,21 +28,21 @@ export function V2RealmChrome({ progression, latestArtifact, children }) {
           <article>
             <Crown size={14} />
             <div>
-              <span>Current Rank</span>
+              <span>Architect Tier</span>
               <strong>{progression.currentRank}</strong>
             </div>
           </article>
           <article>
             <Sparkles size={14} />
             <div>
-              <span>Active Quest</span>
-              <strong>None</strong>
+              <span>Current Focus</span>
+              <strong>AI & Scalable Systems</strong>
             </div>
           </article>
           <article>
             <Trophy size={14} />
             <div>
-              <span>Latest Artifact</span>
+              <span>Latest Certificate</span>
               <strong>{latestArtifact?.title || "Oracle Java Foundation"}</strong>
             </div>
           </article>
@@ -50,7 +50,7 @@ export function V2RealmChrome({ progression, latestArtifact, children }) {
             <ShieldCheck size={14} />
             <div>
               <span>System Status</span>
-              <strong>Monarch Sync Online</strong>
+              <strong>Online</strong>
             </div>
           </article>
         </div>

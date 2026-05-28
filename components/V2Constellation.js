@@ -344,7 +344,7 @@ export function V2Constellation({ profileName, floatingSkills, domains, quotes =
               aria-hidden={groupIndex === 1}
               ref={groupIndex === 0 ? marqueeGroupRef : null}
             >
-              {domains.slice(0, 5).map((domain) => {
+              {domains.map((domain) => {
                 const Icon = getDomainIcon(domain.title);
                 const active = domain.title === activeDomain;
 

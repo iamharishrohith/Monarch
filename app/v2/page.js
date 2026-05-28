@@ -237,7 +237,9 @@ export default async function V2Page() {
     certifications,
     achievements,
     progression,
-    v2Config
+    v2Config,
+    githubStatus,
+    leetcodeStatus
   } = await getPortfolioData();
 
   const skillDomains = buildCuratedDomainDetails(curatedDomainCards, skills);
@@ -291,10 +293,7 @@ export default async function V2Page() {
   const jsonLd = [personSchema, projectsSchema];
 
   return (
-    <V2RealmChrome
-      progression={progression}
-      latestArtifact={certifications[0]}
-    >
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -317,7 +316,9 @@ export default async function V2Page() {
         supportAchievements={supportAchievements}
         projectMyths={projectMyths}
         serviceCards={serviceCards}
+        githubStatus={githubStatus}
+        leetcodeStatus={leetcodeStatus}
       />
-    </V2RealmChrome>
+    </>
   );
 }

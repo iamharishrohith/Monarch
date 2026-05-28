@@ -17,15 +17,15 @@ export function V2SummonPortal({ profile }) {
     <>
       <section id="final-form" className={styles.finalSection}>
         <div className={styles.finalRing} />
-        <span className={styles.systemBadge}>FINAL SUMMON</span>
-        <h2>Open The Next Legendary Quest</h2>
+        <span className={styles.systemBadge}>COLLABORATION</span>
+        <h2>Let's Build Something Great</h2>
         <p>
           Bring me in when the product needs more than clean code and more than pretty visuals.
-          I build the system, the motion, and the memory people carry away from it.
+          I build the system, the motion, and the experience people carry away from it.
         </p>
         <div className={styles.finalActions}>
           <button type="button" className={styles.primaryButton} onClick={handleOpenPortal}>
-            Open Summon Portal <ArrowUpRight size={16} />
+            Open Contact Portal <ArrowUpRight size={16} />
           </button>
           {profile?.githubUrl ? (
             <a
@@ -33,7 +33,7 @@ export function V2SummonPortal({ profile }) {
               onClick={() => trackEvent("Portal", "View Code Realm Click", profile.githubUrl)}
               className={styles.ghostButton}
             >
-              View Code Realm <Github size={16} />
+              View GitHub Profile <Github size={16} />
             </a>
           ) : null}
         </div>
@@ -47,9 +47,9 @@ export function V2SummonPortal({ profile }) {
               <X size={16} />
             </button>
             <div className={styles.portalSigil} />
-            <span className={styles.systemBadge}>RITUAL SUMMON</span>
-            <h3>Signal The Build</h3>
-            <p>Choose the channel and let the next realm open.</p>
+            <span className={styles.systemBadge}>CONTACT PORTAL</span>
+            <h3>Send a Signal</h3>
+            <p>Select your preferred channel to collaborate.</p>
             <div className={styles.portalLinks}>
               <a
                 href={`mailto:${profile?.email}`}

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import {
   BookOpenText,
@@ -16,13 +17,18 @@ import {
   TrendingUp,
   Blocks,
   X,
-  Info
+  Info,
+  Github,
+  Zap
 } from "lucide-react";
 import { SectionReveal } from "@/components/SectionReveal";
 import { V2Constellation } from "@/components/V2Constellation";
 import { V2HeroSection } from "@/components/V2HeroSection";
 import { V2SummonPortal } from "@/components/V2SummonPortal";
 import { V2BackgroundEffects } from "@/components/V2BackgroundEffects";
+import { V2RealmChrome } from "@/components/V2RealmChrome";
+import { V2DeveloperClient } from "@/components/V2DeveloperClient";
+import { V2GatewayPortal } from "@/components/V2GatewayPortal";
 import styles from "@/app/v2/page.module.css";
 
 const serviceIcons = [Bot, Cpu, RadioTower, Search, PenTool, Smartphone, TrendingUp, Blocks];
@@ -50,9 +56,9 @@ function formatMonth(date) {
 }
 
 function buildQuestType(index) {
-  if (index === 0) return "World Quest";
-  if (index < 3) return "Elite Quest";
-  return "Rapid Quest";
+  if (index === 0) return "Enterprise System";
+  if (index < 3) return "Core Integration";
+  return "Utility Build";
 }
 
 function SolutionOverview({ projectId, isFeatured = false }) {
@@ -369,7 +375,7 @@ function SolutionOverview({ projectId, isFeatured = false }) {
   );
 }
 
-export function V2RealmClient({
+function V2RealmClientInner({
   profile,
   projects,
   skills,
@@ -386,7 +392,10 @@ export function V2RealmClient({
   majorAchievements,
   supportAchievements,
   projectMyths,
-  serviceCards
+  serviceCards,
+  onToggleMode,
+  githubStatus,
+  leetcodeStatus
 }) {
   const gear = 5; // Default to Gear 5 / Sun God Nika
   const [isHakiEnabled, setIsHakiEnabled] = useState(true);
@@ -432,12 +441,13 @@ export function V2RealmClient({
           achievementCount={achievements.length}
           v2Config={v2Config}
           onOpenInfo={() => setInfoModalOpen(true)}
+          onToggleMode={onToggleMode}
         />
 
         <SectionReveal className={styles.originSection} delay={0.04}>
           <div className={styles.sectionHeading}>
-            <span className={styles.systemBadge}>ORIGIN SCROLL</span>
-            <h2>Awakened Engineering: Defying Latency, Orchestrating Impact</h2>
+            <span className={styles.systemBadge}>PROFILE OVERVIEW</span>
+            <h2>Creative Engineering: Defying Latency, Orchestrating Impact</h2>
           </div>
           <div className={styles.originLayout}>
             <div className={styles.originGhost}>ORIGIN</div>
@@ -456,15 +466,15 @@ export function V2RealmClient({
             </article>
             <article className={styles.originStats}>
               <div>
-                <span>Current Realm</span>
+                <span>Location</span>
                 <strong>{profile?.location}</strong>
               </div>
               <div>
-                <span>Primary Signal</span>
+                <span>Contact</span>
                 <strong>{profile?.email}</strong>
               </div>
               <div>
-                <span>Battle Focus</span>
+                <span>Core Focus</span>
                 <strong>AI, Full Stack, Mobile, IoT</strong>
               </div>
             </article>
@@ -473,7 +483,7 @@ export function V2RealmClient({
 
         <SectionReveal className={styles.servicesSection} delay={0.06}>
           <div className={styles.sectionHeading}>
-            <span className={styles.systemBadge}>SERVICE MAP</span>
+            <span className={styles.systemBadge}>SERVICES OFFERED</span>
             <h2>Services I Offer</h2>
           </div>
           <div className={styles.servicesIntro}>
@@ -505,8 +515,8 @@ export function V2RealmClient({
 
         <SectionReveal id="constellation" className={styles.constellationSection} delay={0.08}>
           <div className={styles.sectionHeading}>
-            <span className={styles.systemBadge}>POWER CONSTELLATION</span>
-            <h2>Awakened Ability Map</h2>
+            <span className={styles.systemBadge}>INTERACTIVE ABILITY MAP</span>
+            <h2>Skills Graph</h2>
           </div>
           <V2Constellation
             profileName={profile?.name}
@@ -517,10 +527,155 @@ export function V2RealmClient({
           />
         </SectionReveal>
 
+        {/* Ascension Haki & Combat Telemetry Section */}
+        <SectionReveal id="telemetry" className={styles.telemetrySection} delay={0.1}>
+          <div className={styles.sectionHeading}>
+            <span className={styles.systemBadge}>LORE_TELEMETRY</span>
+            <h2>Ascension Status & Combat Telemetry</h2>
+          </div>
+          <p className={styles.servicesIntro} style={{ marginBottom: "20px" }}>
+            Real-time digital battle stats mapping repositories to spell arsenals, and solved algorithms to vanquished beasts.
+          </p>
+          <div className={styles.telemetryGrid}>
+            {/* GitHub Status Card */}
+            <article className={styles.telemetryCard}>
+              <div className={styles.telemetryCardHeader}>
+                <div className={`${styles.telemetryIconWrap} ${styles.githubIconWrap}`}>
+                  <Github size={20} />
+                </div>
+                <h3>GitHub: Conqueror Haki</h3>
+              </div>
+              
+              <div className={styles.statsBlock}>
+                <div className={styles.statItem}>
+                  <span className={styles.statItemLabel}>Arsenal Spells</span>
+                  <span className={styles.statItemValue}>
+                    {githubStatus && !githubStatus.unavailable ? githubStatus.publicRepos : "18"}
+                  </span>
+                </div>
+                <div className={styles.statItem}>
+                  <span className={styles.statItemLabel}>Grand Fleet</span>
+                  <span className={styles.statItemValue}>
+                    {githubStatus && !githubStatus.unavailable ? githubStatus.followers : "24"}
+                  </span>
+                </div>
+              </div>
+              
+              <div className={styles.serviceFoot} style={{ marginTop: "10px" }}>
+                <span>USER_SIGIL: {githubStatus?.username || "iamharishrohith"}</span>
+                <span className={styles.purpleText} style={{ fontWeight: "700" }}>[LIBERATED_ACTIVE]</span>
+              </div>
+            </article>
+
+            {/* LeetCode Status Card */}
+            <article className={styles.telemetryCard}>
+              <div className={styles.telemetryCardHeader}>
+                <div className={`${styles.telemetryIconWrap} ${styles.leetcodeIconWrap}`}>
+                  <Trophy size={20} />
+                </div>
+                <h3>LeetCode: Sun God Stats</h3>
+              </div>
+
+              <div className={styles.statsBlock}>
+                <div className={styles.statItem}>
+                  <span className={styles.statItemLabel}>Bounty Rank</span>
+                  <span className={styles.statItemValue}>
+                    {leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.ranking 
+                      ? `#${leetcodeStatus.ranking.toLocaleString()}` 
+                      : "#845,620"}
+                  </span>
+                </div>
+                <div className={styles.statItem}>
+                  <span className={styles.statItemLabel}>Beasts Slain</span>
+                  <span className={styles.statItemValue}>
+                    {leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
+                      ? leetcodeStatus.solved.all 
+                      : "154"}
+                  </span>
+                </div>
+              </div>
+
+              <div className={styles.difficultyDistribution}>
+                {/* Easy Progress Bar */}
+                <div className={styles.difficultyDistributionItem}>
+                  <div className={styles.diffRow}>
+                    <span className={styles.diffLabel} style={{ color: "#34A853" }}>INFANTRY</span>
+                    <div className={styles.diffBarBg}>
+                      <div 
+                        className={`${styles.diffBarFill} ${styles.easyFill}`} 
+                        style={{ 
+                          width: `${
+                            leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
+                              ? (leetcodeStatus.solved.easy / leetcodeStatus.solved.all) * 100 
+                              : 33
+                          }%` 
+                        }} 
+                      />
+                    </div>
+                    <span className={styles.diffCount}>
+                      {leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
+                        ? leetcodeStatus.solved.easy 
+                        : "52"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Medium Progress Bar */}
+                <div className={styles.difficultyDistributionItem}>
+                  <div className={styles.diffRow}>
+                    <span className={styles.diffLabel} style={{ color: "#fbbf24" }}>BOSSES</span>
+                    <div className={styles.diffBarBg}>
+                      <div 
+                        className={`${styles.diffBarFill} ${styles.mediumFill}`} 
+                        style={{ 
+                          width: `${
+                            leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
+                              ? (leetcodeStatus.solved.medium / leetcodeStatus.solved.all) * 100 
+                              : 57
+                          }%` 
+                        }} 
+                      />
+                    </div>
+                    <span className={styles.diffCount}>
+                      {leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
+                        ? leetcodeStatus.solved.medium 
+                        : "88"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Hard Progress Bar */}
+                <div className={styles.difficultyDistributionItem}>
+                  <div className={styles.diffRow}>
+                    <span className={styles.diffLabel} style={{ color: "#ea4335" }}>LORDS</span>
+                    <div className={styles.diffBarBg}>
+                      <div 
+                        className={`${styles.diffBarFill} ${styles.hardFill}`} 
+                        style={{ 
+                          width: `${
+                            leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
+                              ? (leetcodeStatus.solved.hard / leetcodeStatus.solved.all) * 100 
+                              : 10
+                          }%` 
+                        }} 
+                      />
+                    </div>
+                    <span className={styles.diffCount}>
+                      {leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
+                        ? leetcodeStatus.solved.hard 
+                        : "14"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </SectionReveal>
+
         <SectionReveal id="quests" className={styles.questSection} delay={0.12}>
           <div className={styles.sectionHeading}>
-            <span className={styles.systemBadge}>LEGENDARY QUESTS</span>
-            <h2>Mission Dossiers</h2>
+            <span className={styles.systemBadge}>FEATURED PROJECTS</span>
+            <h2>Engineering Case Studies</h2>
           </div>
 
           {featuredProject ? (
@@ -529,14 +684,14 @@ export function V2RealmClient({
                 <SolutionOverview projectId={featuredProject.id} isFeatured={true} />
                 <div className={styles.featuredQuestGlow} />
                 <div className={styles.featuredQuestSeal}>
-                  <span>World Quest</span>
+                  <span>Enterprise System</span>
                   <strong>+{featuredProject.expValue} EXP</strong>
                 </div>
               </div>
               <div className={styles.featuredQuestCopy}>
                 <div className={styles.questHeadlineRow}>
-                  <span className={styles.questType}>World Quest</span>
-                  <span className={styles.questMythLabel}>{projectMyths[featuredProject.slug]?.label || "Legendary Mission Artifact"}</span>
+                  <span className={styles.questType}>Enterprise System</span>
+                  <span className={styles.questMythLabel}>{projectMyths[featuredProject.slug]?.label || "Core Architecture"}</span>
                 </div>
                 <h3>{featuredProject.title}</h3>
                 <p>{featuredProject.summary}</p>
@@ -547,7 +702,7 @@ export function V2RealmClient({
                     <strong>{questStat(featuredProject)}</strong>
                   </article>
                   <article>
-                    <span>Quest Stack</span>
+                    <span>Tech Stack</span>
                     <strong>{splitStack(featuredProject.stack).slice(0, 2).join(" / ") || "Full Stack Build"}</strong>
                   </article>
                 </div>
@@ -558,8 +713,8 @@ export function V2RealmClient({
                   <span>+{featuredProject.expValue} EXP</span>
                 </div>
                 <div className={styles.questActions}>
-                  {featuredProject.liveUrl ? <a href={featuredProject.liveUrl}>Live System</a> : null}
-                  {featuredProject.repoUrl ? <a href={featuredProject.repoUrl}>Source Archive</a> : null}
+                  {featuredProject.liveUrl ? <a href={featuredProject.liveUrl}>Live Demo</a> : null}
+                  {featuredProject.repoUrl ? <a href={featuredProject.repoUrl}>Source Code</a> : null}
                 </div>
               </div>
             </article>
@@ -581,7 +736,7 @@ export function V2RealmClient({
                     </div>
 
                     <div className={styles.questCardBody}>
-                      <span className={styles.questMythLabel}>{projectMyths[project.slug]?.label || "Elite Relic"}</span>
+                      <span className={styles.questMythLabel}>{projectMyths[project.slug]?.label || "Core Build"}</span>
                       <h3>{project.title}</h3>
                       <p>{project.summary}</p>
                       <strong className={styles.questImpactLine}>{project.impact}</strong>
@@ -605,7 +760,7 @@ export function V2RealmClient({
                         <span className={styles.questType}>{buildQuestType(index + 3)}</span>
                         <span className={styles.tileExp}>+{project.expValue} EXP</span>
                       </div>
-                      <span className={styles.questTileMyth}>{projectMyths[project.slug]?.label || "Rapid Relic"}</span>
+                      <span className={styles.questTileMyth}>{projectMyths[project.slug]?.label || "Utility Build"}</span>
                       <h3>{project.title}</h3>
                       <p>{project.impact || project.summary}</p>
                       <div className={styles.questTileFoot}>
@@ -623,8 +778,8 @@ export function V2RealmClient({
 
         <SectionReveal className={styles.timelineSection} delay={0.16}>
           <div className={styles.sectionHeading}>
-            <span className={styles.systemBadge}>BATTLE CHRONICLE</span>
-            <h2>Ascension Timeline</h2>
+            <span className={styles.systemBadge}>CAREER JOURNEY</span>
+            <h2>Professional Experience</h2>
           </div>
 
           <div className={styles.timelineTrack}>
@@ -650,15 +805,15 @@ export function V2RealmClient({
 
         <SectionReveal className={styles.vaultSection} delay={0.2}>
           <div className={styles.sectionHeading}>
-            <span className={styles.systemBadge}>ARTIFACTS & VICTORIES</span>
-            <h2>Relics of Progress</h2>
+            <span className={styles.systemBadge}>CREDENTIALS & HACKATHONS</span>
+            <h2>Certifications & Achievements</h2>
           </div>
 
           <div className={styles.vaultLayout}>
             <div className={styles.artifactVault}>
               <div className={styles.vaultTitle}>
                 <ScrollText size={18} />
-                <h3>Artifacts</h3>
+                <h3>Certifications</h3>
               </div>
               <div className={styles.artifactGrid}>
                 {certifications.map((item) => (
@@ -675,7 +830,7 @@ export function V2RealmClient({
             <div className={styles.victoryVault}>
               <div className={styles.vaultTitle}>
                 <Trophy size={18} />
-                <h3>Victories</h3>
+                <h3>Hackathon Wins</h3>
               </div>
               <div className={styles.victoryHeroGrid}>
                 {majorAchievements.map((item) => (
@@ -702,7 +857,7 @@ export function V2RealmClient({
         <section className={styles.footerNote}>
           <div>
             <BookOpenText size={16} />
-            <span>Monarch Portfolio System</span>
+            <span>Creative Architect System</span>
           </div>
         </section>
       </main>
@@ -795,5 +950,87 @@ export function V2RealmClient({
         </div>
       ) : null}
     </div>
+  );
+}
+
+export function V2RealmClient(props) {
+  const [mounted, setMounted] = useState(false);
+  const [portfolioMode, setPortfolioMode] = useState(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (portfolioMode === null) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [portfolioMode]);
+
+  if (!mounted) {
+    return <div style={{ minHeight: "100vh", backgroundColor: "#030209" }} />;
+  }
+
+  return (
+    <AnimatePresence mode="wait">
+      {portfolioMode === null ? (
+        <motion.div
+          key="gateway"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, scale: 0.97 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <V2GatewayPortal
+            onSelectMode={(mode) => {
+              setPortfolioMode(mode);
+            }}
+          />
+        </motion.div>
+      ) : portfolioMode === "developer" ? (
+        <motion.div
+          key="developer"
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.97 }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <V2DeveloperClient
+            {...props}
+            onToggleMode={() => {
+              setPortfolioMode("creative");
+            }}
+          />
+        </motion.div>
+      ) : (
+        <motion.div
+          key="creative"
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.97 }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <V2RealmChrome
+            progression={props.progression}
+            latestArtifact={props.certifications[0]}
+          >
+            <V2RealmClientInner
+              {...props}
+              onToggleMode={() => {
+                setPortfolioMode("developer");
+              }}
+            />
+          </V2RealmChrome>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

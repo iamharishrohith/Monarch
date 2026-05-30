@@ -20,7 +20,9 @@ import {
   Shield,
   Smartphone,
   Sparkles,
-  WandSparkles
+  WandSparkles,
+  Bot,
+  TrendingUp
 } from "lucide-react";
 import styles from "@/app/v2/page.module.css";
 

@@ -16,6 +16,24 @@ export function V2BackgroundEffects({ gear, isHakiEnabled, onToggleHaki, project
 
 
 
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isLowEnd, setIsLowEnd] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const cores = navigator.hardwareConcurrency || 4;
+      const memory = navigator.deviceMemory || 8;
+      if (prefersReduced || cores < 4 || memory < 4) {
+        setIsLowEnd(true);
+      }
+    }
+    const timer = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Canvas physics loop (Sun God Nika black/red Conqueror Haki lightning)
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -80,6 +98,12 @@ export function V2BackgroundEffects({ gear, isHakiEnabled, onToggleHaki, project
     const loop = () => {
       // Clear canvas
       ctx.clearRect(0, 0, width, height);
+
+      // If transitioning or low-end device, bypass heavy drawing calculations to maintain 60 FPS
+      if (isLowEnd || isTransitioning) {
+        animationFrameId = requestAnimationFrame(loop);
+        return;
+      }
 
       // Smooth pointer lag
       pointer.rx += (pointer.x - pointer.rx) * 0.08;

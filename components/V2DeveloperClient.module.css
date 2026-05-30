@@ -49,7 +49,7 @@
   border-radius: 30px;
   backdrop-filter: blur(20px);
   z-index: 100;
-  max-width: 1200px;
+  max-width: 1400px;
   width: calc(100% - 32px);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.02);
   box-sizing: border-box;
@@ -134,17 +134,17 @@
 /* Hero Section */
 .heroSection {
   position: relative;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 60px 16px 60px;
+  padding: 18px 0 40px;
   z-index: 2;
   box-sizing: border-box;
 }
 
 .heroGrid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 40px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  gap: 32px;
   align-items: center;
 }
 
@@ -401,7 +401,7 @@
 
 /* Sections general layout styling */
 .section {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto 96px;
   padding: 0 16px;
   position: relative;
@@ -1435,7 +1435,7 @@
 
 /* Contact CTA Section */
 .contactCta {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto 96px;
   padding: 80px 16px;
   position: relative;
@@ -1673,7 +1673,7 @@
 
 /* Footer structure */
 .footer {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 40px 16px 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
@@ -1981,9 +1981,16 @@
   margin-top: 24px;
 }
 
+.bentoCardSpan2 {
+  grid-column: span 2;
+}
+
 @media (max-width: 1024px) {
   .capabilitiesBentoGrid {
     grid-template-columns: 1fr;
+  }
+  .bentoCardSpan2 {
+    grid-column: span 1;
   }
 }
 
@@ -2133,19 +2140,19 @@
 
 .bentoSkillsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
   width: 100%;
 }
 
 .bentoSkillChip {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   background: rgba(255, 255, 255, 0.015);
   border: 1px solid rgba(255, 255, 255, 0.03);
-  border-radius: 8px;
-  padding: 8px 12px;
+  border-radius: 14px;
+  padding: 13px 18px;
   box-sizing: border-box;
   cursor: pointer;
   transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -2170,7 +2177,7 @@
 }
 
 .bentoSkillName {
-  font-size: 0.76rem;
+  font-size: 0.94rem;
   font-weight: 600;
   color: #a1a1aa;
   transition: color 250ms ease;
@@ -2509,4 +2516,585 @@
     gap: 16px;
   }
 }
+
+/* ==========================================================================
+   THEME OVERRIDE: WHITE & SKY BLUE GRADIENT BASED THEME (TECH SIDE)
+   ========================================================================== */
+
+/* 1. Global Container */
+.container {
+  background-color: #f8fafc !important;
+  background-image: 
+    radial-gradient(circle at 50% 0%, #e0f2fe 0%, transparent 60%),
+    radial-gradient(circle at 0% 100%, #f0f9ff 0%, #f8fafc 100%) !important;
+  color: #1e293b !important;
+}
+
+/* 2. Grid Overlay & Glow */
+.gridOverlay {
+  background-image: radial-gradient(rgba(14, 165, 233, 0.08) 1.2px, transparent 1.2px) !important;
+}
+.ambientGlow {
+  background: radial-gradient(circle at 50% -20%, rgba(14, 165, 233, 0.18) 0%, rgba(56, 189, 248, 0.08) 40%, transparent 80%) !important;
+}
+
+/* 3. Floating Glass Navbar */
+.navbar {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border: 1px solid rgba(14, 165, 233, 0.18) !important;
+  box-shadow: 0 10px 40px rgba(14, 165, 233, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+.navbarScrolled {
+  background: rgba(240, 249, 255, 0.85) !important;
+  border-color: rgba(14, 165, 233, 0.25) !important;
+  box-shadow: 0 12px 40px rgba(14, 165, 233, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+.navLogo {
+  color: #0f172a !important;
+}
+.navLogo strong {
+  color: #0284c7 !important;
+}
+.logoIcon {
+  color: #0ea5e9 !important;
+}
+.navVersion {
+  color: #0369a1 !important;
+  border: 1px solid rgba(14, 165, 233, 0.2) !important;
+  background: rgba(14, 165, 233, 0.06) !important;
+}
+.navLinks a {
+  color: #475569 !important;
+}
+.navLinks a:hover {
+  color: #0ea5e9 !important;
+}
+.creativeSwitch {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(56, 189, 248, 0.1)) !important;
+  border: 1px solid rgba(14, 165, 233, 0.3) !important;
+  color: #0284c7 !important;
+}
+.creativeSwitch:hover {
+  background: #0ea5e9 !important;
+  color: #ffffff !important;
+  border-color: #0ea5e9 !important;
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.4) !important;
+}
+
+/* 4. Section Badge & Name */
+.sectionBadge {
+  color: #0284c7 !important;
+  background: rgba(14, 165, 233, 0.08) !important;
+  border: 1px solid rgba(14, 165, 233, 0.2) !important;
+}
+.heroName {
+  color: #0f172a !important;
+  background: linear-gradient(135deg, #0f172a 30%, #0284c7 90%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+.heroHeadline {
+  color: #1e293b !important;
+}
+.heroBio {
+  color: #475569 !important;
+}
+
+/* 5. Hero Stats */
+.metaStatBox {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(14, 165, 233, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.03) !important;
+}
+.metaStatBox span {
+  color: #64748b !important;
+}
+.metaStatBox strong {
+  color: #0f172a !important;
+}
+.amberText { color: #b45309 !important; }
+.purpleText { color: #7e22ce !important; }
+.cyanText { color: #0284c7 !important; }
+.greenText { color: #15803d !important; }
+
+/* 6. Action Buttons */
+.btnPrimary {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+  border: 1px solid #0284c7 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.25) !important;
+}
+.btnPrimary:hover {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  border-color: #0369a1 !important;
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35) !important;
+}
+.btnSecondary {
+  background: rgba(14, 165, 233, 0.05) !important;
+  border: 1px solid rgba(14, 165, 233, 0.2) !important;
+  color: #0284c7 !important;
+}
+.btnSecondary:hover {
+  background: rgba(14, 165, 233, 0.1) !important;
+  border-color: rgba(14, 165, 233, 0.3) !important;
+  color: #0369a1 !important;
+}
+.socialBtn {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(14, 165, 233, 0.15) !important;
+  color: #475569 !important;
+}
+.socialBtn:hover {
+  border-color: #0ea5e9 !important;
+  color: #0ea5e9 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* 7. Section Headers */
+.sectionHeader h2 {
+  color: #0f172a !important;
+}
+.sectionHeader p {
+  color: #475569 !important;
+}
+.sectionIndex {
+  color: #64748b !important;
+}
+
+/* 8. Panels and Cards (Glassmorphism Light) */
+.originPanel, .originStats, .serviceCard, .telemetryCard, .featuredProjectCard, .secondaryProjectCard, .projectTileCard, .experienceCard, .plaqueCard, .portalPanel, .terminalContainer {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(14, 165, 233, 0.15) !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: 0 15px 35px rgba(14, 165, 233, 0.05), 0 1px 3px rgba(0, 0, 0, 0.01) !important;
+  color: #1e293b !important;
+}
+.originGhost {
+  color: rgba(14, 165, 233, 0.03) !important;
+}
+.originPanel p {
+  color: #1e293b !important;
+}
+.philosophyRow span {
+  background: rgba(14, 165, 233, 0.04) !important;
+  border: 1px solid rgba(14, 165, 233, 0.1) !important;
+  color: #475569 !important;
+}
+.originStats span {
+  color: #64748b !important;
+}
+.originStats strong {
+  color: #0f172a !important;
+}
+
+/* 9. Service Cards */
+.serviceCard:hover {
+  border-color: #0ea5e9 !important;
+  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.12) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  transform: translateY(-4px) !important;
+}
+.serviceCard h3 {
+  color: #0f172a !important;
+}
+.serviceCard p {
+  color: #475569 !important;
+}
+.serviceFoot {
+  color: #64748b !important;
+  border-top-color: rgba(14, 165, 233, 0.1) !important;
+}
+
+/* 10. Capability Matrix */
+.capabilityCard {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(14, 165, 233, 0.15) !important;
+  box-shadow: 0 20px 45px rgba(14, 165, 233, 0.04) !important;
+}
+.capabilityCard:hover {
+  border-color: rgba(14, 165, 233, 0.25) !important;
+  box-shadow: 0 24px 60px rgba(14, 165, 233, 0.08) !important;
+}
+.capabilityCardHead h3 {
+  color: #0f172a !important;
+}
+
+/* 11. Bento Skill Chips */
+.bentoSkillChip {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(14, 165, 233, 0.12) !important;
+  color: #334155 !important;
+  box-shadow: 0 2px 4px rgba(14, 165, 233, 0.02) !important;
+}
+.bentoSkillChip:hover {
+  background: #ffffff !important;
+  border-color: var(--badge-accent, #0ea5e9) !important;
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.08) !important;
+  color: #0f172a !important;
+}
+.bentoSkillName {
+  color: #475569 !important;
+}
+.bentoSkillChip:hover .bentoSkillName {
+  color: #0f172a !important;
+}
+
+/* 12. Coding Telemetry */
+.telemetryCard:hover {
+  border-color: #0ea5e9 !important;
+  box-shadow: 0 30px 60px rgba(14, 165, 233, 0.1) !important;
+}
+.telemetryCard h3 {
+  color: #0f172a !important;
+}
+.statItemLabel {
+  color: #64748b !important;
+}
+.statItemValue {
+  color: #0f172a !important;
+}
+.githubIconWrap {
+  color: #0284c7 !important;
+}
+.leetcodeIconWrap {
+  color: #f97316 !important;
+}
+.diffCount {
+  color: #64748b !important;
+}
+.diffBarBg {
+  background: rgba(14, 165, 233, 0.08) !important;
+}
+
+/* 13. Projects / Systems */
+.projectSvgGrid {
+  background-image: radial-gradient(rgba(14, 165, 233, 0.15) 1.2px, transparent 1.2px) !important;
+}
+.projectSvgGlow {
+  background: radial-gradient(circle at center, rgba(14, 165, 233, 0.08) 0%, transparent 80%) !important;
+}
+.featuredProjectSeal {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid rgba(14, 165, 233, 0.2) !important;
+}
+.featuredProjectSeal span {
+  color: #64748b !important;
+}
+.featuredProjectCopy h3 {
+  color: #0f172a !important;
+}
+.featuredProjectCopy p {
+  color: #475569 !important;
+}
+.projectMetadataRow {
+  border-top-color: rgba(14, 165, 233, 0.1) !important;
+}
+.metaCol span {
+  color: #64748b !important;
+}
+.metaCol strong {
+  color: #0f172a !important;
+}
+.techTag {
+  background: rgba(14, 165, 233, 0.04) !important;
+  border: 1px solid rgba(14, 165, 233, 0.1) !important;
+  color: #475569 !important;
+}
+.cardBtnPrimary {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+  border: 1px solid #0284c7 !important;
+  color: #ffffff !important;
+}
+.cardBtnPrimary:hover {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  border-color: #0369a1 !important;
+}
+.cardBtn {
+  background: rgba(14, 165, 233, 0.05) !important;
+  border: 1px solid rgba(14, 165, 233, 0.2) !important;
+  color: #0284c7 !important;
+}
+.cardBtn:hover {
+  background: rgba(14, 165, 233, 0.1) !important;
+  border-color: rgba(14, 165, 233, 0.3) !important;
+  color: #0369a1 !important;
+}
+.secondaryProjectCard:hover {
+  border-color: rgba(14, 165, 233, 0.3) !important;
+  box-shadow: 0 20px 50px rgba(14, 165, 233, 0.08) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+.secondaryProjectBody h3 {
+  color: #0f172a !important;
+}
+.secondaryProjectBody p {
+  color: #475569 !important;
+}
+.projectTileCard:hover {
+  border-color: rgba(22, 163, 74, 0.3) !important;
+  box-shadow: 0 16px 40px rgba(22, 163, 74, 0.06) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+}
+.projectTileCard h3 {
+  color: #0f172a !important;
+}
+.projectTileCard p {
+  color: #475569 !important;
+}
+.xpTag {
+  color: #0284c7 !important;
+}
+
+/* 14. Centerpiece (Visual Orb & Aura) */
+.heroOrbMiddle {
+  border: 2px solid rgba(14, 165, 233, 0.18) !important;
+  background: radial-gradient(circle at 50% 50%, #f0f9ff 0%, #e0f2fe 58%, rgba(14, 165, 233, 0.08) 100%) !important;
+}
+.heroOrbCore {
+  color: #0284c7 !important;
+  border: 1px solid rgba(14, 165, 233, 0.25) !important;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #f0f9ff 52%, rgba(14, 165, 233, 0.08) 100%) !important;
+  box-shadow: 0 0 0 16px rgba(14, 165, 233, 0.06), 0 28px 70px rgba(14, 165, 233, 0.12) !important;
+}
+.heroOrbOuter {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0) 56%, rgba(14, 165, 233, 0.15) 58%, rgba(14, 165, 233, 0.02) 62%),
+    radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.25) 0%, rgba(14, 165, 233, 0.06) 60%, rgba(14, 165, 233, 0) 74%) !important;
+  box-shadow: 0 0 0 26px rgba(14, 165, 233, 0.03) !important;
+}
+.heroAuraField {
+  background:
+    radial-gradient(circle at var(--hero-x, 50%) var(--hero-y, 50%), rgba(14, 165, 233, 0.06), transparent 28%),
+    radial-gradient(circle at center, rgba(14, 165, 233, 0.03), transparent 56%) !important;
+}
+
+/* 15. Floating Cards */
+.floatCard {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border: 1px solid rgba(14, 165, 233, 0.2) !important;
+  box-shadow: 0 24px 60px rgba(14, 165, 233, 0.08) !important;
+}
+.floatCard span {
+  color: #64748b !important;
+}
+.floatCard strong {
+  color: #0f172a !important;
+}
+
+/* 16. Career Chronicle Grid */
+.expHeader h3 {
+  color: #0f172a !important;
+}
+.expDate {
+  color: #64748b !important;
+}
+.expCompany {
+  color: #0284c7 !important;
+}
+.expSummary {
+  color: #475569 !important;
+}
+.expHighlight {
+  background: rgba(14, 165, 233, 0.05) !important;
+  border-color: rgba(14, 165, 233, 0.15) !important;
+  color: #0284c7 !important;
+}
+
+/* 17. Plaque Cards */
+.blockHeader h4 {
+  color: #64748b !important;
+}
+.plaqueGlow {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 80%) !important;
+}
+.plaqueCard h5 {
+  color: #0f172a !important;
+}
+.plaqueCard p {
+  color: #475569 !important;
+}
+.plaqueIssuer {
+  color: #64748b !important;
+}
+.plaqueDate {
+  color: #64748b !important;
+}
+
+/* 18. Contact CTA Section */
+.contactCtaTitle {
+  color: #0f172a !important;
+}
+.contactCtaDesc {
+  color: #475569 !important;
+}
+.contactCtaRing {
+  background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.1), rgba(14, 165, 233, 0.04) 60%, transparent 74%) !important;
+  box-shadow: 0 0 0 20px rgba(14, 165, 233, 0.03), 0 0 80px rgba(14, 165, 233, 0.05) !important;
+}
+
+/* 19. Contact Portal Modal */
+.portalTitle {
+  color: #0f172a !important;
+}
+.portalDesc {
+  color: #475569 !important;
+}
+.portalClose {
+  background: rgba(14, 165, 233, 0.05) !important;
+  border-color: rgba(14, 165, 233, 0.12) !important;
+  color: #475569 !important;
+}
+.portalClose:hover {
+  background: rgba(14, 165, 233, 0.1) !important;
+  color: #0284c7 !important;
+  border-color: rgba(14, 165, 233, 0.25) !important;
+}
+.portalSigil {
+  background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.12), rgba(14, 165, 233, 0.04) 55%, transparent 72%) !important;
+  box-shadow: 0 0 0 14px rgba(14, 165, 233, 0.03), 0 0 40px rgba(14, 165, 233, 0.05) !important;
+}
+.portalLink {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(14, 165, 233, 0.15) !important;
+  color: #334155 !important;
+}
+.portalLink:hover {
+  background: #ffffff !important;
+  border-color: #0ea5e9 !important;
+  color: #0ea5e9 !important;
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.08) !important;
+}
+
+/* 20. Live Terminal Overlay */
+.terminalHeader {
+  border-bottom-color: rgba(14, 165, 233, 0.1) !important;
+  background: rgba(14, 165, 233, 0.05) !important;
+}
+.terminalBody {
+  background: rgba(255, 255, 255, 0.65) !important;
+}
+.terminalConsole {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(14, 165, 233, 0.18) !important;
+  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+  color: #475569 !important;
+}
+.terminalConsole:hover {
+  border-color: rgba(14, 165, 233, 0.3) !important;
+}
+.terminalActiveTitle {
+  color: #0f172a !important;
+  text-shadow: 0 0 8px rgba(14, 165, 233, 0.2) !important;
+}
+.terminalDescText {
+  color: #475569 !important;
+}
+.terminalIdleTitle {
+  color: #64748b !important;
+}
+.terminalIdleText {
+  color: #64748b !important;
+}
+.terminalBlinkCursor {
+  color: #0284c7 !important;
+}
+.logInfo {
+  color: #0f172a !important;
+}
+.logSuccess {
+  color: #16a34a !important;
+}
+.logPass {
+  color: #0284c7 !important;
+}
+.terminalFooter {
+  border-top-color: rgba(14, 165, 233, 0.1) !important;
+  background: rgba(14, 165, 233, 0.05) !important;
+}
+.buildBarBg {
+  background: rgba(14, 165, 233, 0.1) !important;
+}
+.buildBarPct {
+  color: #0f172a !important;
+}
+
+/* 21. Footer styling */
+.footer {
+  border-top-color: rgba(14, 165, 233, 0.1) !important;
+  color: #64748b !important;
+}
+
+/* ==========================================================================
+   22. Upscaled Typography & Legibility Enhancements (Creative Parity Upgrade)
+   ========================================================================== */
+.heroHeadline {
+  font-size: clamp(1.45rem, 2.8vw, 1.85rem) !important;
+  line-height: 1.75 !important;
+  max-width: 56rem !important;
+}
+.heroBio {
+  font-size: 1.22rem !important;
+  line-height: 1.9 !important;
+  color: #475569 !important;
+  max-width: 42rem !important;
+}
+.originPanel p {
+  font-size: 1.22rem !important;
+  line-height: 1.85 !important;
+}
+.serviceCard p {
+  font-size: 1.15rem !important;
+  line-height: 1.75 !important;
+}
+.featuredProjectCopy p {
+  font-size: 1.18rem !important;
+  line-height: 1.8 !important;
+}
+.secondaryProjectBody p {
+  font-size: 1.15rem !important;
+  line-height: 1.75 !important;
+}
+.projectTileCard p {
+  font-size: 1.12rem !important;
+  line-height: 1.7 !important;
+}
+.expSummary {
+  font-size: 1.15rem !important;
+  line-height: 1.75 !important;
+}
+.plaqueCard p {
+  font-size: 1.12rem !important;
+  line-height: 1.7 !important;
+}
+.contactCtaDesc {
+  font-size: 1.22rem !important;
+  line-height: 1.85 !important;
+}
+.portalDesc {
+  font-size: 1.15rem !important;
+  line-height: 1.75 !important;
+}
+.tagType, .serviceType, .tileMythLabel, .xpTag, .expDate, .plaqueDate, .plaqueIssuer {
+  font-size: 0.85rem !important;
+  letter-spacing: 0.04em !important;
+}
+.sectionHeader h2 {
+  font-size: clamp(1.8rem, 3.4vw, 2.5rem) !important;
+  font-weight: 850 !important;
+}
+.sectionHeader p {
+  font-size: 1.2rem !important;
+  line-height: 1.75 !important;
+  color: #475569 !important;
+  max-width: 760px !important;
+}
+.bentoSkillName {
+  font-size: 1.12rem !important;
+  font-weight: 600 !important;
+}
+.bentoSkillIcon {
+  width: 24px !important;
+  height: 24px !important;
+}
+
 

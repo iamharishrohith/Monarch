@@ -91,7 +91,7 @@ function VisualOrb({ initials }) {
               height={75}
               style={{
                 objectFit: "contain",
-                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.6)) drop-shadow(0 0 4px rgba(251, 191, 36, 0.4))"
+                filter: "drop-shadow(0 0 10px rgba(14, 165, 233, 0.45)) drop-shadow(0 0 4px rgba(14, 165, 233, 0.2))"
               }}
             />
           </div>
@@ -101,68 +101,404 @@ function VisualOrb({ initials }) {
   );
 }
 
+function TiltCard({ children, className, style, ...props }) {
+  const cardRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+  
+  const handleMouseMove = (e) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((centerY - y) / centerY) * 6; // subtle max 6 degrees tilt
+    const rotateY = ((x - centerX) / centerX) * 6; // subtle max 6 degrees tilt
+    
+    card.style.setProperty("--rx", `${rotateX}deg`);
+    card.style.setProperty("--ry", `${rotateY}deg`);
+    setIsHovered(true);
+  };
+  
+  const handleMouseLeave = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.setProperty("--rx", "0deg");
+    card.style.setProperty("--ry", "0deg");
+    setIsHovered(false);
+  };
+  
+  return (
+    <div
+      ref={cardRef}
+      className={className}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        ...style,
+        transform: "perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))",
+        transition: isHovered 
+          ? "transform 80ms linear" 
+          : "transform 500ms cubic-bezier(0.25, 1, 0.5, 1)",
+        transformStyle: "preserve-3d",
+        willChange: "transform"
+      }}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
+// Native brand SVG icons for skills
+function JavaScriptIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#f7df1e" d="M0 0h24v24H0z"/>
+      <path fill="#000" d="M18.66 12.02c-.8-.44-1.8-.73-2.65-.73-1.4 0-2.3.62-2.3 1.7 0 1.25.96 1.62 2.65 2.19 2.22.75 3.3 1.66 3.3 3.65 0 2.2-1.78 3.5-4.4 3.5-2.07 0-3.7-.85-4.48-2.35l1.83-1.07c.56.98 1.48 1.48 2.62 1.48 1.34 0 2.25-.56 2.25-1.57 0-1.25-.9-1.63-2.62-2.22-2.2-.77-3.33-1.63-3.33-3.66 0-2.05 1.72-3.4 4.07-3.4 1.74 0 3.2.66 3.98 1.93l-1.92 1.07zm-7.66 4.31v4c0 1.28-.62 1.95-1.77 1.95-.9 0-1.5-.47-1.75-1.32l-1.9 1.15c.66 1.5 2.05 2.2 3.8 2.2 2.64 0 3.94-1.4 3.94-3.9v-8.4h-2.32v4.32z"/>
+    </svg>
+  );
+}
+
+function TypeScriptIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#3178c6" d="M0 0h24v24H0z"/>
+      <path fill="#fff" d="M12.92 20.35v-8.42h-3.4v8.42zm7.1 0c.93 0 1.7-.35 2.1-.98l-1.23-1c-.24.33-.55.5-.86.5-.44 0-.74-.23-.74-.93v-4.9h2.36v-1.12H19.4v-2.2l-1.25.33v1.87h-1.66v1.12h1.66v5.2c0 1.3.83 2.1 2.87 2.1z"/>
+    </svg>
+  );
+}
+
+function ReactIcon({ size, className }) {
+  return (
+    <svg viewBox="-11.5 -10.23174 23 20.46348" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <circle cx="0" cy="0" r="2.05" fill="#61dafb"/>
+      <g stroke="#61dafb" strokeWidth="1.2" fill="none">
+        <ellipse rx="11" ry="4.2"/>
+        <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
+        <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
+      </g>
+    </svg>
+  );
+}
+
+function NextjsIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 180 180" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0, filter: "drop-shadow(0 0 1px rgba(255,255,255,0.8))" }}>
+      <circle cx="90" cy="90" r="90" fill="#000"/>
+      <path fill="url(#nextjs-grad)" d="M149.508 157.52L69.142 54H54v72h14.4V72.234l72.2 92.427c3.213-2.14 6.184-4.52 8.908-7.14z"/>
+      <rect x="115" y="54" width="14" height="72" fill="#fff"/>
+      <defs>
+        <linearGradient id="nextjs-grad" x1="109" y1="116.5" x2="144.5" y2="160.5" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#fff"/>
+          <stop offset="1" stopColor="#fff" stopOpacity="0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+function TailwindIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#38bdf8" d="M12 6.018C15.6 2.418 20.4 4.818 24 8.418c-3.6 3.6-8.4 1.2-12-2.4-3.6-3.6-8.4-1.2-12 2.4 3.6-3.6 8.4-1.2 12-2.4zm0 6c3.6-3.6 8.4-1.2 12 2.4-3.6 3.6-8.4 1.2-12-2.4-3.6-3.6-8.4-1.2-12 2.4 3.6-3.6 8.4-1.2 12-2.4z"/>
+    </svg>
+  );
+}
+
+function NodejsIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#339933" d="M12 1.344L2.247 6.974v11.26L12 23.86l9.753-5.626v-11.26L12 1.344zm7.986 6.302l-2.02 1.16v1.986L12 14.288 6.034 10.79V8.805l-2.02-1.16v10.18l7.986 4.607 7.986-4.607V7.646zm-2.02 5.093l-2.02 1.16v1.985l-3.946 2.274-3.947-2.274v-1.985l-2.02-1.16v4.617l5.967 3.441 5.967-3.441v-4.617z"/>
+    </svg>
+  );
+}
+
+function BunIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#fbf0d9" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5V14h3v2.5zm0-4.5h-3v-1.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5V12z" stroke="#cca43b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="9.5" cy="11.5" r="1.2" fill="#cca43b" />
+      <circle cx="14.5" cy="11.5" r="1.2" fill="#cca43b" />
+      <path d="M11 13.5h2" stroke="#cca43b" strokeWidth="1" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ElysiaIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="url(#elysia-grad)" d="M12 2L2 22h20L12 2zm0 4l6.5 13H5.5L12 6z"/>
+      <defs>
+        <linearGradient id="elysia-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop stopColor="#00f2fe"/>
+          <stop offset="1" stopColor="#4facfe"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+function RedisIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#dc382c" d="M12 .587l11.455 5.867v11.092L12 23.413.545 17.546V6.454L12 .587zm0 4.195L4.417 8.654l7.583 3.882 7.583-3.882-7.583-3.872zm-7.583 6.94l6.453 3.305v4.205L4.417 15.93v-4.208zm8.713 7.51v-4.205l6.453-3.305v4.208l-6.453 3.302z"/>
+    </svg>
+  );
+}
+
+function PostgresIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#336791" d="M21.907 10.963c-.305-1.921-1.391-3.666-2.91-4.912l-1.37 1.37c1.077.892 1.83 2.115 2.052 3.542h2.228zm-3.522-6.52c-1.667-.938-3.53-1.443-5.385-1.443s-3.718.505-5.385 1.443l1.109 1.917c1.32-.73 2.802-1.12 4.276-1.12s2.956.39 4.276 1.12l1.109-1.917zm-14.83 4.208c-.732 1.321-1.12 2.802-1.12 4.276 0 1.474.388 2.955 1.12 4.276l1.918-1.109c-.502-.911-.778-1.94-.778-3.167s.276-2.256.778-3.167L3.555 8.651zm8.445 12.349c1.474 0 2.956-.388 4.276-1.12l-1.109-1.918c-.911.502-1.94.778-3.167.778s-2.256-.276-3.167-.778l-1.109 1.918c1.32.732 2.802 1.12 4.276 1.12zm10.207-6.037h-2.228c-.222 1.427-.975 2.65-2.052 3.542l1.37 1.37c1.519-1.246 2.605-2.991 2.91-4.912z"/>
+    </svg>
+  );
+}
+
+function MongodbIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#13aa52" d="M12 1.5C9 3.5 7.5 6 7.5 9c0 4 3 6.5 4.5 13.5 1.5-7 4.5-9.5 4.5-13.5 0-3-1.5-5.5-4.5-7.5zm.3 6.5c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z"/>
+    </svg>
+  );
+}
+
+function FirebaseIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#FFCA28" d="M3.89 15.67L2 5.09a.46.46 0 0 1 .8-.4l3.19 3.19z"/>
+      <path fill="#FFA000" d="M13.6 3.15a.5.5 0 0 0-.7 0L2 14.77l5.08-5.08z"/>
+      <path fill="#F57C00" d="M12 21.64l9.11-9.11a.5.5 0 0 0-.7-.7L2 21.64z"/>
+    </svg>
+  );
+}
+
+function SupabaseIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#3ecf8e" d="M12 2L2 14h9v8l10-12h-9z"/>
+    </svg>
+  );
+}
+
+function DockerIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#2496ed" d="M13.983 11.078h2.119c.102 0 .186-.083.186-.185V8.902c0-.102-.084-.186-.186-.186h-2.119c-.103 0-.186.084-.186.186v1.99c0 .103.083.186.186.186zm-2.913 0h2.119c.102 0 .185-.083.185-.185V8.902c0-.102-.083-.186-.185-.186h-2.119c-.103 0-.186.084-.186.186v1.99c0 .103.083.186.186.186zM8.157 8.166h2.119c.102 0 .185-.083.185-.185V5.99c0-.102-.083-.186-.185-.186h-2.119c-.103 0-.186.084-.186.186v1.99c0 .103.083.186.186.186zM.05 13.068c.03.35.132.966.529 1.48 1.139 1.477 3.593 1.42 4.47 1.402.13-.002.261-.006.393-.01.378-.012.753-.024 1.127-.024 2.012.052 4.092.748 5.378 1.942.277.257.568.643.568 1.101a3.523 3.523 0 0 0 1.258-2.613l.006-.118c.01-.174.028-.344.053-.51.096-.641.344-1.222.757-1.745.92-1.163 2.27-1.8 3.99-1.895l.385-.021c.143-.008.236-.123.236-.266v-.41c0-.13-.08-.244-.206-.279-1.285-.36-2.58-.69-3.896-.69h-.33a.473.473 0 0 0-.472.483l-.004.148c-.021.67-.091 1.341-.212 2.003-.064.354-.265.656-.566.852-.352.228-.783.279-1.18.138a3.782 3.782 0 0 1-1.921-1.507c-.438-.59-.641-1.218-.582-1.821v-.15c0-.127-.09-.234-.216-.255l-.364-.061c-1.743-.292-3.48-.46-5.234-.46-2.632 0-5.22.378-7.766 1.127a.264.264 0 0 0-.19.255v.714z"/>
+    </svg>
+  );
+}
+
+function GitIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#f05032" d="M23.384 11.41L12.59.616a1.686 1.686 0 0 0-2.384 0L8.243 2.58l3.19 3.19a2.823 2.823 0 0 1 3.985 0 2.825 2.825 0 0 1 0 3.985 2.827 2.827 0 0 1-3.985 0 2.823 2.823 0 0 1 0-3.985l-3.19-3.19L.616 10.206a1.686 1.686 0 0 0 0 2.384l10.79 10.79a1.686 1.686 0 0 0 2.384 0l10.79-10.79a1.688 1.688 0 0 0 0-2.384z"/>
+    </svg>
+  );
+}
+
+function FigmaIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#F24E1E" d="M12 5C12 3.34 10.66 2 9 2S6 3.34 6 5s1.34 3 3 3h3V5z"/>
+      <path fill="#A259FF" d="M9 8c-1.66 0-3 1.34-3 3s1.34 3 3 3h3V8H9z"/>
+      <path fill="#1ABC9C" d="M9 14c-1.66 0-3 1.34-3 3s1.34 3 3 3h3v-6H9z"/>
+      <path fill="#19BCFE" d="M15 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3v6h3z"/>
+      <path fill="#FF7262" d="M15 14c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3v-3h3z"/>
+    </svg>
+  );
+}
+
+function Esp32Icon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <rect x="3" y="3" width="18" height="18" rx="2" fill="#d97706" />
+      <rect x="7" y="7" width="10" height="10" fill="#000" />
+      <text x="12" y="13" fill="#fff" fontSize="5" fontWeight="bold" textAnchor="middle" fontFamily="monospace">ESP32</text>
+      <path d="M5 3v-2M9 3v-2M13 3v-2M17 3v-2M5 21v2M9 21v2M13 21v2M17 21v2M3 5H1M3 9H1M3 13H1M3 17H1M21 5h2M21 9h2M21 13h2M21 17h2" stroke="#fff" strokeWidth="1" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function FramerIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#000000" stroke="#fff" strokeWidth="0.5" d="M5 2h14v6l-7 7H5V2zm0 14h7l7-7v13H5v-6z"/>
+    </svg>
+  );
+}
+
+function PythonIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#3776ab" d="M11.898.05c-2.42 0-4.63.16-5.59.45-3.32 1.01-3.23 3.16-3.23 5.34v2.02h8.92v1.27H3.078c-2.18 0-4.33-.09-5.34 3.23C-3.27 15.68-3.27 17.89-3.27 20.31s.16 4.63.45 5.59c1.01 3.32 3.16 3.23 5.34 3.23h2.02v-8.92h-1.27v8.92c2.18 0 4.33.09 5.34-3.23.99-3.23.99-5.44.99-7.86s-.16-4.63-.45-5.59c-1.01-3.32-3.16-3.23-5.34-3.23H2.078v1.27H11c2.18 0 4.33-.09 5.34 3.23z"/>
+    </svg>
+  );
+}
+
+function SolidityIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#363636" d="M12 1.5L4.5 9 12 16.5 19.5 9 12 1.5zm0 15L4.5 16.5l7.5 7.5 7.5-7.5-7.5 0z" />
+      <path fill="#8c8c8c" d="M12 1.5L12 16.5l7.5-7.5L12 1.5zm0 15L12 24l7.5-7.5-7.5 0z" />
+    </svg>
+  );
+}
+
+function ArduinoIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#00979d" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zm4 0c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+      <path fill="#fff" d="M9 11.5h2v1H9zM13 12h2v-2h-1v2z"/>
+    </svg>
+  );
+}
+
+function N8nIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#FF6D5A" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-3 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm6 0c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+      <path fill="none" stroke="#FF6D5A" strokeWidth="2" d="M9 12h6"/>
+    </svg>
+  );
+}
+
+function OpenRouterIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <rect x="2" y="2" width="20" height="20" rx="4" fill="#000000" />
+      <path fill="none" stroke="#ffffff" strokeWidth="2" d="M6 18V9a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v9"/>
+      <circle cx="6" cy="18" r="2" fill="#0ea5e9"/>
+      <circle cx="18" cy="18" r="2" fill="#22c55e"/>
+      <circle cx="12" cy="6" r="2" fill="#a855f7"/>
+    </svg>
+  );
+}
+
+function LangChainIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <rect x="2" y="2" width="20" height="20" rx="4" fill="#1c3d2f" />
+      <path fill="none" stroke="#38bdf8" strokeWidth="2.5" strokeLinecap="round" d="M8 12h8M6 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4M18 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4" />
+    </svg>
+  );
+}
+
+function FlowiseIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <rect x="2" y="2" width="20" height="20" rx="4" fill="#2b6cb0" />
+      <path d="M7 17v-6h4v2h2v-2h4v6" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="7" cy="11" r="2" fill="#fff" />
+      <circle cx="17" cy="11" r="2" fill="#fff" />
+    </svg>
+  );
+}
+
+function LovableIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <path fill="#ff4b91" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+  );
+}
+
+function V0DevIcon({ size, className }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size || 13} height={size || 13} className={className} style={{ flexShrink: 0 }}>
+      <rect x="2" y="2" width="20" height="20" rx="4" fill="#000000" />
+      <path fill="#ffffff" d="M12 17.5L5.5 6h13L12 17.5zm0-3l3.5-6.5h-7l3.5 6.5z"/>
+    </svg>
+  );
+}
+
+function GreenCheckIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: "#10b981", flexShrink: 0 }}>
+      <circle cx="6" cy="6" r="5" fill="#10b981" />
+      <path d="M3.6 6L4.8 7.2L8.4 3.6" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 const skillIconMap = {
   // Languages
-  "javascript (es6+)": Braces,
-  "typescript": Braces,
-  "python": Code2,
-  "java": CoffeeIcon, // Fallback if Coffee not imported, let's map it below
-  "c++": Cpu,
+  "javascript (es6+)": JavaScriptIcon,
+  "typescript": TypeScriptIcon,
+  "python": PythonIcon,
+  "java": CoffeeIcon,
+  "c++": Esp32Icon,
   "sql": Database,
-  "solidity": ShieldCheck,
+  "solidity": SolidityIcon,
   
-  // AI & ML
-  "ollama": Bot,
-  "custom llm training (4b+ params)": BrainCircuit,
-  "tx-itx architecture": Activity,
-  "linear regression optimization": TrendingUp,
+  // ML
+  "supervised learning": TrendingUp,
+  "regression & classification": Activity,
+  "neural networks": BrainCircuit,
+  "data preprocessing": Blocks,
+  
+  // Agent Orchestration
   "ai agents": Bot,
-  "vector databases (pinecone, supabase vector)": Database,
+  "flowise": FlowiseIcon,
+  "n8n": N8nIcon,
+  "openrouter": OpenRouterIcon,
+  "langchain": LangChainIcon,
   
   // Backend & Performance
-  "bun.js": Server,
-  "elysiajs": Zap,
-  "redis (caching & pub/sub)": Database,
+  "bun.js": BunIcon,
+  "elysiajs": ElysiaIcon,
+  "redis (caching & pub/sub)": RedisIcon,
+  "redis": RedisIcon,
   "websockets": RadioTower,
-  "node.js": Server,
+  "node.js": NodejsIcon,
   "fastify.js": Zap,
   "express.js": Server,
   
   // Frontend & Mobile
-  "next.js 15": Globe,
-  "react.js": Blocks,
-  "react native": Smartphone,
+  "next.js 15": NextjsIcon,
+  "react.js": ReactIcon,
+  "react native": ReactIcon,
   "antigravity (state management)": Sparkles,
-  "tailwind css": Palette,
+  "antigravity": Sparkles,
+  "tailwind css": TailwindIcon,
+  "capacitor.js": Smartphone,
   
   // IoT & Infrastructure
-  "esp32": Cpu,
+  "esp32": Esp32Icon,
+  "arduino": ArduinoIcon,
   "embedded c": Terminal,
   "raspberry pi": Cpu,
   "lora": RadioTower,
   "sensors": Cpu,
   
   // Database & Cloud
-  "supabase (auth/database/edge functions)": Database,
-  "postgresql": Database,
-  "firebase": Cloud,
-  "mongodb": Database,
+  "supabase (auth/database/edge functions)": SupabaseIcon,
+  "supabase": SupabaseIcon,
+  "postgresql": PostgresIcon,
+  "firebase": FirebaseIcon,
+  "mongodb": MongodbIcon,
   "mysql": Database,
   
-  // Tools & DevOps
-  "figma": PenTool,
-  "git/github": Github,
-  "docker": Blocks,
-  "postman": Terminal,
-  "vercel": Globe,
-  "turborepo": Blocks,
+  // Vibe Coding [GDG Dev]
+  "ai studio": Sparkles,
+  "stitch": Sparkles,
+  "jules": Bot,
+  "pomeilli": PenTool,
+  "claude code": Braces,
+  "codex": Code2,
+  "framer": FramerIcon,
+  "lovable": LovableIcon,
+  "v0.dev": V0DevIcon,
 
   // Fundamentals
   "dsa": Code2,
   "oops": Blocks,
   "dom": Globe,
   "system design": Cpu,
-  "git & github": Github,
+  "git & github": GitIcon,
+  "git/github": GitIcon,
   "rest apis": Braces
 };
 
@@ -177,13 +513,18 @@ const skillDescriptionFallback = {
   "sql": "High-efficiency query construction, complex join queries, index structures, and transaction optimization.",
   "solidity": "Decentralized smart contract design, EVM execution cost optimization, and secure cryptographic protocols.",
   
-  // AI & ML
-  "ollama": "Local LLM runtime environment hosting, model orchestration, and fast semantic token inference.",
-  "custom llm training (4b+ params)": "Dataset curating, transformer pre-training hyper-parameters, and weights convergence diagnostics.",
-  "tx-itx architecture": "Innovative double-transformer loop routing, state persistence matrices, and cognitive reasoning paths.",
-  "linear regression optimization": "Mathematical loss reduction, gradient descent tuning, and predictive value modeling.",
+  // ML
+  "supervised learning": "Implementing training algorithms on labeled datasets for highly accurate prediction systems.",
+  "regression & classification": "Supervised ML mapping discrete classes and predicting continuous outcomes.",
+  "neural networks": "Designing layered neural connections, backpropagation tuning, and custom weight adjustments.",
+  "data preprocessing": "Cleaning datasets, normalizations, scaling input matrices, and feature scaling operations.",
+  
+  // Agent Orchestration
   "ai agents": "Autonomous decision tree loops, tool-calling agency, and dynamic contextual system prompts.",
-  "vector databases (pinecone, supabase vector)": "Cosine similarity space mapping, semantic embeddings storage, and high-speed KNN indexing.",
+  "flowise": "Visual drag-drop interface automation for rapidly staging and deploying custom LLM flows.",
+  "n8n": "Self-hosted event-driven node workflow integrations and low-latency API connections.",
+  "openrouter": "Unified LLM routing, latency-based model switching, and optimized cost-effective token delivery.",
+  "langchain": "Developing modular model-chain logic pipelines, memory state persistence, and tool-calling execution.",
   
   // Backend & Performance
   "bun.js": "Ultra-fast Javascript runtime execution, native package management, and zero-overhead compilation.",
@@ -203,6 +544,7 @@ const skillDescriptionFallback = {
   
   // IoT & Infrastructure
   "esp32": "Microcontroller firmware flashing, deep-sleep cycles management, and WiFi/BLE telemetry integration.",
+  "arduino": "Microcontroller system programming, digital/analog signal processing, and direct hardware instrumentation.",
   "embedded c": "Hardware registers manipulation, interrupt handling routines, and strict memory resource constraints.",
   "raspberry pi": "Single-board Linux hosting automation, sensor bus aggregation, and network gateways orchestration.",
   "lora": "Long-range sub-GHz RF data telemetry packet transmission, and low-power remote communications.",
@@ -215,13 +557,17 @@ const skillDescriptionFallback = {
   "mongodb": "Document-oriented storage models, flexible schema scaling, and aggregate pipelines optimization.",
   "mysql": "Classic structured data queries execution, transaction-safe ACID states, and relational table indexing.",
   
-  // Tools & DevOps
-  "figma": "Pixel-perfect visual design systems, interactive component wireframing, and design-token exports.",
-  "git/github": "Distributed version history branches control, collaborative pull requests, and automation actions.",
-  "docker": "Isolated virtual container packaging, infrastructure deployment blueprints, and multi-service networks.",
-  "postman": "API endpoint verification suites, automated test scripts runner, and API schema documentation.",
-  "vercel": "Global Edge network CDNs hosting, instant branch preview builds, and serverless script routes.",
-  "turborepo": "Monorepo workspace build caching, parallel tasks run orchestration, and fast execution pipelines.",
+  // Vibe Coding [GDG Dev]
+  "ai studio": "Direct API benchmarking for Gemini models, system instruction testing, and high-performance prompts tuning.",
+  "stitch": "Component rendering orchestration, live data connections, and fast app builder scaffolding.",
+  "antigravity": "Interaction flow orchestration for fast-moving product interfaces.",
+  "jules": "Interactive terminal agents, automated project code reviews, and high-efficiency task orchestration.",
+  "pomeilli": "Rapid custom styling presets, dynamic CSS utilities compilation, and design-token systems.",
+  "claude code": "Advanced agentic command-line system prompts, test suite runners, and surgical file refactorings.",
+  "codex": "Autonomous codebase code generator tools, type mapping, and rapid feature prototyping scripts.",
+  "framer": "Rich pixel-perfect animations layout prototyping, dynamic components transitions, and visual microcopy.",
+  "lovable": "Full-stack client compiler execution, rapid UI iteration, and clean codebase generation.",
+  "v0.dev": "Vercel-native generative UI design tokens, component wireframing, and custom Tailwind styling templates.",
 
   // Fundamentals
   "dsa": "Advanced data structures and algorithms, complexity analysis, and runtime performance.",
@@ -269,7 +615,7 @@ function BentoSkillChip({ skill, accentColor, isSelected, onHover }) {
         "--badge-accent": accentColor,
       }}
     >
-      <Glyph size={13} className={styles.bentoSkillIcon} />
+      <Glyph size={24} className={styles.bentoSkillIcon} />
       <span className={styles.bentoSkillName}>{skill.name}</span>
     </div>
   );
@@ -296,7 +642,7 @@ function CapabilityCard({ category, skills }) {
   const defaultColor = getGoogleColor(category, 0);
 
   return (
-    <div className={styles.capabilityCard}>
+    <TiltCard className={styles.capabilityCard}>
       <div className={styles.capabilityCardHead}>
         <div className={styles.capabilityTitleRow}>
           <h3>{category}</h3>
@@ -328,7 +674,7 @@ function CapabilityCard({ category, skills }) {
           );
         })}
       </div>
-    </div>
+    </TiltCard>
   );
 }
 
@@ -493,13 +839,26 @@ export function V2DeveloperClient({
   serviceCards,
   onToggleMode,
   githubStatus,
-  leetcodeStatus
+  leetcodeStatus,
+  isLowEnd = false
 }) {
   const [coreTemp, setCoreTemp] = useState(38);
   const [uptime, setUptime] = useState(99.982);
   const [latency, setLatency] = useState(14);
   const [portalOpen, setPortalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [loadStage, setLoadStage] = useState(0);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setLoadStage(1), 350);
+    const t2 = setTimeout(() => setLoadStage(2), 700);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, []);
+  
+  const isDeferredLoaded = loadStage >= 2;
   
   const [monarchHovered, setMonarchHovered] = useState(false);
   const heroRef = useRef(null);
@@ -718,12 +1077,12 @@ export function V2DeveloperClient({
                     : "translate(calc((var(--hero-x, 50%) - 50%) * -0.22px), calc((var(--hero-y, 50%) - 50%) * -0.22px)) scale(1)",
                   transition: "all 400ms cubic-bezier(0.16, 1, 0.3, 1)",
                   cursor: "pointer",
-                  border: monarchHovered ? "1.5px solid rgba(251, 191, 36, 0.7)" : "1px solid rgba(255, 255, 255, 0.06)",
+                  border: monarchHovered ? "1.5px solid rgba(14, 165, 233, 0.5)" : "1px solid rgba(14, 165, 233, 0.15)",
                   boxShadow: monarchHovered 
-                    ? "0 30px 70px rgba(168, 85, 247, 0.16), 0 0 25px rgba(251, 191, 36, 0.35)" 
-                    : "0 24px 60px rgba(0, 0, 0, 0.4)",
-                  background: monarchHovered ? "rgba(15, 12, 46, 0.94)" : "rgba(12, 11, 26, 0.65)",
-                  color: monarchHovered ? "#ffffff" : "inherit",
+                    ? "0 30px 70px rgba(14, 165, 233, 0.16), 0 0 25px rgba(14, 165, 233, 0.35)" 
+                    : "0 24px 60px rgba(14, 165, 233, 0.06)",
+                  background: monarchHovered ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0.7)",
+                  color: monarchHovered ? "#0ea5e9" : "inherit",
                   zIndex: 30,
                   display: "flex",
                   flexDirection: "column",
@@ -782,7 +1141,7 @@ export function V2DeveloperClient({
                   transition: "all 400ms cubic-bezier(0.16, 1, 0.3, 1)",
                   marginTop: monarchHovered ? "10px" : "0px",
                   fontSize: "0.74rem",
-                  color: "#d8b4fe",
+                  color: "#0369a1",
                   fontFamily: "monospace",
                   lineHeight: "1.4",
                   width: "100%"
@@ -818,7 +1177,7 @@ export function V2DeveloperClient({
                       </div>
                     </div>
                     
-                    <div style={{ textAlign: "left", fontSize: "0.72rem", color: "#e9d5ff", lineHeight: "1.45" }}>
+                    <div style={{ textAlign: "left", fontSize: "0.72rem", color: "#475569", lineHeight: "1.45" }}>
                       ⚔️ Harish&apos;s strategic design orbit and core developer crew. Architecting the future of high-performance decentralized systems.
                     </div>
                   </div>
@@ -875,25 +1234,31 @@ export function V2DeveloperClient({
           <h2>Services Offered</h2>
           <p>Building scalable systems that combine mechanical precision with top-tier user experiences.</p>
         </div>
-        <div className={styles.servicesGrid}>
-          {(v2Config?.services || serviceCards || []).map((service, index) => {
-            const Icon = serviceIcons[index % serviceIcons.length];
-            return (
-              <motion.article key={service.title} className={styles.serviceCard} variants={cardReveal} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-                <div className={styles.serviceIconWrap}>
-                  <Icon size={18} />
-                </div>
-                <span className={styles.serviceType}>Service Node</span>
-                <h3>{service.title}</h3>
-                <p>{service.summary}</p>
-                <div className={styles.serviceFoot}>
-                  <span>Custom Scope</span>
-                  <span>Build Ready</span>
-                </div>
-              </motion.article>
-            );
-          })}
-        </div>
+        {loadStage >= 1 ? (
+          <div className={styles.servicesGrid}>
+            {(v2Config?.services || serviceCards || []).map((service, index) => {
+              const Icon = serviceIcons[index % serviceIcons.length];
+              return (
+                <motion.article key={service.title} className={styles.serviceCard} variants={cardReveal} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+                  <div className={styles.serviceIconWrap}>
+                    <Icon size={18} />
+                  </div>
+                  <span className={styles.serviceType}>Service Node</span>
+                  <h3>{service.title}</h3>
+                  <p>{service.summary}</p>
+                  <div className={styles.serviceFoot}>
+                    <span>Custom Scope</span>
+                    <span>Build Ready</span>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
+        ) : (
+          <div style={{ height: "140px", display: "grid", placeItems: "center", background: "rgba(255, 255, 255, 0.4)", borderRadius: "20px", border: "1px solid rgba(14, 165, 233, 0.12)" }}>
+            <span className={styles.sectionBadge}>COMPILING CORE SERVICE SCHEMAS...</span>
+          </div>
+        )}
       </SectionReveal>
 
       {/* Frosted Capabilities Matrix Bento Grid */}
@@ -903,13 +1268,30 @@ export function V2DeveloperClient({
           <h2>Capabilities Matrix</h2>
           <p>Explore full stack capabilities, programming languages, and system architectures in a responsive grid.</p>
         </div>
-        <div className={styles.capabilitiesBentoGrid}>
-          {Object.entries(skillGroups).map(([category, catSkills], index) => (
-            <motion.div key={category} variants={cardReveal} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-              <CapabilityCard category={category} skills={catSkills} />
-            </motion.div>
-          ))}
-        </div>
+        {isDeferredLoaded ? (
+          <div className={styles.capabilitiesBentoGrid}>
+            {Object.entries(skillGroups).map(([category, catSkills], index, arr) => {
+              const isLastAndOdd = arr.length % 2 !== 0 && index === arr.length - 1;
+              return (
+                <motion.div 
+                  key={category} 
+                  className={isLastAndOdd ? styles.bentoCardSpan2 : ""}
+                  variants={cardReveal} 
+                  custom={index} 
+                  initial="hidden" 
+                  whileInView="visible" 
+                  viewport={{ once: true, amount: 0.1 }}
+                >
+                  <CapabilityCard category={category} skills={catSkills} />
+                </motion.div>
+              );
+            })}
+          </div>
+        ) : (
+          <div style={{ height: "350px", display: "grid", placeItems: "center", background: "rgba(255, 255, 255, 0.4)", borderRadius: "20px", border: "1px solid rgba(14, 165, 233, 0.12)" }}>
+            <span className={styles.sectionBadge}>LOADING CAPABILITIES MATRIX...</span>
+          </div>
+        )}
       </SectionReveal>
 
       {/* GitHub & LeetCode Coding Telemetry Section */}
@@ -920,139 +1302,150 @@ export function V2DeveloperClient({
           <p>Real-time analytics and algorithmic data tracking synced directly from active developer profiles.</p>
         </div>
         
-        <div className={styles.telemetryGrid}>
-          {/* GitHub Stats Card */}
-          <article className={styles.telemetryCard}>
-            <div className={styles.telemetryCardHeader}>
-              <div className={`${styles.telemetryIconWrap} ${styles.githubIconWrap}`}>
-                <Github size={20} />
-              </div>
-              <h3>GitHub Workspace Signal</h3>
-            </div>
-            
-            <div className={styles.statsBlock}>
-              <div className={styles.statItem}>
-                <span className={styles.statItemLabel}>Repositories</span>
-                <span className={styles.statItemValue}>
-                  {githubStatus && !githubStatus.unavailable ? githubStatus.publicRepos : "18"}
-                </span>
-              </div>
-              <div className={styles.statItem}>
-                <span className={styles.statItemLabel}>Followers</span>
-                <span className={styles.statItemValue}>
-                  {githubStatus && !githubStatus.unavailable ? githubStatus.followers : "24"}
-                </span>
-              </div>
-            </div>
-            <div className={styles.serviceFoot} style={{ marginTop: "10px" }}>
-              <span>USER_ID: {githubStatus?.username || "iamharishrohith"}</span>
-              <span className={styles.greenText}>[CONNECTION_ACTIVE]</span>
-            </div>
-          </article>
-
-          {/* LeetCode Stats Card */}
-          <article className={styles.telemetryCard}>
-            <div className={styles.telemetryCardHeader}>
-              <div className={`${styles.telemetryIconWrap} ${styles.leetcodeIconWrap}`}>
-                <Award size={20} />
-              </div>
-              <h3>LeetCode Matrix Engine</h3>
-            </div>
-
-            <div className={styles.statsBlock}>
-              <div className={styles.statItem}>
-                <span className={styles.statItemLabel}>Rank</span>
-                <span className={styles.statItemValue}>
-                  {leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.ranking 
-                    ? `#${leetcodeStatus.ranking.toLocaleString()}` 
-                    : "#845,620"}
-                </span>
-              </div>
-              <div className={styles.statItem}>
-                <span className={styles.statItemLabel}>Total Solved</span>
-                <span className={styles.statItemValue}>
-                  {leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
-                    ? leetcodeStatus.solved.all 
-                    : "154"}
-                </span>
-              </div>
-            </div>
-
-            <div className={styles.difficultyDistribution}>
-              {/* Easy Progress Bar */}
-              <div className={styles.difficultyDistributionItem}>
-                <div className={styles.diffRow}>
-                  <span className={styles.diffLabel} style={{ color: "#34A853" }}>EASY</span>
-                  <div className={styles.diffBarBg}>
-                    <div 
-                      className={`${styles.diffBarFill} ${styles.easyFill}`} 
-                      style={{ 
-                        width: `${
-                          leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
-                            ? (leetcodeStatus.solved.easy / leetcodeStatus.solved.all) * 100 
-                            : 33
-                        }%` 
-                      }} 
-                    />
-                  </div>
-                  <span className={styles.diffCount}>
-                    {leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
-                      ? leetcodeStatus.solved.easy 
-                      : "52"}
-                  </span>
+        {loadStage >= 1 ? (
+          <div className={styles.telemetryGrid}>
+            {/* GitHub Stats Card */}
+            <TiltCard className={styles.telemetryCard} style={{
+              background: "rgba(255, 255, 255, 0.8)",
+              border: "1px solid rgba(14, 165, 233, 0.15)",
+              borderRadius: "24px",
+              padding: "28px 24px",
+              boxShadow: "0 20px 40px rgba(14, 165, 233, 0.05)",
+              backdropFilter: "blur(20px)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "24px"
+            }}>
+              {/* Header: Github Stats | Brand Logo */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(14, 165, 233, 0.1)", paddingBottom: "12px" }}>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "800", color: "#0f172a", margin: 0 }}>Github Status</h3>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <svg height="20" viewBox="0 0 16 16" width="20" fill="#0284c7" style={{ flexShrink: 0 }}>
+                    <path fillRule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                  </svg>
+                  <span style={{ fontFamily: "monospace", fontWeight: 800, fontSize: "0.85rem", color: "#0284c7", letterSpacing: "0.05em" }}>GITHUB.EXE</span>
                 </div>
               </div>
 
-              {/* Medium Progress Bar */}
-              <div className={styles.difficultyDistributionItem}>
-                <div className={styles.diffRow}>
-                  <span className={styles.diffLabel} style={{ color: "#fbbf24" }}>MEDIUM</span>
-                  <div className={styles.diffBarBg}>
-                    <div 
-                      className={`${styles.diffBarFill} ${styles.mediumFill}`} 
-                      style={{ 
-                        width: `${
-                          leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
-                            ? (leetcodeStatus.solved.medium / leetcodeStatus.solved.all) * 100 
-                            : 57
-                        }%` 
-                      }} 
-                    />
+              {/* Sub-layout: 2x3 Grid of spacious Numbers */}
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: "16px",
+                width: "100%"
+              }}>
+                {[
+                  { label: "Arsenal Spells (Repos)", value: githubStatus && !githubStatus.unavailable ? githubStatus.publicRepos || "18" : "18", color: "#0284c7" },
+                  { label: "Grand Fleet (Followers)", value: githubStatus && !githubStatus.unavailable ? githubStatus.followers || "24" : "24", color: "#0284c7" },
+                  { label: "Total Commits", value: githubStatus && !githubStatus.unavailable ? githubStatus.totalCommits || "218" : "218", color: "#0ea5e9" },
+                  { label: "Total Contributions", value: githubStatus && !githubStatus.unavailable ? githubStatus.totalContributions || "196" : "196", color: "#0ea5e9" },
+                  { label: "Active Pull Requests", value: githubStatus && !githubStatus.unavailable ? githubStatus.pullsCount || "23" : "23", color: "#34A853" },
+                  { label: "Current Active Streak", value: githubStatus && !githubStatus.unavailable ? `${githubStatus.streak || "6"} Days` : "6 Days", color: "#fbbf24" }
+                ].map((stat, idx) => (
+                  <div key={idx} style={{
+                    background: "rgba(255, 255, 255, 0.7)",
+                    border: "1px solid rgba(14, 165, 233, 0.12)",
+                    borderRadius: "16px",
+                    padding: "16px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    boxShadow: "0 4px 12px rgba(14, 165, 233, 0.02)",
+                    transition: "transform 250ms ease, border-color 250ms ease"
+                  }}>
+                    <span style={{ fontSize: "0.78rem", color: "#475569", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.03em", marginBottom: "6px" }} title={stat.label}>{stat.label}</span>
+                    <strong style={{ fontSize: "1.75rem", color: stat.color, fontWeight: "900", letterSpacing: "-0.02em" }}>{stat.value}</strong>
                   </div>
-                  <span className={styles.diffCount}>
-                    {leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
-                      ? leetcodeStatus.solved.medium 
-                      : "88"}
-                  </span>
+                ))}
+              </div>
+
+              {/* Bottom Row: Verified Seal */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(14, 165, 233, 0.1)", paddingTop: "14px", marginTop: "auto" }}>
+                <span style={{ fontSize: "0.74rem", fontFamily: "monospace", color: "#64748b", fontWeight: "700" }}>
+                  USER_SIGIL: {githubStatus?.username || "iamharishrohith"}
+                </span>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", background: "rgba(16, 185, 129, 0.06)", border: "1px solid rgba(16, 185, 129, 0.15)", padding: "5px 12px", borderRadius: "100px", boxShadow: "0 2px 6px rgba(16, 185, 129, 0.02)" }}>
+                  <GreenCheckIcon />
+                  <span style={{ fontSize: "0.72rem", color: "#16a34a", fontWeight: 700, fontFamily: "monospace" }}>VERIFIED</span>
+                </div>
+              </div>
+            </TiltCard>
+
+            {/* LeetCode Stats Card */}
+            <TiltCard className={styles.telemetryCard} style={{
+              background: "rgba(255, 255, 255, 0.8)",
+              border: "1px solid rgba(14, 165, 233, 0.15)",
+              borderRadius: "24px",
+              padding: "28px 24px",
+              boxShadow: "0 20px 40px rgba(14, 165, 233, 0.05)",
+              backdropFilter: "blur(20px)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "24px"
+            }}>
+              {/* Header: Leet Code | Brand Logo */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(14, 165, 233, 0.1)", paddingBottom: "12px" }}>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "800", color: "#0f172a", margin: 0 }}>LeetCode Status</h3>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                    <path d="M13.483 0a1.374 1.374 0 0 0-.961.397L6.237 6.417a1.367 1.367 0 0 0 0 1.933l6.285 6.285c.255.255.6.398.961.398.362 0 .707-.143.962-.398l6.285-6.285a1.367 1.367 0 0 0 0-1.933L14.444.397A1.374 1.374 0 0 0 13.483 0zm-.961 17.065a1.367 1.367 0 0 0-1.933 0l-6.285 6.285a1.367 1.367 0 0 0 0 1.933c.255.255.6.398.961.398.362 0 .707-.143.962-.398l6.285-6.285a1.367 1.367 0 0 0 0-1.933l-6.285-6.285z" fill="#f97316"/>
+                    <path d="M16.107 10.428H6.5c-.3 0-.5.2-.5.5s.2.5.5.5h9.607c.3 0 .5-.2.5-.5s-.2-.5-.5-.5z" fill="#f97316"/>
+                  </svg>
+                  <span style={{ fontFamily: "monospace", fontWeight: 800, fontSize: "0.85rem", color: "#f97316", letterSpacing: "0.05em" }}>LEETCODE.EXE</span>
                 </div>
               </div>
 
-              {/* Hard Progress Bar */}
-              <div className={styles.difficultyDistributionItem}>
-                <div className={styles.diffRow}>
-                  <span className={styles.diffLabel} style={{ color: "#ea4335" }}>HARD</span>
-                  <div className={styles.diffBarBg}>
-                    <div 
-                      className={`${styles.diffBarFill} ${styles.hardFill}`} 
-                      style={{ 
-                        width: `${
-                          leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
-                            ? (leetcodeStatus.solved.hard / leetcodeStatus.solved.all) * 100 
-                            : 10
-                        }%` 
-                      }} 
-                    />
+              {/* Sub-layout: 2x3 Grid of spacious Numbers */}
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: "16px",
+                width: "100%"
+              }}>
+                {[
+                  { label: "Problems Solved", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved ? leetcodeStatus.solved.all || "154" : "154", color: "#16a34a" },
+                  { label: "Global Ranking", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.ranking ? `#${leetcodeStatus.ranking.toLocaleString()}` : "#845,620", color: "#0284c7" },
+                  { label: "Contributed Items", value: leetcodeStatus && !leetcodeStatus.unavailable ? leetcodeStatus.contributed || "27" : "27", color: "#ea4335" },
+                  { label: "Active Days", value: leetcodeStatus && !leetcodeStatus.unavailable ? `${leetcodeStatus.activeDays || "10"} Days` : "10 Days", color: "#fbbf24" },
+                  { label: "Infantry (Easy)", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved ? leetcodeStatus.solved.easy || "52" : "52", color: "#16a34a" },
+                  { label: "Bosses (Medium)", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved ? leetcodeStatus.solved.medium || "88" : "88", color: "#fbbf24" },
+                  { label: "Lords (Hard)", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved ? leetcodeStatus.solved.hard || "14" : "14", color: "#ea4335" },
+                  { label: "Total Submissions", value: leetcodeStatus && !leetcodeStatus.unavailable ? leetcodeStatus.submissions || "27" : "27", color: "#0ea5e9" }
+                ].map((stat, idx) => (
+                  <div key={idx} style={{
+                    background: "rgba(255, 255, 255, 0.7)",
+                    border: "1px solid rgba(14, 165, 233, 0.12)",
+                    borderRadius: "16px",
+                    padding: "12px 16px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    boxShadow: "0 4px 12px rgba(14, 165, 233, 0.02)",
+                    transition: "transform 250ms ease, border-color 250ms ease"
+                  }}>
+                    <span style={{ fontSize: "0.78rem", color: "#475569", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.03em", marginBottom: "4px" }} title={stat.label}>{stat.label}</span>
+                    <strong style={{ fontSize: "1.6rem", color: stat.color, fontWeight: "900", letterSpacing: "-0.02em" }}>{stat.value}</strong>
                   </div>
-                  <span className={styles.diffCount}>
-                    {leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved 
-                      ? leetcodeStatus.solved.hard 
-                      : "14"}
-                  </span>
+                ))}
+              </div>
+
+              {/* Bottom Row: Verified Seal */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(14, 165, 233, 0.1)", paddingTop: "14px", marginTop: "auto" }}>
+                <span style={{ fontSize: "0.74rem", fontFamily: "monospace", color: "#64748b", fontWeight: "700" }}>
+                  RANK_TIER: S-RANK
+                </span>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", background: "rgba(16, 185, 129, 0.06)", border: "1px solid rgba(16, 185, 129, 0.15)", padding: "5px 12px", borderRadius: "100px", boxShadow: "0 2px 6px rgba(16, 185, 129, 0.02)" }}>
+                  <GreenCheckIcon />
+                  <span style={{ fontSize: "0.72rem", color: "#16a34a", fontWeight: 700, fontFamily: "monospace" }}>VERIFIED</span>
                 </div>
               </div>
-            </div>
-          </article>
-        </div>
+            </TiltCard>
+          </div>
+        ) : (
+          <div style={{ height: "200px", display: "grid", placeItems: "center", background: "rgba(255, 255, 255, 0.4)", borderRadius: "20px", border: "1px solid rgba(14, 165, 233, 0.12)" }}>
+            <span className={styles.sectionBadge}>LINKING ALGORITHMIC TELEMETRY FLUX...</span>
+          </div>
+        )}
       </SectionReveal>
 
       {/* Systems / Quests Section (Featured Projects Grid) */}
@@ -1063,106 +1456,114 @@ export function V2DeveloperClient({
           <p>Modular systems built for latency reduction, real-time analytics, and grid telemetry.</p>
         </div>
 
-        {mainFeaturedProject ? (
-          <motion.article className={styles.featuredProjectCard} initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
-            <div className={styles.featuredProjectMedia}>
-              <SolutionOverview projectId={mainFeaturedProject.id} />
-              <div className={styles.featuredProjectSeal}>
-                <span>Enterprise System</span>
-                <strong>+{mainFeaturedProject.expValue} EXP</strong>
-              </div>
-            </div>
-            <div className={styles.featuredProjectCopy}>
-              <div className={styles.projectTypeRow}>
-                <span className={styles.tagType}>Enterprise Build</span>
-                <span className={styles.tagMyth}>{projectMyths?.[mainFeaturedProject.slug]?.label || "Core System"}</span>
-              </div>
-              <h3>{mainFeaturedProject.title}</h3>
-              <p>{mainFeaturedProject.summary}</p>
-              <strong className={styles.projectImpactLine}>{mainFeaturedProject.impact}</strong>
-              
-              <div className={styles.projectMetadataRow}>
-                <div className={styles.metaCol}>
-                  <span>Impact Metrics</span>
-                  <strong>{questStat(mainFeaturedProject)}</strong>
+        {loadStage >= 1 ? (
+          <>
+            {mainFeaturedProject ? (
+              <motion.article className={styles.featuredProjectCard} initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
+                <div className={styles.featuredProjectMedia}>
+                  <SolutionOverview projectId={mainFeaturedProject.id} />
+                  <div className={styles.featuredProjectSeal}>
+                    <span>Enterprise System</span>
+                    <strong>+{mainFeaturedProject.expValue} EXP</strong>
+                  </div>
                 </div>
-                <div className={styles.metaCol}>
-                  <span>Core Stack</span>
-                  <strong>{splitStack(mainFeaturedProject.stack).slice(0, 2).join(" / ") || "Full Stack Build"}</strong>
-                </div>
-              </div>
+                <div className={styles.featuredProjectCopy}>
+                  <div className={styles.projectTypeRow}>
+                    <span className={styles.tagType}>Enterprise Build</span>
+                    <span className={styles.tagMyth}>{projectMyths?.[mainFeaturedProject.slug]?.label || "Core System"}</span>
+                  </div>
+                  <h3>{mainFeaturedProject.title}</h3>
+                  <p>{mainFeaturedProject.summary}</p>
+                  <strong className={styles.projectImpactLine}>{mainFeaturedProject.impact}</strong>
+                  
+                  <div className={styles.projectMetadataRow}>
+                    <div className={styles.metaCol}>
+                      <span>Impact Metrics</span>
+                      <strong>{questStat(mainFeaturedProject)}</strong>
+                    </div>
+                    <div className={styles.metaCol}>
+                      <span>Core Stack</span>
+                      <strong>{splitStack(mainFeaturedProject.stack).slice(0, 2).join(" / ") || "Full Stack Build"}</strong>
+                    </div>
+                  </div>
 
-              <div className={styles.tagBadges}>
-                {splitStack(mainFeaturedProject.stack).map((item) => (
-                  <span key={item} className={styles.techTag}>{item}</span>
-                ))}
-              </div>
-
-              <div className={styles.projectCtaRow}>
-                {mainFeaturedProject.liveUrl ? (
-                  <a href={mainFeaturedProject.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.cardBtnPrimary}>
-                    <span>Deploy Live</span>
-                    <ExternalLink size={12} />
-                  </a>
-                ) : null}
-                {mainFeaturedProject.repoUrl ? (
-                  <a href={mainFeaturedProject.repoUrl} target="_blank" rel="noopener noreferrer" className={styles.cardBtn}>
-                    <Github size={12} />
-                    <span>Repository</span>
-                  </a>
-                ) : null}
-              </div>
-            </div>
-          </motion.article>
-        ) : null}
-
-        <div className={styles.projectSecondaryGrid}>
-          {/* Elite Column: 2 columns */}
-          <div className={styles.eliteProjectsColumn}>
-            {listSecondaryProjects.map((project, idx) => (
-              <motion.article key={project.id} className={styles.secondaryProjectCard} variants={cardReveal} custom={idx} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-                <div className={styles.projectCardTop}>
-                  <span className={styles.tagType}>Core Pipeline</span>
-                  <span className={styles.xpTag}>+{project.expValue} EXP</span>
-                </div>
-                <div className={styles.secondaryProjectMedia}>
-                  <SolutionOverview projectId={project.id} />
-                </div>
-                <div className={styles.secondaryProjectBody}>
-                  <span className={styles.tagMyth}>{projectMyths?.[project.slug]?.label || "Verify Node"}</span>
-                  <h3>{project.title}</h3>
-                  <p>{project.summary}</p>
-                  <strong className={styles.projectImpactLine}>{project.impact}</strong>
                   <div className={styles.tagBadges}>
-                    {splitStack(project.stack).map((item) => (
+                    {splitStack(mainFeaturedProject.stack).map((item) => (
                       <span key={item} className={styles.techTag}>{item}</span>
                     ))}
                   </div>
-                </div>
-              </motion.article>
-            ))}
-          </div>
 
-          {/* Rapid Grid: Grid of tiles */}
-          <div className={styles.rapidProjectsGrid}>
-            {listGridProjects.map((project, idx) => (
-              <motion.article key={project.id} className={styles.projectTileCard} variants={cardReveal} custom={idx} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-                <div className={styles.projectTileHead}>
-                  <span className={styles.tagType}>System utility</span>
-                  <span className={styles.xpTag}>+{project.expValue} EXP</span>
-                </div>
-                <span className={styles.tileMythLabel}>{projectMyths?.[project.slug]?.label || "Ingest Node"}</span>
-                <h3>{project.title}</h3>
-                <p>{project.impact || project.summary}</p>
-                <div className={styles.tileStackTags}>
-                  {splitStack(project.stack).slice(0, 3).map((item) => (
-                    <span key={item} className={styles.techTagMini}>{item}</span>
-                  ))}
+                  <div className={styles.projectCtaRow}>
+                    {mainFeaturedProject.liveUrl ? (
+                      <a href={mainFeaturedProject.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.cardBtnPrimary}>
+                        <span>Deploy Live</span>
+                        <ExternalLink size={12} />
+                      </a>
+                    ) : null}
+                    {mainFeaturedProject.repoUrl ? (
+                      <a href={mainFeaturedProject.repoUrl} target="_blank" rel="noopener noreferrer" className={styles.cardBtn}>
+                        <Github size={12} />
+                        <span>Repository</span>
+                      </a>
+                    ) : null}
+                  </div>
                 </div>
               </motion.article>
-            ))}
+            ) : null}
+
+            <div className={styles.projectSecondaryGrid}>
+              {/* Elite Column: 2 columns */}
+              <div className={styles.eliteProjectsColumn}>
+                {listSecondaryProjects.map((project, idx) => (
+                  <motion.article key={project.id} className={styles.secondaryProjectCard} variants={cardReveal} custom={idx} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+                    <div className={styles.projectCardTop}>
+                      <span className={styles.tagType}>Core Pipeline</span>
+                      <span className={styles.xpTag}>+{project.expValue} EXP</span>
+                    </div>
+                    <div className={styles.secondaryProjectMedia}>
+                      <SolutionOverview projectId={project.id} />
+                    </div>
+                    <div className={styles.secondaryProjectBody}>
+                      <span className={styles.tagMyth}>{projectMyths?.[project.slug]?.label || "Verify Node"}</span>
+                      <h3>{project.title}</h3>
+                      <p>{project.summary}</p>
+                      <strong className={styles.projectImpactLine}>{project.impact}</strong>
+                      <div className={styles.tagBadges}>
+                        {splitStack(project.stack).map((item) => (
+                          <span key={item} className={styles.techTag}>{item}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+
+              {/* Rapid Grid: Grid of tiles */}
+              <div className={styles.rapidProjectsGrid}>
+                {listGridProjects.map((project, idx) => (
+                  <motion.article key={project.id} className={styles.projectTileCard} variants={cardReveal} custom={idx} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+                    <div className={styles.projectTileHead}>
+                      <span className={styles.tagType}>System utility</span>
+                      <span className={styles.xpTag}>+{project.expValue} EXP</span>
+                    </div>
+                    <span className={styles.tileMythLabel}>{projectMyths?.[project.slug]?.label || "Ingest Node"}</span>
+                    <h3>{project.title}</h3>
+                    <p>{project.impact || project.summary}</p>
+                    <div className={styles.tileStackTags}>
+                      {splitStack(project.stack).slice(0, 3).map((item) => (
+                        <span key={item} className={styles.techTagMini}>{item}</span>
+                      ))}
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          <div style={{ height: "250px", display: "grid", placeItems: "center", background: "rgba(255, 255, 255, 0.4)", borderRadius: "20px", border: "1px solid rgba(14, 165, 233, 0.12)" }}>
+            <span className={styles.sectionBadge}>RESTORING ACTIVE SYSTEM BLUEPRINTS...</span>
           </div>
-        </div>
+        )}
       </SectionReveal>
 
       {/* Career Chronicle Grid Section */}
@@ -1173,26 +1574,32 @@ export function V2DeveloperClient({
           <p>Chronological verification of engineering roles, operations, and development milestones.</p>
         </div>
 
-        <div className={styles.experienceGrid}>
-          {experiences.map((exp, index) => (
-            <motion.div key={exp.id} className={styles.experienceCard} variants={cardReveal} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-              <div className={styles.expHeader}>
-                <div>
-                  <span className={styles.expDate}>
-                    {new Date(exp.startDate).toLocaleDateString("en-US", { month: "short", year: "numeric" })} - {exp.endDate ? new Date(exp.endDate).toLocaleDateString("en-US", { month: "short", year: "numeric" }) : "Present"}
-                  </span>
-                  <h3>{exp.role}</h3>
+        {isDeferredLoaded ? (
+          <div className={styles.experienceGrid}>
+            {experiences.map((exp, index) => (
+              <motion.div key={exp.id} className={styles.experienceCard} variants={cardReveal} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+                <div className={styles.expHeader}>
+                  <div>
+                    <span className={styles.expDate}>
+                      {new Date(exp.startDate).toLocaleDateString("en-US", { month: "short", year: "numeric" })} - {exp.endDate ? new Date(exp.endDate).toLocaleDateString("en-US", { month: "short", year: "numeric" }) : "Present"}
+                    </span>
+                    <h3>{exp.role}</h3>
+                  </div>
+                  <span className={styles.expCompany}>{exp.company}</span>
                 </div>
-                <span className={styles.expCompany}>{exp.company}</span>
-              </div>
-              <p className={styles.expSummary}>{exp.summary}</p>
-              <div className={styles.expHighlight}>
-                <Zap size={11} className={styles.purpleText} />
-                <span>{exp.highlights}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                <p className={styles.expSummary}>{exp.summary}</p>
+                <div className={styles.expHighlight}>
+                  <Zap size={11} className={styles.purpleText} />
+                  <span>{exp.highlights}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ height: "250px", display: "grid", placeItems: "center", background: "rgba(255, 255, 255, 0.4)", borderRadius: "20px", border: "1px solid rgba(14, 165, 233, 0.12)" }}>
+            <span className={styles.sectionBadge}>COMPILING ENGINEERING ROLES TIMELINE...</span>
+          </div>
+        )}
       </section>
 
       {/* Awards & Credentials plaque grid */}
@@ -1203,46 +1610,52 @@ export function V2DeveloperClient({
           <p>Verified certifications, accolades, and hackathon victories.</p>
         </div>
 
-        <div className={styles.credentialsGrid}>
-          {/* Hackathons */}
-          <div className={styles.credentialsBlock}>
-            <div className={styles.blockHeader}>
-              <Award size={14} className={styles.logoIcon} />
-              <h4>HACKATHON_FINALS_VICTORIES</h4>
+        {isDeferredLoaded ? (
+          <div className={styles.credentialsGrid}>
+            {/* Hackathons */}
+            <div className={styles.credentialsBlock}>
+              <div className={styles.blockHeader}>
+                <Award size={14} className={styles.logoIcon} />
+                <h4>HACKATHON_FINALS_VICTORIES</h4>
+              </div>
+              <div className={styles.awardsPlaquesGrid}>
+                {achievements.map((ach, index) => (
+                  <motion.div key={ach.id} className={styles.plaqueCard} variants={cardReveal} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+                    <div className={styles.plaqueGlow} />
+                    <TrendingUp size={16} className={styles.plaqueIcon} />
+                    <h5>{ach.title}</h5>
+                    <p>{ach.summary}</p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
-            <div className={styles.awardsPlaquesGrid}>
-              {achievements.map((ach, index) => (
-                <motion.div key={ach.id} className={styles.plaqueCard} variants={cardReveal} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-                  <div className={styles.plaqueGlow} />
-                  <TrendingUp size={16} className={styles.plaqueIcon} />
-                  <h5>{ach.title}</h5>
-                  <p>{ach.summary}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
 
-          {/* Certifications */}
-          <div className={styles.credentialsBlock}>
-            <div className={styles.blockHeader}>
-              <ShieldCheck size={14} className={styles.logoIcon} />
-              <h4>VERIFIED_COMPILER_SHIELDS</h4>
-            </div>
-            <div className={styles.certsPlaquesGrid}>
-              {certifications.map((cert, index) => (
-                <motion.div key={cert.id} className={styles.plaqueCard} variants={cardReveal} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-                  <div className={styles.plaqueGlow} />
-                  <Award size={16} className={styles.plaqueIconPurple} />
-                  <h5>{cert.title}</h5>
-                  <span className={styles.plaqueIssuer}>{cert.issuer}</span>
-                  <span className={styles.plaqueDate}>
-                    {new Date(cert.issueDate).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
-                  </span>
-                </motion.div>
-              ))}
+            {/* Certifications */}
+            <div className={styles.credentialsBlock}>
+              <div className={styles.blockHeader}>
+                <ShieldCheck size={14} className={styles.logoIcon} />
+                <h4>VERIFIED_COMPILER_SHIELDS</h4>
+              </div>
+              <div className={styles.certsPlaquesGrid}>
+                {certifications.map((cert, index) => (
+                  <motion.div key={cert.id} className={styles.plaqueCard} variants={cardReveal} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+                    <div className={styles.plaqueGlow} />
+                    <Award size={16} className={styles.plaqueIconPurple} />
+                    <h5>{cert.title}</h5>
+                    <span className={styles.plaqueIssuer}>{cert.issuer}</span>
+                    <span className={styles.plaqueDate}>
+                      {new Date(cert.issueDate).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div style={{ height: "250px", display: "grid", placeItems: "center", background: "rgba(255, 255, 255, 0.4)", borderRadius: "20px", border: "1px solid rgba(14, 165, 233, 0.12)" }}>
+            <span className={styles.sectionBadge}>RESTORING HACKATHON & CERTIFICATE VAULTS...</span>
+          </div>
+        )}
       </section>
 
       {/* Contact Portal CTA */}

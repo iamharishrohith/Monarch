@@ -32,7 +32,8 @@ import {
   Server,
   Palette,
   Cloud,
-  BrainCircuit
+  BrainCircuit,
+  Leaf
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SectionReveal } from "./SectionReveal";
@@ -1555,6 +1556,71 @@ export function V2DeveloperClient({
                 <div style={{ display: "flex", alignItems: "center", gap: "6px", background: "rgba(16, 185, 129, 0.06)", border: "1px solid rgba(16, 185, 129, 0.15)", padding: "5px 12px", borderRadius: "100px", boxShadow: "0 2px 6px rgba(16, 185, 129, 0.02)" }}>
                   <GreenCheckIcon />
                   <span style={{ fontSize: "0.72rem", color: "#16a34a", fontWeight: 700, fontFamily: "monospace" }}>VERIFIED</span>
+                </div>
+              </div>
+            </SpotlightCard>
+
+            {/* Green Computing Telemetry Card */}
+            <SpotlightCard className={styles.telemetryCard} style={{
+              background: "rgba(255, 255, 255, 0.8)",
+              border: "1px solid rgba(14, 165, 233, 0.15)",
+              borderRadius: "24px",
+              padding: "28px 24px",
+              boxShadow: "0 20px 40px rgba(14, 165, 233, 0.05)",
+              backdropFilter: "blur(20px)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "24px"
+            }}>
+              {/* Header: Green Computing | Brand Logo */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(14, 165, 233, 0.1)", paddingBottom: "12px" }}>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "800", color: "#0f172a", margin: 0 }}>Green Computing</h3>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <Leaf size={18} color="#16a34a" style={{ flexShrink: 0 }} />
+                  <span style={{ fontFamily: "monospace", fontWeight: 800, fontSize: "0.85rem", color: "#16a34a", letterSpacing: "0.05em" }}>ECO.EXE</span>
+                </div>
+              </div>
+
+              {/* Sub-layout: 2x3 Grid of spacious Numbers */}
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: "16px",
+                width: "100%"
+              }}>
+                {[
+                  { label: "Elysia Latency", value: "0.8 ms", color: "#16a34a" },
+                  { label: "Node Latency", value: "12.4 ms", color: "#f97316" },
+                  { label: "Elysia Energy", value: "0.18 mWh", color: "#16a34a" },
+                  { label: "Node Energy", value: "2.15 mWh", color: "#f97316" },
+                  { label: "Elysia CO2eq", value: "0.07 g", color: "#16a34a" },
+                  { label: "Node CO2eq", value: "0.86 g", color: "#f97316" }
+                ].map((stat, idx) => (
+                  <div key={idx} style={{
+                    background: "rgba(255, 255, 255, 0.7)",
+                    border: "1px solid rgba(14, 165, 233, 0.12)",
+                    borderRadius: "16px",
+                    padding: "12px 16px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    boxShadow: "0 4px 12px rgba(14, 165, 233, 0.02)",
+                    transition: "transform 250ms ease, border-color 250ms ease"
+                  }}>
+                    <span style={{ fontSize: "0.78rem", color: "#475569", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.03em", marginBottom: "4px" }} title={stat.label}>{stat.label}</span>
+                    <strong style={{ fontSize: "1.6rem", color: stat.color, fontWeight: "900", letterSpacing: "-0.02em" }}>{stat.value}</strong>
+                  </div>
+                ))}
+              </div>
+
+              {/* Bottom Row: Verified Seal */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(14, 165, 233, 0.1)", paddingTop: "14px", marginTop: "auto" }}>
+                <span style={{ fontSize: "0.74rem", fontFamily: "monospace", color: "#16a34a", fontWeight: "700" }}>
+                  EFFICIENCY: 15.4X GAIN
+                </span>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", background: "rgba(16, 185, 129, 0.06)", border: "1px solid rgba(16, 185, 129, 0.15)", padding: "5px 12px", borderRadius: "100px", boxShadow: "0 2px 6px rgba(16, 185, 129, 0.02)" }}>
+                  <GreenCheckIcon />
+                  <span style={{ fontSize: "0.72rem", color: "#16a34a", fontWeight: 700, fontFamily: "monospace" }}>ECO_VERIFIED</span>
                 </div>
               </div>
             </SpotlightCard>

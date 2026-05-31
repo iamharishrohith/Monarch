@@ -1,4 +1,5 @@
 import { Sora, JetBrains_Mono } from "next/font/google";
+import { JsonLd } from "@/components/JsonLd";
 import "./globals.css";
 
 const sora = Sora({
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${sora.variable} ${jetbrainsMono.variable}`}>
+        <JsonLd />
         {children}
       </body>
     </html>

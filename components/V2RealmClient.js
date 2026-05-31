@@ -197,8 +197,8 @@ function SolutionOverview({ projectId, isFeatured = false }) {
         </g>
 
         <g transform="translate(240, 20)">
-          <circle cx="25" cy="25" r="18" fill="rgba(251,191,36,0.15)" stroke="#fbbf24" strokeWidth="2" />
-          <polygon points="25,12 28,20 36,20 30,25 32,33 25,28 18,33 20,25 14,20 22,20" fill="#fbbf24" />
+          <circle cx="25" cy="25" r="18" fill="rgba(236,72,153,0.15)" stroke="#ec4899" strokeWidth="2" />
+          <polygon points="25,12 28,20 36,20 30,25 32,33 25,28 18,33 20,25 14,20 22,20" fill="#ec4899" />
           <circle cx="25" cy="25" r="22" stroke="white" strokeWidth="1" strokeDasharray="3,3" opacity="0.5" />
         </g>
       </>
@@ -211,7 +211,7 @@ function SolutionOverview({ projectId, isFeatured = false }) {
       <>
         <defs>
           <linearGradient id="recipeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.8" />
+            <stop offset="0%" stopColor="#ec4899" stopOpacity="0.8" />
             <stop offset="100%" stopColor="#ef4444" stopOpacity="0.8" />
           </linearGradient>
         </defs>
@@ -308,11 +308,11 @@ function SolutionOverview({ projectId, isFeatured = false }) {
           <circle cx="22" cy="38" r="22" stroke="white" strokeWidth="1" strokeDasharray="3,3" opacity="0.6" />
         </g>
 
-        <circle cx="95" cy="85" r="5" fill="#f59e0b" stroke="white" strokeWidth="1" />
+        <circle cx="95" cy="85" r="5" fill="#22d3ee" stroke="white" strokeWidth="1" />
         <line x1="100" y1="85" x2="136" y2="85" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
-        <circle cx="225" cy="85" r="5" fill="#f59e0b" stroke="white" strokeWidth="1" />
+        <circle cx="225" cy="85" r="5" fill="#22d3ee" stroke="white" strokeWidth="1" />
         <line x1="220" y1="85" x2="184" y2="85" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
-        <circle cx="160" cy="32" r="5" fill="#f59e0b" stroke="white" strokeWidth="1" />
+        <circle cx="160" cy="32" r="5" fill="#22d3ee" stroke="white" strokeWidth="1" />
         <line x1="160" y1="37" x2="160" y2="53" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
       </>
     );
@@ -702,7 +702,7 @@ function V2RealmClientInner({
 
                     <div className={styles.difficultyDistributionItem}>
                       <div className={styles.diffRow}>
-                        <span className={styles.diffLabel} style={{ color: "#fbbf24" }}>BOSSES</span>
+                        <span className={styles.diffLabel} style={{ color: "#ec4899" }}>BOSSES</span>
                         <div className={styles.diffBarBg}>
                           <div 
                             className={`${styles.diffBarFill} ${styles.mediumFill}`} 
@@ -972,7 +972,7 @@ function V2RealmClientInner({
               <X size={16} />
             </button>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
-              <Info size={18} style={{ color: "#fbbf24" }} />
+              <Info size={18} style={{ color: "#ec4899" }} />
               <span className={styles.systemBadge}>SYSTEM PROTOCOL</span>
             </div>
             <h3 style={{ fontSize: "1.6rem", fontWeight: "700", color: "#ffffff", marginBottom: "16px", letterSpacing: "-0.02em" }}>
@@ -1024,12 +1024,12 @@ function V2RealmClientInner({
                   Your cumulative EXP determines your <strong>Power Level</strong> (calculated mathematically as <code>Lvl = ⌊√(Total_EXP / 120)⌋ + 1</code>). The level unlocks progressive architectural ranks:
                 </p>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px", marginTop: "10px", background: "rgba(255,255,255,0.02)", padding: "10px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
-                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 1+:</span> <br/><span style={{color:"#fff"}}>E-Rank - Initiate</span></div>
-                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 4+:</span> <br/><span style={{color:"#fff"}}>D-Rank - Builder</span></div>
-                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 7+:</span> <br/><span style={{color:"#fff"}}>C-Rank - Operator</span></div>
-                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 10+:</span> <br/><span style={{color:"#fff"}}>B-Rank - Vanguard</span></div>
-                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 13+:</span> <br/><span style={{color:"#fff"}}>A-Rank - Ascendant</span></div>
-                  <div><span style={{color:"#fbbf24", fontWeight:"600"}}>Lvl 16+:</span> <br/><span style={{color:"#fff"}}>S-Rank - Monarch</span></div>
+                  <div><span style={{color:"#ec4899", fontWeight:"600"}}>Lvl 1+:</span> <br/><span style={{color:"#fff"}}>E-Rank - Initiate</span></div>
+                  <div><span style={{color:"#ec4899", fontWeight:"600"}}>Lvl 4+:</span> <br/><span style={{color:"#fff"}}>D-Rank - Builder</span></div>
+                  <div><span style={{color:"#ec4899", fontWeight:"600"}}>Lvl 7+:</span> <br/><span style={{color:"#fff"}}>C-Rank - Operator</span></div>
+                  <div><span style={{color:"#ec4899", fontWeight:"600"}}>Lvl 10+:</span> <br/><span style={{color:"#fff"}}>B-Rank - Vanguard</span></div>
+                  <div><span style={{color:"#ec4899", fontWeight:"600"}}>Lvl 13+:</span> <br/><span style={{color:"#fff"}}>A-Rank - Ascendant</span></div>
+                  <div><span style={{color:"#ec4899", fontWeight:"600"}}>Lvl 16+:</span> <br/><span style={{color:"#fff"}}>S-Rank - Monarch</span></div>
                 </div>
               </section>
 

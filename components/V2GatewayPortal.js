@@ -1,9 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Terminal, Sparkles, Cpu, ShieldAlert, Binary } from "lucide-react";
 import { motion } from "framer-motion";
 import styles from "./V2GatewayPortal.module.css";
+
+function Magnet({ children, pullStrength = 0.3 }) {
+  const ref = useRef(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  
+  const handleMouseMove = (e) => {
+    const card = ref.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+    
+    setOffset({ x: x * pullStrength, y: y * pullStrength });
+    setIsHovered(true);
+  };
+  
+  const handleMouseLeave = () => {
+    setOffset({ x: 0, y: 0 });
+    setIsHovered(false);
+  };
+  
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `translate3d(${offset.x}px, ${offset.y}px, 0)`,
+        transition: isHovered 
+          ? "transform 80ms linear" 
+          : "transform 400ms cubic-bezier(0.25, 1, 0.5, 1)",
+        display: "inline-block",
+        willChange: "transform"
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export function V2GatewayPortal({ onSelectMode }) {
   const [hoveredSide, setHoveredSide] = useState(null); // 'developer', 'creative', or null
@@ -63,16 +103,18 @@ export function V2GatewayPortal({ onSelectMode }) {
               <span>PostgreSQL</span>
             </div>
 
-            <button 
-              className={styles.devBtn}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleSelect("developer");
-              }}
-            >
-              <Terminal size={14} />
-              <span>LOAD_SYSTEM_ARCHITECT</span>
-            </button>
+            <Magnet>
+              <button 
+                className={styles.devBtn}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSelect("developer");
+                }}
+              >
+                <Terminal size={14} />
+                <span>LOAD_SYSTEM_ARCHITECT</span>
+              </button>
+            </Magnet>
           </div>
 
           <div className={styles.telemetryOverlay}>
@@ -113,16 +155,18 @@ export function V2GatewayPortal({ onSelectMode }) {
               <span>State overdrive</span>
             </div>
 
-            <button 
-              className={styles.creativeBtn}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleSelect("creative");
-              }}
-            >
-              <Sparkles size={14} />
-              <span>AWAKEN_JOYBOY_SIGIL</span>
-            </button>
+            <Magnet>
+              <button 
+                className={styles.creativeBtn}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSelect("creative");
+                }}
+              >
+                <Sparkles size={14} />
+                <span>AWAKEN_JOYBOY_SIGIL</span>
+              </button>
+            </Magnet>
           </div>
 
           <div className={styles.creativeOverlay}>

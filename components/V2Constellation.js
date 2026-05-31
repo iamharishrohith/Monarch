@@ -22,7 +22,8 @@ import {
   Sparkles,
   WandSparkles,
   Bot,
-  TrendingUp
+  TrendingUp,
+  Activity
 } from "lucide-react";
 import styles from "@/app/v2/page.module.css";
 

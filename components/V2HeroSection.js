@@ -6,6 +6,73 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
 import styles from "@/app/v2/page.module.css";
 
+function Magnet({ children, pullStrength = 0.3 }) {
+  const ref = useRef(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  
+  const handleMouseMove = (e) => {
+    const card = ref.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+    
+    setOffset({ x: x * pullStrength, y: y * pullStrength });
+    setIsHovered(true);
+  };
+  
+  const handleMouseLeave = () => {
+    setOffset({ x: 0, y: 0 });
+    setIsHovered(false);
+  };
+  
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `translate3d(${offset.x}px, ${offset.y}px, 0)`,
+        transition: isHovered 
+          ? "transform 80ms linear" 
+          : "transform 400ms cubic-bezier(0.25, 1, 0.5, 1)",
+        display: "inline-block",
+        willChange: "transform"
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function ShinyText({ text, className, speed = "4s", style }) {
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes shinySweep {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+      `}} />
+      <span 
+        className={className}
+        style={{
+          ...style,
+          backgroundImage: "linear-gradient(120deg, var(--text-color, currentColor) 35%, #ec4899 50%, var(--text-color, currentColor) 65%)",
+          backgroundSize: "200% auto",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          animation: `shinySweep ${speed} linear infinite`,
+          display: "inline-block"
+        }}
+      >
+        {text}
+      </span>
+    </>
+  );
+}
+
 function LottiePlayer({ animationPath, className }) {
   const containerRef = useRef(null);
 
@@ -89,7 +156,7 @@ function VisualOrb({ initials }) {
               height={75}
               style={{
                 objectFit: "contain",
-                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.6)) drop-shadow(0 0 4px rgba(251, 191, 36, 0.4))"
+                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.6)) drop-shadow(0 0 4px rgba(236, 72, 153, 0.4))"
               }}
             />
           </div>
@@ -122,53 +189,65 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
           <p className={styles.navTitle}>Welcome to {profile?.name || "Harish Rohith"}&apos;s Creative Studio</p>
         </div>
         <div className={styles.navActions}>
-          <button
-            type="button"
-            onClick={onToggleMode}
-            className={styles.ghostButton}
-            style={{ marginRight: "10px", padding: "8px 16px", fontSize: "0.75rem", background: "rgba(6,182,212,0.06)", borderColor: "rgba(6,182,212,0.2)" }}
-          >
-            Technical Mode
-          </button>
-          <button
-            type="button"
-            onClick={onOpenInfo}
-            className={styles.ghostButton}
-            style={{ marginRight: "10px", padding: "8px 16px", fontSize: "0.75rem", background: "rgba(255,255,255,0.03)" }}
-          >
-            System Specs
-          </button>
-          <a
-            href={v2Config?.heroPrimaryCtaHref || "#quests"}
-            onClick={() => trackEvent("Hero Header", "Button Click", v2Config?.heroPrimaryCtaLabel || "Enter Quest Log")}
-            className={styles.primaryButton}
-          >
-            {v2Config?.heroPrimaryCtaLabel || "Explore Projects"}
-          </a>
+          <Magnet>
+            <button
+              type="button"
+              onClick={onToggleMode}
+              className={styles.ghostButton}
+              style={{ marginRight: "10px", padding: "8px 16px", fontSize: "0.75rem", background: "rgba(6,182,212,0.06)", borderColor: "rgba(6,182,212,0.2)" }}
+            >
+              Technical Mode
+            </button>
+          </Magnet>
+          <Magnet>
+            <button
+              type="button"
+              onClick={onOpenInfo}
+              className={styles.ghostButton}
+              style={{ marginRight: "10px", padding: "8px 16px", fontSize: "0.75rem", background: "rgba(255,255,255,0.03)" }}
+            >
+              System Specs
+            </button>
+          </Magnet>
+          <Magnet>
+            <a
+              href={v2Config?.heroPrimaryCtaHref || "#quests"}
+              onClick={() => trackEvent("Hero Header", "Button Click", v2Config?.heroPrimaryCtaLabel || "Enter Quest Log")}
+              className={styles.primaryButton}
+            >
+              {v2Config?.heroPrimaryCtaLabel || "Explore Projects"}
+            </a>
+          </Magnet>
         </div>
       </div>
 
       <div className={styles.heroLayout}>
         <div className={styles.heroCopy}>
           <span className={styles.systemBadge}>CREATIVE PROFILE</span>
-          <h1>{profile?.name}</h1>
+          <h1>
+            <ShinyText text={profile?.name} />
+          </h1>
           <p className={styles.heroLead}>{profile?.headline}</p>
           <p className={styles.heroText}>{profile?.bio}</p>
           <div className={styles.heroActions}>
-            <a
-              href={v2Config?.heroPrimaryCtaHref || "#constellation"}
-              onClick={() => trackEvent("Hero Content", "Button Click", v2Config?.heroPrimaryCtaLabel || "View Ability Map")}
-              className={styles.primaryButton}
-            >
-              {v2Config?.heroPrimaryCtaLabel || "View Ability Map"}
-            </a>
-            <a
-              href={v2Config?.heroSecondaryCtaHref || "#final-form"}
-              onClick={() => trackEvent("Hero Content", "Button Click", v2Config?.heroSecondaryCtaLabel || "Contact Portal")}
-              className={styles.ghostButton}
-            >
-              {v2Config?.heroSecondaryCtaLabel || "Contact Portal"}
-            </a>
+            <Magnet>
+              <a
+                href={v2Config?.heroPrimaryCtaHref || "#constellation"}
+                onClick={() => trackEvent("Hero Content", "Button Click", v2Config?.heroPrimaryCtaLabel || "View Ability Map")}
+                className={styles.primaryButton}
+              >
+                {v2Config?.heroPrimaryCtaLabel || "View Ability Map"}
+              </a>
+            </Magnet>
+            <Magnet>
+              <a
+                href={v2Config?.heroSecondaryCtaHref || "#final-form"}
+                onClick={() => trackEvent("Hero Content", "Button Click", v2Config?.heroSecondaryCtaLabel || "Contact Portal")}
+                className={styles.ghostButton}
+              >
+                {v2Config?.heroSecondaryCtaLabel || "Contact Portal"}
+              </a>
+            </Magnet>
           </div>
         </div>
 
@@ -220,9 +299,9 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
                   : "translate(calc((var(--hero-x) - 50%) * -0.22px), calc((var(--hero-y) - 50%) * -0.22px)) scale(1)",
                 transition: "all 400ms cubic-bezier(0.16, 1, 0.3, 1)",
                 cursor: "pointer",
-                border: monarchHovered ? "1.5px solid rgba(251, 191, 36, 0.7)" : "1px solid var(--line)",
+                border: monarchHovered ? "1.5px solid rgba(236, 72, 153, 0.7)" : "1px solid var(--line)",
                 boxShadow: monarchHovered 
-                  ? "0 30px 70px rgba(168, 85, 247, 0.16), 0 0 25px rgba(251, 191, 36, 0.35)" 
+                  ? "0 30px 70px rgba(168, 85, 247, 0.16), 0 0 25px rgba(236, 72, 153, 0.35)" 
                   : "0 24px 60px rgba(168, 85, 247, 0.06)",
                 background: monarchHovered ? "rgba(15, 12, 46, 0.94)" : "var(--panel)",
                 color: monarchHovered ? "#ffffff" : "inherit",
@@ -236,7 +315,7 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", gap: "12px" }}>
                 <div>
                   <span style={{ 
-                    color: monarchHovered ? "#fbbf24" : "var(--muted)", 
+                    color: monarchHovered ? "#ec4899" : "var(--muted)", 
                     transition: "color 300ms ease",
                     marginBottom: "4px" 
                   }}>
@@ -259,8 +338,8 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
                     height: "40px",
                     borderRadius: "50%",
                     background: "#ffffff",
-                    border: "1.5px solid rgba(251, 191, 36, 0.7)",
-                    boxShadow: "0 4px 12px rgba(168, 85, 247, 0.16), 0 0 8px rgba(251, 191, 36, 0.22)",
+                    border: "1.5px solid rgba(236, 72, 153, 0.7)",
+                    boxShadow: "0 4px 12px rgba(168, 85, 247, 0.16), 0 0 8px rgba(236, 72, 153, 0.22)",
                     display: "grid",
                     placeItems: "center",
                     flexShrink: 0,
@@ -303,10 +382,10 @@ export function V2HeroSection({ profile, progression, projectCount, skillCount, 
                   }}>
                     <div style={{
                       background: "#ffffff", // Pure high-contrast white background so the red crest and black text are perfectly readable!
-                      border: "1px solid rgba(251, 191, 36, 0.5)",
+                      border: "1px solid rgba(236, 72, 153, 0.5)",
                       padding: "10px 20px",
                       borderRadius: "16px",
-                      boxShadow: "0 10px 28px rgba(0, 0, 0, 0.35), 0 0 20px rgba(251, 191, 36, 0.25)",
+                      boxShadow: "0 10px 28px rgba(0, 0, 0, 0.35), 0 0 20px rgba(236, 72, 153, 0.25)",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center"

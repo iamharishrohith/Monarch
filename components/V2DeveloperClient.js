@@ -101,7 +101,7 @@ function VisualOrb({ initials }) {
   );
 }
 
-function TiltCard({ children, className, style, ...props }) {
+function SpotlightCard({ children, className, style, spotlightColor = "rgba(14, 165, 233, 0.14)", showGrid = false, ...props }) {
   const cardRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   
@@ -119,6 +119,10 @@ function TiltCard({ children, className, style, ...props }) {
     
     card.style.setProperty("--rx", `${rotateX}deg`);
     card.style.setProperty("--ry", `${rotateY}deg`);
+    card.style.setProperty("--mx", `${x}px`);
+    card.style.setProperty("--my", `${y}px`);
+    card.style.setProperty("--spotlight-opacity", "1");
+    card.style.setProperty("--grid-opacity", "0.25");
     setIsHovered(true);
   };
   
@@ -127,6 +131,8 @@ function TiltCard({ children, className, style, ...props }) {
     if (!card) return;
     card.style.setProperty("--rx", "0deg");
     card.style.setProperty("--ry", "0deg");
+    card.style.setProperty("--spotlight-opacity", "0");
+    card.style.setProperty("--grid-opacity", "0.1");
     setIsHovered(false);
   };
   
@@ -138,6 +144,8 @@ function TiltCard({ children, className, style, ...props }) {
       onMouseLeave={handleMouseLeave}
       style={{
         ...style,
+        position: "relative",
+        overflow: "hidden",
         transform: "perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))",
         transition: isHovered 
           ? "transform 80ms linear" 
@@ -147,8 +155,116 @@ function TiltCard({ children, className, style, ...props }) {
       }}
       {...props}
     >
+      {/* Magic Bento Dynamic Grid Overlay */}
+      {showGrid && (
+        <svg
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+            opacity: "var(--grid-opacity, 0.1)",
+            transition: "opacity 300ms ease",
+            color: "rgba(14, 165, 233, 0.18)"
+          }}
+          aria-hidden="true"
+        >
+          <defs>
+            <pattern id="bento-grid-pattern" width="16" height="16" patternUnits="userSpaceOnUse">
+              <path d="M 16 0 L 0 0 0 16" fill="none" stroke="currentColor" strokeWidth="0.8" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#bento-grid-pattern)" />
+        </svg>
+      )}
+
+      {/* Spotlight Radial Aura */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          zIndex: 1,
+          opacity: "var(--spotlight-opacity, 0)",
+          transition: "opacity 300ms ease",
+          background: `radial-gradient(350px circle at var(--mx, 0px) var(--my, 0px), ${spotlightColor}, transparent 80%)`
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Actual Content Wrapper with preserve-3d to push items forward */}
+      <div style={{ position: "relative", zIndex: 2, transform: "translateZ(15px)", transformStyle: "preserve-3d" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function Magnet({ children, pullStrength = 0.3 }) {
+  const ref = useRef(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  
+  const handleMouseMove = (e) => {
+    const card = ref.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+    
+    setOffset({ x: x * pullStrength, y: y * pullStrength });
+    setIsHovered(true);
+  };
+  
+  const handleMouseLeave = () => {
+    setOffset({ x: 0, y: 0 });
+    setIsHovered(false);
+  };
+  
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `translate3d(${offset.x}px, ${offset.y}px, 0)`,
+        transition: isHovered 
+          ? "transform 80ms linear" 
+          : "transform 400ms cubic-bezier(0.25, 1, 0.5, 1)",
+        display: "inline-block",
+        willChange: "transform"
+      }}
+    >
       {children}
     </div>
+  );
+}
+
+function ShinyText({ text, className, speed = "4s", style }) {
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes shinySweep {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+      `}} />
+      <span 
+        className={className}
+        style={{
+          ...style,
+          backgroundImage: "linear-gradient(120deg, var(--text-color, currentColor) 35%, #38bdf8 50%, var(--text-color, currentColor) 65%)",
+          backgroundSize: "200% auto",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          animation: `shinySweep ${speed} linear infinite`,
+          display: "inline-block"
+        }}
+      >
+        {text}
+      </span>
+    </>
   );
 }
 
@@ -642,7 +758,7 @@ function CapabilityCard({ category, skills }) {
   const defaultColor = getGoogleColor(category, 0);
 
   return (
-    <TiltCard className={styles.capabilityCard}>
+    <SpotlightCard className={styles.capabilityCard} showGrid={true}>
       <div className={styles.capabilityCardHead}>
         <div className={styles.capabilityTitleRow}>
           <h3>{category}</h3>
@@ -674,7 +790,7 @@ function CapabilityCard({ category, skills }) {
           );
         })}
       </div>
-    </TiltCard>
+    </SpotlightCard>
   );
 }
 
@@ -739,10 +855,10 @@ function SolutionOverview({ projectId }) {
       </>
     );
   } else if (projectId === "devs-recipe") {
-    gradient = "linear-gradient(135deg, rgba(251, 188, 5, 0.12) 0%, rgba(234, 67, 53, 0.08) 100%)";
+    gradient = "linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(234, 67, 53, 0.08) 100%)";
     content = (
       <>
-        <circle cx="160" cy="90" r="32" fill="rgba(251,188,5,0.06)" stroke="#FBBC05" strokeWidth="1.5" />
+        <circle cx="160" cy="90" r="32" fill="rgba(56,189,248,0.06)" stroke="#38bdf8" strokeWidth="1.5" />
         <circle cx="160" cy="90" r="42" stroke="rgba(234,67,53,0.2)" strokeWidth="1" strokeDasharray="4,4" />
         <text x="160" y="96" fill="#ffffff" fontSize="20" textAnchor="middle" fontWeight="bold" fontFamily="monospace">{"{}"}</text>
         <g transform="translate(60, 40)">
@@ -980,15 +1096,17 @@ export function V2DeveloperClient({
           <span className={styles.navVersion}>sys_v2.5.0</span>
         </div>
         <div className={styles.navActions}>
-          <button 
-            type="button" 
-            onClick={onToggleMode} 
-            className={styles.creativeSwitch}
-            title="Switch to Creative Mode"
-          >
-            <Sparkles size={12} />
-            <span>Creative Mode</span>
-          </button>
+          <Magnet>
+            <button 
+              type="button" 
+              onClick={onToggleMode} 
+              className={styles.creativeSwitch}
+              title="Switch to Creative Mode"
+            >
+              <Sparkles size={12} />
+              <span>Creative Mode</span>
+            </button>
+          </Magnet>
         </div>
       </header>
 
@@ -1093,7 +1211,7 @@ export function V2DeveloperClient({
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", gap: "12px" }}>
                   <div>
                     <span style={{ 
-                      color: monarchHovered ? "#fbbf24" : "#71717a", 
+                      color: monarchHovered ? "#38bdf8" : "#71717a", 
                       transition: "color 300ms ease",
                       marginBottom: "4px" 
                     }}>
@@ -1115,8 +1233,8 @@ export function V2DeveloperClient({
                       height: "40px",
                       borderRadius: "50%",
                       background: "#ffffff",
-                      border: "1.5px solid rgba(251, 191, 36, 0.7)",
-                      boxShadow: "0 4px 12px rgba(168, 85, 247, 0.16), 0 0 8px rgba(251, 191, 36, 0.22)",
+                      border: "1.5px solid rgba(56, 189, 248, 0.7)",
+                      boxShadow: "0 4px 12px rgba(168, 85, 247, 0.16), 0 0 8px rgba(56, 189, 248, 0.22)",
                       display: "grid",
                       placeItems: "center",
                       flexShrink: 0,
@@ -1156,10 +1274,10 @@ export function V2DeveloperClient({
                     }}>
                       <div style={{
                         background: "#ffffff",
-                        border: "1px solid rgba(251, 191, 36, 0.5)",
+                        border: "1px solid rgba(56, 189, 248, 0.5)",
                         padding: "10px 20px",
                         borderRadius: "16px",
-                        boxShadow: "0 10px 28px rgba(0, 0, 0, 0.35), 0 0 20px rgba(251, 191, 36, 0.25)",
+                        boxShadow: "0 10px 28px rgba(0, 0, 0, 0.35), 0 0 20px rgba(56, 189, 248, 0.25)",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center"
@@ -1305,7 +1423,7 @@ export function V2DeveloperClient({
         {loadStage >= 1 ? (
           <div className={styles.telemetryGrid}>
             {/* GitHub Stats Card */}
-            <TiltCard className={styles.telemetryCard} style={{
+            <SpotlightCard className={styles.telemetryCard} style={{
               background: "rgba(255, 255, 255, 0.8)",
               border: "1px solid rgba(14, 165, 233, 0.15)",
               borderRadius: "24px",
@@ -1340,7 +1458,7 @@ export function V2DeveloperClient({
                   { label: "Total Commits", value: githubStatus && !githubStatus.unavailable ? githubStatus.totalCommits || "218" : "218", color: "#0ea5e9" },
                   { label: "Total Contributions", value: githubStatus && !githubStatus.unavailable ? githubStatus.totalContributions || "196" : "196", color: "#0ea5e9" },
                   { label: "Active Pull Requests", value: githubStatus && !githubStatus.unavailable ? githubStatus.pullsCount || "23" : "23", color: "#34A853" },
-                  { label: "Current Active Streak", value: githubStatus && !githubStatus.unavailable ? `${githubStatus.streak || "6"} Days` : "6 Days", color: "#fbbf24" }
+                  { label: "Current Active Streak", value: githubStatus && !githubStatus.unavailable ? `${githubStatus.streak || "6"} Days` : "6 Days", color: "#f97316" }
                 ].map((stat, idx) => (
                   <div key={idx} style={{
                     background: "rgba(255, 255, 255, 0.7)",
@@ -1369,10 +1487,10 @@ export function V2DeveloperClient({
                   <span style={{ fontSize: "0.72rem", color: "#16a34a", fontWeight: 700, fontFamily: "monospace" }}>VERIFIED</span>
                 </div>
               </div>
-            </TiltCard>
+            </SpotlightCard>
 
             {/* LeetCode Stats Card */}
-            <TiltCard className={styles.telemetryCard} style={{
+            <SpotlightCard className={styles.telemetryCard} style={{
               background: "rgba(255, 255, 255, 0.8)",
               border: "1px solid rgba(14, 165, 233, 0.15)",
               borderRadius: "24px",
@@ -1406,9 +1524,9 @@ export function V2DeveloperClient({
                   { label: "Problems Solved", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved ? leetcodeStatus.solved.all || "154" : "154", color: "#16a34a" },
                   { label: "Global Ranking", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.ranking ? `#${leetcodeStatus.ranking.toLocaleString()}` : "#845,620", color: "#0284c7" },
                   { label: "Contributed Items", value: leetcodeStatus && !leetcodeStatus.unavailable ? leetcodeStatus.contributed || "27" : "27", color: "#ea4335" },
-                  { label: "Active Days", value: leetcodeStatus && !leetcodeStatus.unavailable ? `${leetcodeStatus.activeDays || "10"} Days` : "10 Days", color: "#fbbf24" },
+                  { label: "Active Days", value: leetcodeStatus && !leetcodeStatus.unavailable ? `${leetcodeStatus.activeDays || "10"} Days` : "10 Days", color: "#f97316" },
                   { label: "Infantry (Easy)", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved ? leetcodeStatus.solved.easy || "52" : "52", color: "#16a34a" },
-                  { label: "Bosses (Medium)", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved ? leetcodeStatus.solved.medium || "88" : "88", color: "#fbbf24" },
+                  { label: "Bosses (Medium)", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved ? leetcodeStatus.solved.medium || "88" : "88", color: "#f97316" },
                   { label: "Lords (Hard)", value: leetcodeStatus && !leetcodeStatus.unavailable && leetcodeStatus.solved ? leetcodeStatus.solved.hard || "14" : "14", color: "#ea4335" },
                   { label: "Total Submissions", value: leetcodeStatus && !leetcodeStatus.unavailable ? leetcodeStatus.submissions || "27" : "27", color: "#0ea5e9" }
                 ].map((stat, idx) => (
@@ -1439,7 +1557,7 @@ export function V2DeveloperClient({
                   <span style={{ fontSize: "0.72rem", color: "#16a34a", fontWeight: 700, fontFamily: "monospace" }}>VERIFIED</span>
                 </div>
               </div>
-            </TiltCard>
+            </SpotlightCard>
           </div>
         ) : (
           <div style={{ height: "200px", display: "grid", placeItems: "center", background: "rgba(255, 255, 255, 0.4)", borderRadius: "20px", border: "1px solid rgba(14, 165, 233, 0.12)" }}>

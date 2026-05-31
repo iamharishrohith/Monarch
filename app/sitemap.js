@@ -1,5 +1,5 @@
 export default async function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://harishrohith.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://harishrohith.vercel.app";
 
   return [
     {
